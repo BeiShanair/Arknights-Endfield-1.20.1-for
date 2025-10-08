@@ -1,0 +1,31 @@
+{
+  "type":"forge:add_features",
+  "biomes":"#minecraft:is_overworld",
+  "features":[
+    "arknights_endfield:amethyst_mineral_vein_placed",
+    "arknights_endfield:amethyst_ore_middle_placed",
+    "arknights_endfield:amethyst_ore_small_placed",
+    "arknights_endfield:amethyst_ore_upper_placed",
+    "arknights_endfield:coal_mineral_vein_placed",
+    "arknights_endfield:copper_mineral_vein_placed",
+    "arknights_endfield:cuprium_mineral_vein_placed",
+    "arknights_endfield:cuprium_ore_middle_placed",
+    "arknights_endfield:cuprium_ore_small_placed",
+    "arknights_endfield:cuprium_ore_upper_placed",
+    "arknights_endfield:diamond_mineral_vein_placed",
+    "arknights_endfield:emerald_mineral_vein_placed",
+    "arknights_endfield:ferrium_mineral_vein_placed",
+    "arknights_endfield:ferrium_ore_middle_placed",
+    "arknights_endfield:ferrium_ore_small_placed",
+    "arknights_endfield:ferrium_ore_upper_placed",
+    "arknights_endfield:gold_mineral_vein_placed",
+    "arknights_endfield:iron_mineral_vein_placed",
+    "arknights_endfield:lapis_mineral_vein_placed",
+    "arknights_endfield:originum_mineral_vein_placed",
+    "arknights_endfield:originum_ore_middle_placed",
+    "arknights_endfield:originum_ore_small_placed",
+    "arknights_endfield:originum_ore_upper_placed",
+    "arknights_endfield:redstone_mineral_vein_placed"
+  ],
+  "step": "underground_ores"
+}

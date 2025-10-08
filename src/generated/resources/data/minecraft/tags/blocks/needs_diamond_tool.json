@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "arknights_endfield:amethyst_mineral_vein_block",
+    "arknights_endfield:coal_mineral_vein_block",
+    "arknights_endfield:copper_mineral_vein_block",
+    "arknights_endfield:diamond_mineral_vein_block",
+    "arknights_endfield:emerald_mineral_vein_block",
+    "arknights_endfield:gold_mineral_vein_block",
+    "arknights_endfield:iron_mineral_vein_block",
+    "arknights_endfield:lapis_mineral_vein_block",
+    "arknights_endfield:originium_mineral_vein_block",
+    "arknights_endfield:redstone_mineral_vein_block",
+    "arknights_endfield:cuprium_mineral_vein_block",
+    "arknights_endfield:ferrium_mineral_vein_block"
+  ]
+}

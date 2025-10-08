@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "arknights_endfield:ferrium_ore_block",
+    "arknights_endfield:deepslate_ferrium_ore",
+    "arknights_endfield:amethyst_ore_block",
+    "arknights_endfield:deepslate_amethyst_ore",
+    "arknights_endfield:cuprium_ore_block",
+    "arknights_endfield:deepslate_cuprium_ore"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type":"forge:add_features",
+  "biomes":"#minecraft:is_overworld",
+  "features":[
+    "arknights_endfield:aketine_placed",
+    "arknights_endfield:amber_rice_placed",
+    "arknights_endfield:buckflower_placed",
+    "arknights_endfield:citrome_placed",
+    "arknights_endfield:firebuckle_placed",
+    "arknights_endfield:fluffed_jincao_placed",
+    "arknights_endfield:jincao_placed",
+    "arknights_endfield:redjade_ginseng_placed",
+    "arknights_endfield:reed_rye_placed",
+    "arknights_endfield:sandleaf_placed",
+    "arknights_endfield:tartpepper_placed",
+    "arknights_endfield:thorny_yazhen_placed",
+    "arknights_endfield:umbraline_placed",
+    "arknights_endfield:yazhen_placed"
+  ],
+  "step":"vegetal_decoration"
+}
