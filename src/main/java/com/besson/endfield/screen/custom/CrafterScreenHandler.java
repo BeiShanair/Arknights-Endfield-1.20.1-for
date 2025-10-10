@@ -2,7 +2,7 @@ package com.besson.endfield.screen.custom;
 
 import com.besson.endfield.blockEntity.custom.CrafterBlockEntity;
 import com.besson.endfield.recipe.custom.CrafterRecipe;
-import com.besson.endfield.screen.ModScreenHandlers;
+import com.besson.endfield.screen.ModScreens;
 import com.besson.endfield.util.CrafterResultSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -30,7 +30,7 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
     }
 
     public CrafterScreenHandler(int syncId, Inventory playerInventory, CrafterBlockEntity blockEntity) {
-        super(ModScreenHandlers.CRAFTER_SCREEN.get(), syncId);
+        super(ModScreens.CRAFTER_SCREEN.get(), syncId);
         checkContainerSize(blockEntity.getContainer(), 4);
         this.inventory = blockEntity.asContainer();
         inventory.startOpen(playerInventory.player);
@@ -147,5 +147,13 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return this.inventory.stillValid(pPlayer);
+    }
+
+    public List<CrafterRecipe> getCurrentRecipes() {
+        return currentRecipes;
+    }
+
+    public int getSelectedRecipeIndex() {
+        return selectedRecipeIndex;
     }
 }

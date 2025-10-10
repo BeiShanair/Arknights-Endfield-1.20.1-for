@@ -15,7 +15,7 @@ public class ModItemGroups {
 
     public static final RegistryObject<CreativeModeTab> ARKNIGHTS_ENDFIELD =
             CREATIVE_MODE_TAB.register("arknights_endfield", () -> CreativeModeTab.builder()
-                    .icon(() -> ModBlocks.ORIGINIUM_MINERAL_VEIN_BLOCK.get().asItem().getDefaultInstance())
+                    .icon(() -> ModBlocks.PROTOCOL_ANCHOR_CORE.get().asItem().getDefaultInstance())
                     .title(Component.translatable("itemGroup.arknights_endfield"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ORIGINIUM_MINERAL_VEIN_BLOCK.get());
@@ -41,12 +41,12 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.REDSTONE_MINERAL_VEIN_BLOCK.get());
 
                         pOutput.accept(ModBlocks.CRAFTER.get());
-//                        pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM);
+                        pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM.get());
 //                        pOutput.accept(ModItems.RELAY_TOWER_ITEM);
 //                        pOutput.accept(ModItems.ELECTRIC_PYLON_ITEM);
 //                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_ITEM);
 //                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_MK_II_ITEM);
-//                        pOutput.accept(ModItems.PORTABLE_ORIGINIUM_RIG_ITEM);
+                        pOutput.accept(ModItems.PORTABLE_ORIGINIUM_RIG_ITEM.get());
 //                        pOutput.accept(ModItems.REFINING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.SHREDDING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.FILLING_UNIT_ITEM);
@@ -57,7 +57,7 @@ public class ModItemGroups {
 //                        pOutput.accept(ModItems.PACKAGING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.PLANTING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.THERMAL_BANK_ITEM);
+                        pOutput.accept(ModItems.THERMAL_BANK_ITEM.get());
 
                         pOutput.accept(ModItems.ORIGINIUM_ORE.get());
                         pOutput.accept(ModItems.ORIGINIUM_POWDER.get());

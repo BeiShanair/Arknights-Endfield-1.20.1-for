@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +60,8 @@ public class CrafterRecipe implements Recipe<Container> {
                 if (stack.getItem().equals(entry.getKey().asItem())) {
                     int removed = Math.min(stack.getCount(), need);
                     stack.shrink(removed);
+                    need -= removed;
+                    if (need <= 0) break;
                 }
             }
         }

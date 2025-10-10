@@ -1,7 +1,7 @@
 package com.besson.endfield.block;
 
 import com.besson.endfield.ArknightsEndfield;
-import com.besson.endfield.block.custom.CrafterBlock;
+import com.besson.endfield.block.custom.*;
 import com.besson.endfield.item.ModItems;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -23,6 +23,15 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> CRAFTER = registerBlocks("crafter",
             () -> new CrafterBlock(BlockBehaviour.Properties.of().strength(3f).noOcclusion()));
+    public static final RegistryObject<Block> PORTABLE_ORIGINIUM_RIG = registerBlocksWithoutItem("portable_originium_rig",
+            () -> new PortableOriginiumRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE = registerBlocksWithoutItem("protocol_anchor_core",
+            () -> new ProtocolAnchorCoreBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> THERMAL_BANK = registerBlocksWithoutItem("thermal_bank",
+            () -> new ThermalBankBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> THERMAL_BANK_SIDE = registerBlocks("thermal_bank_side",
+            () -> new ThermalBankSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
 
     public static final RegistryObject<Block> AMETHYST_MINERAL_VEIN_BLOCK = registerBlocks("amethyst_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));

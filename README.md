@@ -35,7 +35,7 @@ reimagined in the Minecraft universe.
 
 ## 联系方式 / Contact
 作者：`北山_Besson / Beishan_Besson`  
-仓库地址：`https://github.com/BeiShanair/Arknights-Endfield-1.20.1-fab`
+仓库地址：`https://github.com/BeiShanair/Arknights-Endfield-1.20.1-for`
 
 ---
 
@@ -57,4 +57,4 @@ reimagined in the Minecraft universe.
 
 ## 未来
 - 本模组目前仍在开发中，未来将移植至`其他版本`和`NeoForge`
-- This mod is still under development and is currently limited to version `1.20.1 Fabric`. In the future, it will be ported to `other versions` and `NeoForge`.
+- This mod is still under development. In the future, it will be ported to `other versions` and `NeoForge`.

@@ -2,17 +2,31 @@ package com.besson.endfield.item;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
+import com.besson.endfield.item.custom.PortableOriginiumRigItem;
+import com.besson.endfield.item.custom.ProtocolAnchorCoreItem;
+import com.besson.endfield.item.custom.ThermalBankItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, ArknightsEndfield.MOD_ID);
+
+    public static final RegistryObject<Item> PORTABLE_ORIGINIUM_RIG_ITEM = ITEMS.register("portable_originium_rig",
+            () -> new PortableOriginiumRigItem(ModBlocks.PORTABLE_ORIGINIUM_RIG.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PROTOCOL_ANCHOR_CORE_ITEM = ITEMS.register("protocol_anchor_core",
+            () -> new ProtocolAnchorCoreItem(ModBlocks.PROTOCOL_ANCHOR_CORE.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> THERMAL_BANK_ITEM = ITEMS.register("thermal_bank",
+            () -> new ThermalBankItem(ModBlocks.THERMAL_BANK.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> AGGAGRIT = ITEMS.register("aggagrit", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AGGAGRIT_BLOCK = ITEMS.register("aggagrit_block", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

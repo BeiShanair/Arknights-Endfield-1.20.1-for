@@ -6,8 +6,11 @@ import com.besson.endfield.item.ModItemGroups;
 import com.besson.endfield.item.ModItems;
 import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.recipe.ModRecipes;
-import com.besson.endfield.screen.ModScreenHandlers;
+import com.besson.endfield.screen.ModScreens;
 import com.besson.endfield.screen.custom.CrafterScreen;
+import com.besson.endfield.screen.custom.PortableOriginiumRigScreen;
+import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreen;
+import com.besson.endfield.screen.custom.ThermalBankScreen;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -43,7 +46,7 @@ public class ArknightsEndfield {
         ModItemGroups.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
-        ModScreenHandlers.register(modEventBus);
+        ModScreens.register(modEventBus);
         ModRecipes.register(modEventBus);
 
         ModNetWorking.register();
@@ -75,7 +78,10 @@ public class ArknightsEndfield {
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
             event.enqueueWork(() -> {
-                MenuScreens.register(ModScreenHandlers.CRAFTER_SCREEN.get(), CrafterScreen::new);
+                MenuScreens.register(ModScreens.CRAFTER_SCREEN.get(), CrafterScreen::new);
+                MenuScreens.register(ModScreens.PORTABLE_ORIGINIUM_RIG_SCREEN.get(), PortableOriginiumRigScreen::new);
+                MenuScreens.register(ModScreens.PROTOCOL_ANCHOR_CORE_SCREEN.get(), ProtocolAnchorCoreScreen::new);
+                MenuScreens.register(ModScreens.THERMAL_BANK_SCREEN.get(), ThermalBankScreen::new);
             });
         }
     }
