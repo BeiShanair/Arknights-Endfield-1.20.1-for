@@ -43,6 +43,9 @@ reimagined in the Minecraft universe.
 > 所有贴图、模型、音频资源依据 CC BY-NC-SA 4.0 许可。  
 > 《明日方舟：终末地》及其相关版权归鹰角网络所有。
 
+## 模组依赖
+- Forge Loader >= 47.4.0
+- Geckolib4 >= 4.7.3
 
 ## 关于
 - 这是一个将游戏`《明日方舟：终末地》`中的集成工业设施加入到`Minecraft`中的模组

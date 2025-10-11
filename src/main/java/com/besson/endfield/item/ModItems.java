@@ -2,9 +2,7 @@ package com.besson.endfield.item;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
-import com.besson.endfield.item.custom.PortableOriginiumRigItem;
-import com.besson.endfield.item.custom.ProtocolAnchorCoreItem;
-import com.besson.endfield.item.custom.ThermalBankItem;
+import com.besson.endfield.item.custom.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -27,6 +25,16 @@ public class ModItems {
             () -> new ProtocolAnchorCoreItem(ModBlocks.PROTOCOL_ANCHOR_CORE.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> THERMAL_BANK_ITEM = ITEMS.register("thermal_bank",
             () -> new ThermalBankItem(ModBlocks.THERMAL_BANK.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> RELAY_TOWER_ITEM = ITEMS.register("relay_tower",
+            () -> new RelayTowerItem(ModBlocks.RELAY_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ELECTRIC_PYLON_ITEM = ITEMS.register("electric_pylon",
+            () -> new ElectricPylonItem(ModBlocks.ELECTRIC_PYLON.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ELECTRIC_MINING_RIG_ITEM = ITEMS.register("electric_mining_rig",
+            () -> new ElectricMiningRigItem(ModBlocks.ELECTRIC_MINING_RIG.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ELECTRIC_MINING_RIG_MK_II_ITEM = ITEMS.register("electric_mining_rig_mk_ii",
+            () -> new ElectricMiningRigMkIIItem(ModBlocks.ELECTRIC_MINING_RIG_MK_II.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> REFINING_UNIT_ITEM = ITEMS.register("refining_unit",
+            () -> new RefiningUnitItem(ModBlocks.REFINING_UNIT.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> AGGAGRIT = ITEMS.register("aggagrit", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AGGAGRIT_BLOCK = ITEMS.register("aggagrit_block", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

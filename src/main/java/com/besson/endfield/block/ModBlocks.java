@@ -27,6 +27,19 @@ public class ModBlocks {
             () -> new PortableOriginiumRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
     public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE = registerBlocksWithoutItem("protocol_anchor_core",
             () -> new ProtocolAnchorCoreBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> RELAY_TOWER = registerBlocksWithoutItem("relay_tower",
+            () -> new RelayTowerBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> ELECTRIC_PYLON = registerBlocksWithoutItem("electric_pylon",
+            () -> new ElectricPylonBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> ELECTRIC_MINING_RIG = registerBlocksWithoutItem("electric_mining_rig",
+            () -> new ElectricMiningRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> ELECTRIC_MINING_RIG_MK_II = registerBlocksWithoutItem("electric_mining_rig_mk_ii",
+            () -> new ElectricMiningRigMkIIBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> REFINING_UNIT = registerBlocksWithoutItem("refining_unit",
+            () -> new RefiningUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> REFINING_UNIT_SIDE = registerBlocks("refining_unit_side",
+            () -> new RefiningUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
 
     public static final RegistryObject<Block> THERMAL_BANK = registerBlocksWithoutItem("thermal_bank",
             () -> new ThermalBankBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));

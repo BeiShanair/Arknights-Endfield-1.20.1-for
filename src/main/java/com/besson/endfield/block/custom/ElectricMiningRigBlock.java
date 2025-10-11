@@ -2,7 +2,7 @@ package com.besson.endfield.block.custom;
 
 import com.besson.endfield.block.ModBlockEntityWithFacing;
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.blockEntity.custom.PortableOriginiumRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.ElectricMiningRigBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -18,44 +18,44 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class PortableOriginiumRigBlock extends ModBlockEntityWithFacing {
+public class ElectricMiningRigBlock extends ModBlockEntityWithFacing {
 
-    public PortableOriginiumRigBlock(Properties pProperties) {
+    public ElectricMiningRigBlock(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new PortableOriginiumRigBlockEntity(pPos, pState);
+        return new ElectricMiningRigBlockEntity(pPos, pState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.PORTABLE_ORIGINIUM_RIG.get(),
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.ELECTRIC_MINING_RIG.get(),
                 (world1, pos, state1, blockEntity) ->
-                        blockEntity.tick(world1, pos, state1, (PortableOriginiumRigBlockEntity) blockEntity));
-    }
-
-    @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (!pLevel.isClientSide() && pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof PortableOriginiumRigBlockEntity rig) {
-                Containers.dropContents(pLevel, pPos, rig.getItems());
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+                        ElectricMiningRigBlockEntity.tick(world1, pos, state1, (ElectricMiningRigBlockEntity) blockEntity));
     }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof PortableOriginiumRigBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, (PortableOriginiumRigBlockEntity) blockEntity, pPos);
+            if (blockEntity instanceof ElectricMiningRigBlockEntity) {
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, (ElectricMiningRigBlockEntity) blockEntity, pPos);
             }
         }
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if (!pLevel.isClientSide() && pState.getBlock() != pNewState.getBlock()) {
+            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+            if (blockEntity instanceof ElectricMiningRigBlockEntity blockEntity1) {
+                Containers.dropContents(pLevel, pPos, blockEntity1.getItems());
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 }

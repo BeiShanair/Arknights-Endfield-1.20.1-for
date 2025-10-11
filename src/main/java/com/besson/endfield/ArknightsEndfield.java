@@ -7,10 +7,7 @@ import com.besson.endfield.item.ModItems;
 import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.recipe.ModRecipes;
 import com.besson.endfield.screen.ModScreens;
-import com.besson.endfield.screen.custom.CrafterScreen;
-import com.besson.endfield.screen.custom.PortableOriginiumRigScreen;
-import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreen;
-import com.besson.endfield.screen.custom.ThermalBankScreen;
+import com.besson.endfield.screen.custom.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -82,6 +79,9 @@ public class ArknightsEndfield {
                 MenuScreens.register(ModScreens.PORTABLE_ORIGINIUM_RIG_SCREEN.get(), PortableOriginiumRigScreen::new);
                 MenuScreens.register(ModScreens.PROTOCOL_ANCHOR_CORE_SCREEN.get(), ProtocolAnchorCoreScreen::new);
                 MenuScreens.register(ModScreens.THERMAL_BANK_SCREEN.get(), ThermalBankScreen::new);
+                MenuScreens.register(ModScreens.ELECTRIC_MINING_RIG_SCREEN.get(), ElectricMiningRigScreen::new);
+                MenuScreens.register(ModScreens.ELECTRIC_MINING_RIG_MK_II_SCREEN.get(), ElectricMiningRigMkIIScreen::new);
+                MenuScreens.register(ModScreens.REFINING_UNIT_SCREEN.get(), RefiningUnitScreen::new);
             });
         }
     }

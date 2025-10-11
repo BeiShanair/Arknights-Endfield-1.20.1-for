@@ -28,6 +28,24 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<ThermalBankSideBlockEntity>> THERMAL_BANK_SIDE =
             BLOCK_ENTITIES.register("thermal_bank_side", () -> BlockEntityType.Builder.of(
                     ThermalBankSideBlockEntity::new, ModBlocks.THERMAL_BANK_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RelayTowerBlockEntity>> RELAY_TOWER =
+            BLOCK_ENTITIES.register("relay_tower", () -> BlockEntityType.Builder.of(
+                    RelayTowerBlockEntity::new, ModBlocks.RELAY_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElectricPylonBlockEntity>> ELECTRIC_PYLON =
+            BLOCK_ENTITIES.register("electric_pylon", () -> BlockEntityType.Builder.of(
+                    ElectricPylonBlockEntity::new, ModBlocks.ELECTRIC_PYLON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElectricMiningRigBlockEntity>> ELECTRIC_MINING_RIG =
+            BLOCK_ENTITIES.register("electric_mining_rig", () -> BlockEntityType.Builder.of(
+                    ElectricMiningRigBlockEntity::new, ModBlocks.ELECTRIC_MINING_RIG.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElectricMiningRigMkIIBlockEntity>> ELECTRIC_MINING_RIG_MK_II =
+            BLOCK_ENTITIES.register("electric_mining_rig_mk2", () -> BlockEntityType.Builder.of(
+                    ElectricMiningRigMkIIBlockEntity::new, ModBlocks.ELECTRIC_MINING_RIG_MK_II.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RefiningUnitBlockEntity>> REFINING_UNIT =
+            BLOCK_ENTITIES.register("refining_unit", () -> BlockEntityType.Builder.of(
+                    RefiningUnitBlockEntity::new, ModBlocks.REFINING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RefiningUnitSideBlockEntity>> REFINING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("refining_unit_side", () -> BlockEntityType.Builder.of(
+                    RefiningUnitSideBlockEntity::new, ModBlocks.REFINING_UNIT_SIDE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

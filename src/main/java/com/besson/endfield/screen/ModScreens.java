@@ -1,10 +1,7 @@
 package com.besson.endfield.screen;
 
 import com.besson.endfield.ArknightsEndfield;
-import com.besson.endfield.screen.custom.CrafterScreenHandler;
-import com.besson.endfield.screen.custom.PortableOriginiumRigScreenHandler;
-import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreenHandler;
-import com.besson.endfield.screen.custom.ThermalBankScreenHandler;
+import com.besson.endfield.screen.custom.*;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -26,6 +23,12 @@ public class ModScreens {
             register("protocol_anchor_core", ProtocolAnchorCoreScreenHandler::new);
     public static final RegistryObject<MenuType<ThermalBankScreenHandler>> THERMAL_BANK_SCREEN =
             register("thermal_bank", ThermalBankScreenHandler::new);
+    public static final RegistryObject<MenuType<ElectricMiningRigScreenHandler>> ELECTRIC_MINING_RIG_SCREEN =
+            register("electric_mining_rig", ElectricMiningRigScreenHandler::new);
+    public static final RegistryObject<MenuType<ElectricMiningRigMkIIScreenHandler>> ELECTRIC_MINING_RIG_MK_II_SCREEN =
+            register("electric_mining_rig_mk_ii", ElectricMiningRigMkIIScreenHandler::new);
+    public static final RegistryObject<MenuType<RefiningUnitScreenHandler>> REFINING_UNIT_SCREEN =
+            register("refining_unit", RefiningUnitScreenHandler::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> register(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IForgeMenuType.create(factory));

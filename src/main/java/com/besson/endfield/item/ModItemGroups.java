@@ -42,12 +42,12 @@ public class ModItemGroups {
 
                         pOutput.accept(ModBlocks.CRAFTER.get());
                         pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM.get());
-//                        pOutput.accept(ModItems.RELAY_TOWER_ITEM);
-//                        pOutput.accept(ModItems.ELECTRIC_PYLON_ITEM);
-//                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_ITEM);
-//                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_MK_II_ITEM);
+                        pOutput.accept(ModItems.RELAY_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.ELECTRIC_PYLON_ITEM.get());
+                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_ITEM.get());
+                        pOutput.accept(ModItems.ELECTRIC_MINING_RIG_MK_II_ITEM.get());
                         pOutput.accept(ModItems.PORTABLE_ORIGINIUM_RIG_ITEM.get());
-//                        pOutput.accept(ModItems.REFINING_UNIT_ITEM);
+                        pOutput.accept(ModItems.REFINING_UNIT_ITEM.get());
 //                        pOutput.accept(ModItems.SHREDDING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.FILLING_UNIT_ITEM);
 //                        pOutput.accept(ModItems.FITTING_UNIT_ITEM);
