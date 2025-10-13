@@ -4,6 +4,8 @@
 - Ported `Gearing Unit`, `Grinding Unit`, `Filling Unit`, `Fitting Unit`, `Moulding Unit`, `Packaging Unit`, `Planting Unit`, `Seed Picking Unit`, and `Shredding Unit`
 - 完成`JEI`适配
 - Completed `JEI` integration
+- 调整各个工业设备的生产时间
+- Adjusted production times for various industrial devices
 
 ## 2025-10-11
 - `中继器`、`供电桩`、`电驱矿机`、`二型电驱矿机`、`精炼炉`移植

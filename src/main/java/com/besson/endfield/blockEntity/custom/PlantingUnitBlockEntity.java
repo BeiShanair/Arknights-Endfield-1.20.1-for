@@ -45,7 +45,7 @@ public class PlantingUnitBlockEntity extends BlockEntity implements GeoBlockEnti
 
     protected final ContainerData propertyDelegate;
     private int progress = 0;
-    private int maxProgress = 80;
+    private int maxProgress = 40;
 
     private int storedPower = 0;
     private static final int POWER_PRE_TICK = 10;

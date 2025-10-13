@@ -45,7 +45,7 @@ public class MouldingUnitBlockEntity extends BlockEntity implements GeoBlockEnti
 
     protected final ContainerData propertyDelegate;
     private int progress = 0;
-    private int maxProgress = 80;
+    private int maxProgress = 40;
 
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;

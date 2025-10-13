@@ -1,6 +1,5 @@
 package com.besson.endfield.blockEntity.custom;
 
-import com.besson.endfield.block.custom.ThermalBankBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.screen.custom.ThermalBankScreenHandler;
 import net.minecraft.core.BlockPos;
@@ -48,7 +47,6 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     protected final ContainerData propertyDelegate;
 
     public static final int INPUT_SLOT = 0;
-    public static final int[] INPUT_SLOTS = {0};
 
     private final LazyOptional<ItemStackHandler> lazyOptional = LazyOptional.of(() -> itemStackHandler);
 
@@ -182,9 +180,5 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
 
     public ContainerData getPropertyDelegate() {
         return propertyDelegate;
-    }
-
-    public void writeMenuOpeningData(FriendlyByteBuf buf) {
-        buf.writeBlockPos(getBlockPos());
     }
 }
