@@ -82,6 +82,15 @@ public class ArknightsEndfield {
                 MenuScreens.register(ModScreens.ELECTRIC_MINING_RIG_SCREEN.get(), ElectricMiningRigScreen::new);
                 MenuScreens.register(ModScreens.ELECTRIC_MINING_RIG_MK_II_SCREEN.get(), ElectricMiningRigMkIIScreen::new);
                 MenuScreens.register(ModScreens.REFINING_UNIT_SCREEN.get(), RefiningUnitScreen::new);
+                MenuScreens.register(ModScreens.FILLING_UNIT_SCREEN.get(), FillingUnitScreen::new);
+                MenuScreens.register(ModScreens.FITTING_UNIT_SCREEN.get(), FittingUnitScreen::new);
+                MenuScreens.register(ModScreens.GEARING_UNIT_SCREEN.get(), GearingUnitScreen::new);
+                MenuScreens.register(ModScreens.GRINDING_UNIT_SCREEN.get(), GrindingUnitScreen::new);
+                MenuScreens.register(ModScreens.MOULDING_UNIT_SCREEN.get(), MouldingUnitScreen::new);
+                MenuScreens.register(ModScreens.PACKAGING_UNIT_SCREEN.get(), PackagingUnitScreen::new);
+                MenuScreens.register(ModScreens.PLANTING_UNIT_SCREEN.get(), PlantingUnitScreen::new);
+                MenuScreens.register(ModScreens.SEED_PICKING_UNIT_SCREEN.get(), SeedPickingUnitScreen::new);
+                MenuScreens.register(ModScreens.SHREDDING_UNIT_SCREEN.get(), ShreddingUnitScreen::new);
             });
         }
     }

@@ -88,20 +88,16 @@ public class RefiningUnitRecipe implements Recipe<Container> {
 
         @Override
         public RefiningUnitRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-            InputEntry inputs;
-            ItemStack output = buf.readItem();
-
             Ingredient ingredient = Ingredient.fromNetwork(buf);
             int count = buf.readInt();
-            inputs = new InputEntry(ingredient, count);
-
+            InputEntry inputs = new InputEntry(ingredient, count);
+            ItemStack output = buf.readItem();
             return new RefiningUnitRecipe(id, inputs, output);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, RefiningUnitRecipe recipe) {
-            buf.writeInt(recipe.getIngredients().size());
-            InputEntry entry = recipe.input;
+            InputEntry entry = recipe.getInput();
             entry.getIngredient().toNetwork(buf);
             buf.writeInt(entry.getCount());
             buf.writeItem(recipe.output);

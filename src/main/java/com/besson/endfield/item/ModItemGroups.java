@@ -48,15 +48,15 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.ELECTRIC_MINING_RIG_MK_II_ITEM.get());
                         pOutput.accept(ModItems.PORTABLE_ORIGINIUM_RIG_ITEM.get());
                         pOutput.accept(ModItems.REFINING_UNIT_ITEM.get());
-//                        pOutput.accept(ModItems.SHREDDING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.FILLING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.FITTING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.GEARING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.GRINDING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.MOULDING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.PACKAGING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.PLANTING_UNIT_ITEM);
-//                        pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM);
+                        pOutput.accept(ModItems.SHREDDING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.FILLING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.FITTING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.GEARING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.GRINDING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.MOULDING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.PACKAGING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.PLANTING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.THERMAL_BANK_ITEM.get());
 
                         pOutput.accept(ModItems.ORIGINIUM_ORE.get());

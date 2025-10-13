@@ -28,5 +28,23 @@ public class ModBlockEntityRenderers {
                 ElectricMiningRigMkIIRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.REFINING_UNIT.get(),
                 RefiningUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FILLING_UNIT.get(),
+                FillingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FITTING_UNIT.get(),
+                FittingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.GEARING_UNIT.get(),
+                GearingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.GRINDING_UNIT.get(),
+                GrindingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MOULDING_UNIT.get(),
+                MouldingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.PACKAGING_UNIT.get(),
+                PackagingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.PLANTING_UNIT.get(),
+                PlantingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SEED_PICKING_UNIT.get(),
+                SeedPickingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SHREDDING_UNIT.get(),
+                ShreddingUnitRenderer::new);
     }
 }

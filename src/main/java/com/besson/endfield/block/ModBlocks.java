@@ -41,6 +41,51 @@ public class ModBlocks {
     public static final RegistryObject<Block> REFINING_UNIT_SIDE = registerBlocks("refining_unit_side",
             () -> new RefiningUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
 
+    public static final RegistryObject<Block> FILLING_UNIT = registerBlocksWithoutItem("filling_unit",
+            () -> new FillingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> FILLING_UNIT_SIDE = registerBlocks("filling_unit_side",
+            () -> new FillingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> FITTING_UNIT = registerBlocksWithoutItem("fitting_unit",
+            () -> new FittingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> FITTING_UNIT_SIDE = registerBlocks("fitting_unit_side",
+            () -> new FittingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> SHREDDING_UNIT = registerBlocksWithoutItem("shredding_unit",
+            () -> new ShreddingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> SHREDDING_UNIT_SIDE = registerBlocks("shredding_unit_side",
+            () -> new ShreddingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> GEARING_UNIT = registerBlocksWithoutItem("gearing_unit",
+            () -> new GearingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> GEARING_UNIT_SIDE = registerBlocks("gearing_unit_side",
+            () -> new GearingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> GRINDING_UNIT = registerBlocksWithoutItem("grinding_unit",
+            () -> new GrindingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> GRINDING_UNIT_SIDE = registerBlocks("grinding_unit_side",
+            () -> new GrindingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> MOULDING_UNIT = registerBlocksWithoutItem("moulding_unit",
+            () -> new MouldingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> MOULDING_UNIT_SIDE = registerBlocksWithoutItem("moulding_unit_side",
+            () -> new MouldingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> PACKAGING_UNIT = registerBlocksWithoutItem("packaging_unit",
+            () -> new PackagingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> PACKAGING_UNIT_SIDE = registerBlocks("packaging_unit_side",
+            () -> new PackagingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> PLANTING_UNIT = registerBlocksWithoutItem("planting_unit",
+            () -> new PlantingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> PLANTING_UNIT_SIDE = registerBlocks("planting_unit_side",
+            () -> new PlantingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
+    public static final RegistryObject<Block> SEED_PICKING_UNIT = registerBlocksWithoutItem("seed_picking_unit",
+            () -> new SeedPickingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> SEED_PICKING_UNIT_SIDE = registerBlocks("seed_picking_unit_side",
+            () -> new SeedPickingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+
     public static final RegistryObject<Block> THERMAL_BANK = registerBlocksWithoutItem("thermal_bank",
             () -> new ThermalBankBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
     public static final RegistryObject<Block> THERMAL_BANK_SIDE = registerBlocks("thermal_bank_side",

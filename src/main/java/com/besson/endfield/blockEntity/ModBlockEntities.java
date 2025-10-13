@@ -46,6 +46,60 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<RefiningUnitSideBlockEntity>> REFINING_UNIT_SIDE =
             BLOCK_ENTITIES.register("refining_unit_side", () -> BlockEntityType.Builder.of(
                     RefiningUnitSideBlockEntity::new, ModBlocks.REFINING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FillingUnitBlockEntity>> FILLING_UNIT =
+            BLOCK_ENTITIES.register("filling_unit", () -> BlockEntityType.Builder.of(
+                    FillingUnitBlockEntity::new, ModBlocks.FILLING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FillingUnitSideBlockEntity>> FILLING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("filling_unit_side", () -> BlockEntityType.Builder.of(
+                    FillingUnitSideBlockEntity::new, ModBlocks.FILLING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FittingUnitBlockEntity>> FITTING_UNIT =
+            BLOCK_ENTITIES.register("fitting_unit", () -> BlockEntityType.Builder.of(
+                    FittingUnitBlockEntity::new, ModBlocks.FITTING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FittingUnitSideBlockEntity>> FITTING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("fitting_unit_side", () -> BlockEntityType.Builder.of(
+                    FittingUnitSideBlockEntity::new, ModBlocks.FITTING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GearingUnitBlockEntity>> GEARING_UNIT =
+            BLOCK_ENTITIES.register("gearing_unit", () -> BlockEntityType.Builder.of(
+                    GearingUnitBlockEntity::new, ModBlocks.GEARING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GearingUnitSideBlockEntity>> GEARING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("gearing_unit_side", () -> BlockEntityType.Builder.of(
+                    GearingUnitSideBlockEntity::new, ModBlocks.GEARING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GrindingUnitBlockEntity>> GRINDING_UNIT =
+            BLOCK_ENTITIES.register("grinding_unit", () -> BlockEntityType.Builder.of(
+                    GrindingUnitBlockEntity::new, ModBlocks.GRINDING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GrindingUnitSideBlockEntity>> GRINDING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("grinding_unit_side", () -> BlockEntityType.Builder.of(
+                    GrindingUnitSideBlockEntity::new, ModBlocks.GRINDING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MouldingUnitBlockEntity>> MOULDING_UNIT =
+            BLOCK_ENTITIES.register("moulding_unit", () -> BlockEntityType.Builder.of(
+                    MouldingUnitBlockEntity::new, ModBlocks.MOULDING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MouldingUnitSideBlockEntity>> MOULDING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("moulding_unit_side", () -> BlockEntityType.Builder.of(
+                    MouldingUnitSideBlockEntity::new, ModBlocks.MOULDING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PackagingUnitBlockEntity>> PACKAGING_UNIT =
+            BLOCK_ENTITIES.register("packaging_unit", () -> BlockEntityType.Builder.of(
+                    PackagingUnitBlockEntity::new, ModBlocks.PACKAGING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PackagingUnitSideBlockEntity>> PACKAGING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("packaging_unit_side", () -> BlockEntityType.Builder.of(
+                    PackagingUnitSideBlockEntity::new, ModBlocks.PACKAGING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PlantingUnitBlockEntity>> PLANTING_UNIT =
+            BLOCK_ENTITIES.register("planting_unit", () -> BlockEntityType.Builder.of(
+                    PlantingUnitBlockEntity::new, ModBlocks.PLANTING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PlantingUnitSideBlockEntity>> PLANTING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("planting_unit_side", () -> BlockEntityType.Builder.of(
+                    PlantingUnitSideBlockEntity::new, ModBlocks.PLANTING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SeedPickingUnitBlockEntity>> SEED_PICKING_UNIT =
+            BLOCK_ENTITIES.register("seed_picking_unit", () -> BlockEntityType.Builder.of(
+                    SeedPickingUnitBlockEntity::new, ModBlocks.SEED_PICKING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SeedPickingUnitSideBlockEntity>> SEED_PICKING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("seed_picking_unit_side", () -> BlockEntityType.Builder.of(
+                    SeedPickingUnitSideBlockEntity::new, ModBlocks.SEED_PICKING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ShreddingUnitBlockEntity>> SHREDDING_UNIT =
+            BLOCK_ENTITIES.register("shredding_unit", () -> BlockEntityType.Builder.of(
+                    ShreddingUnitBlockEntity::new, ModBlocks.SHREDDING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ShreddingUnitSideBlockEntity>> SHREDDING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("shredding_unit_side", () -> BlockEntityType.Builder.of(
+                    ShreddingUnitSideBlockEntity::new, ModBlocks.SHREDDING_UNIT_SIDE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

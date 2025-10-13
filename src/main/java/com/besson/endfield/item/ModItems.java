@@ -35,6 +35,24 @@ public class ModItems {
             () -> new ElectricMiningRigMkIIItem(ModBlocks.ELECTRIC_MINING_RIG_MK_II.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<Item> REFINING_UNIT_ITEM = ITEMS.register("refining_unit",
             () -> new RefiningUnitItem(ModBlocks.REFINING_UNIT.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FILLING_UNIT_ITEM = ITEMS.register("filling_unit",
+            () -> new FillingUnitItem(ModBlocks.FILLING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> FITTING_UNIT_ITEM = ITEMS.register("fitting_unit",
+            () -> new FittingUnitItem(ModBlocks.FITTING_UNIT.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> SHREDDING_UNIT_ITEM = ITEMS.register("shredding_unit",
+            () -> new ShreddingUnitItem(ModBlocks.SHREDDING_UNIT.get(), new Item.Properties()));
+    public static final RegistryObject<Item> GEARING_UNIT_ITEM = ITEMS.register("gearing_unit",
+            () -> new GearingUnitItem(ModBlocks.GEARING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> GRINDING_UNIT_ITEM = ITEMS.register("grinding_unit",
+            () -> new GrindingUnitItem(ModBlocks.GRINDING_UNIT.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> MOULDING_UNIT_ITEM = ITEMS.register("moulding_unit",
+            () -> new MouldingUnitItem(ModBlocks.MOULDING_UNIT.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> PACKAGING_UNIT_ITEM = ITEMS.register("packaging_unit",
+            () -> new PackagingUnitItem(ModBlocks.PACKAGING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> PLANTING_UNIT_ITEM = ITEMS.register("planting_unit",
+            () -> new PlantingUnitItem(ModBlocks.PLANTING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<Item> SEED_PICKING_UNIT_ITEM = ITEMS.register("seed_picking_unit",
+            () -> new SeedPickingUnitItem(ModBlocks.SEED_PICKING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> AGGAGRIT = ITEMS.register("aggagrit", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AGGAGRIT_BLOCK = ITEMS.register("aggagrit_block", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
