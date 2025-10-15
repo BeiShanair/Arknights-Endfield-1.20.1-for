@@ -36,7 +36,9 @@ public class ProtocolAnchorCoreBlock extends ModBlockEntityWithFacing {
         if (!pLevel.isClientSide()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof ProtocolAnchorCoreBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, (ProtocolAnchorCoreBlockEntity) blockEntity, pPos);
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, (ProtocolAnchorCoreBlockEntity) blockEntity, friendlyByteBuf -> {
+                    ((ProtocolAnchorCoreBlockEntity) blockEntity).writeScreenData(friendlyByteBuf);
+                });
             }
         }
         return InteractionResult.CONSUME;

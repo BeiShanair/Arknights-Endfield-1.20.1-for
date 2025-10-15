@@ -1,16 +1,17 @@
 package com.besson.endfield.blockEntity.custom;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
+import com.besson.endfield.power.PowerNetworkManager;
 import com.besson.endfield.screen.custom.ThermalBankScreenHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -45,6 +47,7 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     private int burnTime;
     private int fuelTime;
     protected final ContainerData propertyDelegate;
+    private boolean registeredToManager = false;
 
     public static final int INPUT_SLOT = 0;
 
@@ -162,6 +165,34 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     @Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new ThermalBankScreenHandler(pContainerId, pPlayerInventory, this, this.propertyDelegate);
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(this.getBlockPos()).inflate(0, 4, 0);
+    }
+
+    @Override
+    public void setLevel(Level pLevel) {
+        super.setLevel(pLevel);
+        if (!registeredToManager && pLevel instanceof ServerLevel serverLevel) {
+            PowerNetworkManager.get(serverLevel).registerGenerator(this.getBlockPos(), () -> {
+                try {
+                    return getPowerOutput();
+                } catch (Exception e) {
+                    return 0;
+                }
+            });
+            registeredToManager = true;
+        }
+    }
+
+    @Override
+    public void setRemoved() {
+        if (level instanceof ServerLevel serverLevel) {
+            PowerNetworkManager.get(serverLevel).unregisterGenerator(this.getBlockPos());
+        }
+        super.setRemoved();
     }
 
     @Override

@@ -1,14 +1,17 @@
 package com.besson.endfield.blockEntity.custom;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
+import com.besson.endfield.power.PowerNetworkManager;
 import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreenHandler;
 import com.besson.endfield.util.ProtocolAnchorCoreStatus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +20,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -33,9 +37,9 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     private final int baseMaxBuffer = 100000;
     private final int basePower = 150;
     private int extraPower = 0;
-    private int loadNode = 0;
 
     protected final ContainerData propertyDelegate;
+    private boolean registeredToManager = false;
 
     public ProtocolAnchorCoreBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PROTOCOL_ANCHOR_CORE.get(), pos, state);
@@ -47,7 +51,6 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
                     case 1 -> ProtocolAnchorCoreBlockEntity.this.getMaxBuffer();
                     case 2 -> ProtocolAnchorCoreBlockEntity.this.basePower;
                     case 3 -> ProtocolAnchorCoreBlockEntity.this.getExtraPower();
-                    case 4 -> ProtocolAnchorCoreBlockEntity.this.loadNode;
                     default -> 0;
                 };
             }
@@ -59,7 +62,7 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
 
             @Override
             public int getCount() {
-                return 5;
+                return 4;
             }
         };
     }
@@ -70,21 +73,56 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         entity.setChanged();
     }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(this.getBlockPos()).inflate(2, 27, 2);
+    }
+
+    @Override
+    public void setLevel(Level pLevel) {
+        super.setLevel(pLevel);
+        if (!registeredToManager && pLevel instanceof ServerLevel serverLevel) {
+            PowerNetworkManager.get(serverLevel).registerGenerator(this.getBlockPos(), () -> {
+                try {
+                    return this.getTotalPower();
+                } catch (Throwable t) {
+                    return 0;
+                }
+            });
+            registeredToManager = true;
+        }
+    }
+
+    @Override
+    public void setRemoved() {
+        if (level instanceof ServerLevel serverLevel) {
+            PowerNetworkManager.get(serverLevel).unregisterGenerator(this.getBlockPos());
+        }
+        super.setRemoved();
+    }
+
     private int getNearbyThermalBankPower() {
         int sum = 0;
-        int loadNode = 0;
         BlockPos blockPos = this.getBlockPos();
         if (level != null) {
-            for (BlockPos pos : BlockPos.betweenClosed(blockPos.offset(-30, -10, -30), blockPos.offset(30, 10, 30))) {
+            for (BlockPos pos : BlockPos.betweenClosed(blockPos.offset(-30, -30, -30), blockPos.offset(30, 30, 30))) {
                 BlockEntity be = level.getBlockEntity(pos);
                 if (be instanceof ThermalBankBlockEntity blockEntity) {
                     sum += blockEntity.getPowerOutput();
-                    loadNode += 1;
                 }
             }
         }
-        this.loadNode = loadNode;
         return sum;
+    }
+
+    public void writeScreenData(FriendlyByteBuf buf) {
+        buf.writeBlockPos(this.worldPosition);
+        ServerLevel level = (ServerLevel) this.getLevel();
+        PowerNetworkManager manager = PowerNetworkManager.get(level);
+        buf.writeDouble(manager.getLastSupplyRatio());
+        buf.writeInt(manager.getLastTotalGenerated());
+        buf.writeInt(manager.getLastTotalDemand());
+        buf.writeInt(manager.getCurrentStoredEnergy());
     }
 
     public int getMaxBuffer() {
@@ -101,7 +139,7 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     }
 
     public ProtocolAnchorCoreStatus getStatus() {
-        return new ProtocolAnchorCoreStatus(buffer, getMaxBuffer(), basePower, getExtraPower(), loadNode);
+        return new ProtocolAnchorCoreStatus(buffer, getMaxBuffer(), basePower, getExtraPower());
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {

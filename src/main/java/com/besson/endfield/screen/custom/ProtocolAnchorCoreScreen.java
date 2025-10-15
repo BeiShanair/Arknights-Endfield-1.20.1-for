@@ -28,7 +28,8 @@ public class ProtocolAnchorCoreScreen extends AbstractContainerScreen<ProtocolAn
         super.render(context, mouseX, mouseY, delta);
     }
 
-    private void drawBackground(GuiGraphics context, float delta, int mouseX, int mouseY, ProtocolAnchorCoreStatus status) {
+    @Override
+    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         RenderSystem.setShaderTexture(0, TEXTURE);
@@ -37,33 +38,15 @@ public class ProtocolAnchorCoreScreen extends AbstractContainerScreen<ProtocolAn
 
         context.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        // 进度条
-        int barWidth = 120;
-        int barHeight = 12;
-        int filled = (int) ((double) status.buffer() / status.maxBuffer() * barWidth);
-
-        context.fill(x + 25, y + 120, x + 25 + barWidth, y + 120  + barHeight, 0xFF555555); // 背景
-        context.fill(x + 25, y + 120, x + 25 + filled, y + 120 + barHeight, 0xFF2E7D32);   // 电量
-        context.renderOutline(x + 25, y + 120, barWidth, barHeight, 0xFF000000); // 边框
-
-        // 数值文字（核心缓冲）
         context.drawString(this.font,
-                Component.translatable("screen.protocol_core.buffer", status.buffer(), status.maxBuffer()),
+                Component.translatable("screen.protocol_core.buffer", menu.storedEnergy, 100000),
                 x + 8, y + 20, 0x404040, false);
         context.drawString(this.font,
-                Component.translatable("screen.protocol_core.base_power", status.basePower()),
+                Component.translatable("screen.protocol_core.generated", menu.totalGenerated),
                 x + 8, y + 30, 0xFFFFFF,false);
         context.drawString(this.font,
-                Component.translatable("screen.protocol_core.extra_power", status.extraPower()),
+                Component.translatable("screen.protocol_core.consumer", menu.totalDemand),
                 x + 8, y + 40, 0xFF8000,false);
-        context.drawString(this.font,
-                Component.translatable("screen.protocol_core.load", status.loadNodeNum()),
-                x + 8, y + 50, 0xFF0000,false);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
-        drawBackground(context, delta, mouseX, mouseY, menu.getStatus());
     }
 
     @Override

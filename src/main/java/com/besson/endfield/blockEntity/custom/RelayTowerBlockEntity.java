@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -34,7 +35,7 @@ public class RelayTowerBlockEntity extends BlockEntity implements GeoBlockEntity
             BlockPos closest = null;
             double closestDist = Double.MAX_VALUE;
 
-            for (BlockPos p: BlockPos.betweenClosed(pos.offset(-30, -10, -30), pos.offset(30, 10, 30))) {
+            for (BlockPos p: BlockPos.betweenClosed(pos.offset(-30, -30, -30), pos.offset(30, 30, 30))) {
                 if (p.equals(pos)) continue;
 
                 BlockEntity candidate = world.getBlockEntity(p);
@@ -55,6 +56,11 @@ public class RelayTowerBlockEntity extends BlockEntity implements GeoBlockEntity
 
     public BlockPos getConnectedNode() {
         return connectedNode;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(this.getBlockPos()).inflate(0, 11, 0);
     }
 
     @Override
