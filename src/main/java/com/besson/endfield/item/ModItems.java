@@ -159,7 +159,7 @@ public class ModItems {
     public static final RegistryObject<Item> LC_BATTERY = ITEMS.register("lc_battery", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<Item> MEAT_STIR_FRY = ITEMS.register("meat_stir_fry", () -> new ModEpicItem(new Item.Properties()));
     public static final RegistryObject<Item> MOSSFIELD_PIE = ITEMS.register("mossfield_pie", () -> new ModEpicItem(new Item.Properties()));
-    public static final RegistryObject<Item> ORIGINIUM_ORE = ITEMS.register("originium_ore", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ORIGINIUM_ORE = ITEMS.register("originium_ore", () -> new ModFuelItem(new Item.Properties(), 1600));
     public static final RegistryObject<Item> ORIGINIUM_POWDER = ITEMS.register("originium_powder", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> ORIGOCRUST = ITEMS.register("origocrust", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> ORIGOCRUST_POWDER = ITEMS.register("origocrust_powder", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

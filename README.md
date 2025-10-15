@@ -43,7 +43,7 @@ reimagined in the Minecraft universe.
 > 所有贴图、模型、音频资源依据 CC BY-NC-SA 4.0 许可。  
 > 《明日方舟：终末地》及其相关版权归鹰角网络所有。
 
-## 模组依赖
+## 模组依赖 / Dependencies
 - Forge Loader >= 47.4.0
 - Geckolib4 >= 4.7.3
 
@@ -52,7 +52,7 @@ reimagined in the Minecraft universe.
 - 使用这个模组，让你在`Minecraft`也能成为`管理员`！
 
 - This is a mod that adds the Integrated Industries facilities from the game "Arknights: Endfield" into "Minecraft".
-- With this mod, you can become an "Administrator" in "Minecraft"!
+- With this mod, you can become an "Endministrator" in "Minecraft"!
 
 ## 玩法提示
 - （待定）

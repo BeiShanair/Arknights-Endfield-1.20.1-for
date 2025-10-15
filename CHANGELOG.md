@@ -1,4 +1,10 @@
 # 更新日志 / Changelog
+## 2025-10-15
+- 临时追加`晶体外壳`的熔炉和高炉配方，以保证游戏正常推进
+- Temporarily added furnace and blast furnace recipes for `Origocrust` to ensure normal game progression
+- 追加`热能池`配方
+- Added recipe for `Thermal Bank`
+
 ## 2025-10-12 -> 2025-10-13
 - `装备原件机`、`研磨机`、`灌装机`、`配件机`、`塑形机`、`封装机`、`种植机`、`采种机`、`粉碎机`移植完成
 - Ported `Gearing Unit`, `Grinding Unit`, `Filling Unit`, `Fitting Unit`, `Moulding Unit`, `Packaging Unit`, `Planting Unit`, `Seed Picking Unit`, and `Shredding Unit`
