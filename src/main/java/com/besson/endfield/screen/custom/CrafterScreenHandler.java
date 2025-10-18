@@ -156,4 +156,12 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
     public int getSelectedRecipeIndex() {
         return selectedRecipeIndex;
     }
+
+    @Override
+    public void removed(Player pPlayer) {
+        super.removed(pPlayer);
+        if (!pPlayer.level().isClientSide()) {
+            this.clearContainer(pPlayer, this.inventory);
+        }
+    }
 }

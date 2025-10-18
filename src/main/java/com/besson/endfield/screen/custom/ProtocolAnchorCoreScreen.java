@@ -39,14 +39,20 @@ public class ProtocolAnchorCoreScreen extends AbstractContainerScreen<ProtocolAn
         context.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         context.drawString(this.font,
-                Component.translatable("screen.protocol_core.buffer", menu.storedEnergy, 100000),
-                x + 8, y + 20, 0x404040, false);
+                Component.translatable("screen.protocol_core.buffer"),
+                x + 70, y + 55, 0x404040, false);
+        context.drawString(this.font,
+                Component.translatable("screen.protocol_core.storedEnergy", menu.storedEnergy),
+                x + 65, y + 70, 0x404040, false);
+        context.drawString(this.font,
+                Component.translatable("screen.protocol_core.max", 100000),
+                x + 70, y + 85, 0x404040, false);
         context.drawString(this.font,
                 Component.translatable("screen.protocol_core.generated", menu.totalGenerated),
-                x + 8, y + 30, 0xFFFFFF,false);
+                x + 20, y + 134, 0xFFFFFF,false);
         context.drawString(this.font,
                 Component.translatable("screen.protocol_core.consumer", menu.totalDemand),
-                x + 8, y + 40, 0xFF8000,false);
+                x + 102, y + 18, 0xFF8000,false);
     }
 
     @Override
