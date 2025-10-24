@@ -2,6 +2,10 @@
 *Arknights: Endfield - Minecraft Fan Mod*
 *(非官方明日方舟：终末地 二创模组)*
 
+**注意：模组的部分代码使用`生成式人工智能(AI)`编写，此篇文章的英文翻译也由AI翻译**
+
+**Note: Some code of this mod is written using AI, and the English translation of this article is also translated by AI**
+
 ## 此仓库为 *Forge* 版本
 
 ## 简介 / Introduction

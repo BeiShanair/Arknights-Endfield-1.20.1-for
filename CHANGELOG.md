@@ -1,4 +1,8 @@
 # 更新日志 / Changelog
+## 2025-10-24
+- 修复`制造台`刷物品的特性（bug）
+- Fixed the item duplication bug in `Crafter`
+
 ## 2025-10-18
 - 更新`协议核心`GUI界面
 - Updated `Protocol Anchor Core` GUI interface

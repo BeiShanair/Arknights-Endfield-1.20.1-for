@@ -64,20 +64,11 @@ public class CrafterBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
-        for (int i = 0; i < inv.size(); i++) {
-            CompoundTag itemTag = new CompoundTag();
-            inv.get(i).save(itemTag);
-            pTag.put("Item" + i, itemTag);
-        }
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        for (int i = 0; i < inv.size(); i++) {
-            CompoundTag itemTag = pTag.getCompound("Item" + i);
-            inv.set(i, ItemStack.of(itemTag));
-        }
     }
 
     @Override

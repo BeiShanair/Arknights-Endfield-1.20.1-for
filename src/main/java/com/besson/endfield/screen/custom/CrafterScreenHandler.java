@@ -90,9 +90,6 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
 
             if (invSlot == 3) {
                 while (true) {
-                    slot.onTake(player, originalStack);
-                    this.updateResult();
-
                     if (!slot.hasItem() || !this.canTakeItemForPickAll(originalStack, this.slots.get(3))) {
                         break;
                     }
@@ -101,11 +98,20 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(crafted, 4, 40, true)) {
                         break;
                     }
+                    slot.onTake(player, originalStack);
                 }
-            } else {
+            } else if (invSlot >= 4 && invSlot < 40) {
                 if (!this.moveItemStackTo(originalStack, 0, 3, false)) {
                     return ItemStack.EMPTY;
                 }
+            } else if (!this.moveItemStackTo(originalStack, 4, 40, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (originalStack.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
             }
         }
         return newStack;
