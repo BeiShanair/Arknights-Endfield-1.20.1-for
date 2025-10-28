@@ -36,8 +36,9 @@ public class ProtocolAnchorCorePortBlock extends ModBlockEntityWithFacing {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if (entity instanceof ProtocolAnchorCorePortBlockEntity entity1) {
                 ProtocolAnchorCoreBlockEntity parent = entity1.getParentBlock();
+                System.out.println("parent:" + parent);
                 if (parent != null) {
-                    NetworkHooks.openScreen((ServerPlayer) pPlayer, parent, parent.getBlockPos());
+                    NetworkHooks.openScreen((ServerPlayer) pPlayer, parent, parent::writeScreenData);
                     return InteractionResult.SUCCESS;
                 }
             }
