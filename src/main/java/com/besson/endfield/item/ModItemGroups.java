@@ -39,6 +39,7 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.IRON_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.LAPIS_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.REDSTONE_MINERAL_VEIN_BLOCK.get());
+                        pOutput.accept(ModBlocks.PROTOCOL_ANCHOR_CORE_PORT.get());
 
                         pOutput.accept(ModBlocks.CRAFTER.get());
                         pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM.get());

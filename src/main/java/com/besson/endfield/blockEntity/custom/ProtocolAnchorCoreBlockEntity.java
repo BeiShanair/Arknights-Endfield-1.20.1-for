@@ -1,10 +1,13 @@
 package com.besson.endfield.blockEntity.custom;
 
+import com.besson.endfield.block.custom.ProtocolAnchorCoreBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.power.PowerNetworkManager;
 import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreenHandler;
 import com.besson.endfield.util.ProtocolAnchorCoreStatus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -17,10 +20,18 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -29,53 +40,55 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-// TODO: 全局电网管理器
 public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlockEntity, MenuProvider {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private int buffer = 0;
-    private final int baseMaxBuffer = 100000;
-    private final int basePower = 150;
-    private int extraPower = 0;
+    private int cachedNearbyPower = 0;
 
-    protected final ContainerData propertyDelegate;
     private boolean registeredToManager = false;
+
+    private final ItemStackHandler sideHandler = new ItemStackHandler(54) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+
+    private final LazyOptional<IItemHandler> sideLazy = LazyOptional.of(() -> sideHandler);
 
     public ProtocolAnchorCoreBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PROTOCOL_ANCHOR_CORE.get(), pos, state);
-        this.propertyDelegate = new ContainerData() {
-            @Override
-            public int get(int index) {
-                return switch (index){
-                    case 0 -> ProtocolAnchorCoreBlockEntity.this.buffer;
-                    case 1 -> ProtocolAnchorCoreBlockEntity.this.getMaxBuffer();
-                    case 2 -> ProtocolAnchorCoreBlockEntity.this.basePower;
-                    case 3 -> ProtocolAnchorCoreBlockEntity.this.getExtraPower();
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int index, int value) {
-
-            }
-
-            @Override
-            public int getCount() {
-                return 4;
-            }
-        };
     }
 
     public static void tick(Level world, BlockPos pos, BlockState state, ProtocolAnchorCoreBlockEntity entity) {
         if (world.isClientSide()) return;
-        entity.buffer = Math.min(entity.buffer + entity.getTotalPower(), entity.getMaxBuffer());
-        entity.setChanged();
+        int totalPower = entity.getTotalPower();
+        int newBuffer = Math.min(entity.buffer + totalPower, entity.getMaxBuffer());
+
+        if (newBuffer != entity.buffer) {
+            entity.buffer = newBuffer;
+            entity.setChanged();
+        }
     }
 
     @Override
     public AABB getRenderBoundingBox() {
         return new AABB(this.getBlockPos()).inflate(2, 27, 2);
+    }
+
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            return sideLazy.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        sideLazy.invalidate();
     }
 
     @Override
@@ -126,20 +139,22 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     }
 
     public int getMaxBuffer() {
+        int baseMaxBuffer = 100000;
         return baseMaxBuffer + getNearbyThermalBankPower();
     }
 
+    public void refreshNearbyPower() {
+        this.cachedNearbyPower = getNearbyThermalBankPower();
+        setChanged();
+    }
+
     private int getExtraPower() {
-        this.extraPower = getNearbyThermalBankPower();
-        return extraPower;
+        return cachedNearbyPower;
     }
 
     public int getTotalPower() {
-        return basePower + getExtraPower();
-    }
-
-    public ProtocolAnchorCoreStatus getStatus() {
-        return new ProtocolAnchorCoreStatus(buffer, getMaxBuffer(), basePower, getExtraPower());
+        int basePower = 150;
+        return basePower + cachedNearbyPower;
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -159,19 +174,21 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ProtocolAnchorCoreScreenHandler(pContainerId, pPlayerInventory, this, this.propertyDelegate);
+        return new ProtocolAnchorCoreScreenHandler(pContainerId, pPlayerInventory, this);
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putInt("buffer", this.buffer);
+        pTag.put("inventory", sideHandler.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
         this.buffer = pTag.getInt("buffer");
+        sideHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 
     @Override
@@ -184,16 +201,11 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         return saveWithFullMetadata();
     }
 
-    public int getStoredPower() {
-        return (int) this.buffer;
-    }
-
-    public boolean canSupplyPower() {
-        return this.buffer >= 100;
-    }
-
-    public void consumePower(int i) {
-        this.buffer = Math.max(0, this.buffer - i);
-        setChanged();
+    public NonNullList<ItemStack> getItems() {
+        NonNullList<ItemStack> items = NonNullList.create();
+        for (int i = 0; i < sideHandler.getSlots(); i++) {
+            items.add(sideHandler.getStackInSlot(i));
+        }
+        return items;
     }
 }

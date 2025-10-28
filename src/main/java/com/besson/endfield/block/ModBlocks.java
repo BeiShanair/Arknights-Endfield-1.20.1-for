@@ -27,6 +27,10 @@ public class ModBlocks {
             () -> new PortableOriginiumRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
     public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE = registerBlocksWithoutItem("protocol_anchor_core",
             () -> new ProtocolAnchorCoreBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE_PORT = registerBlocks("protocol_anchor_core_port",
+            () -> new ProtocolAnchorCorePortBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+    public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE_SIDE = registerBlocks("protocol_anchor_core_side",
+            () -> new ProtocolAnchorCoreSideBlock(BlockBehaviour.Properties.of().strength(1f, 1f).noOcclusion()));
     public static final RegistryObject<Block> RELAY_TOWER = registerBlocksWithoutItem("relay_tower",
             () -> new RelayTowerBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_PYLON = registerBlocksWithoutItem("electric_pylon",

@@ -22,6 +22,9 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<ProtocolAnchorCoreBlockEntity>> PROTOCOL_ANCHOR_CORE =
             BLOCK_ENTITIES.register("protocol_anchor_core", () -> BlockEntityType.Builder.of(
                     ProtocolAnchorCoreBlockEntity::new, ModBlocks.PROTOCOL_ANCHOR_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ProtocolAnchorCorePortBlockEntity>> PROTOCOL_ANCHOR_CORE_PORT =
+            BLOCK_ENTITIES.register("protocol_anchor_core_port", () -> BlockEntityType.Builder.of(
+                    ProtocolAnchorCorePortBlockEntity::new, ModBlocks.PROTOCOL_ANCHOR_CORE_PORT.get()).build(null));
     public static final RegistryObject<BlockEntityType<ThermalBankBlockEntity>> THERMAL_BANK =
             BLOCK_ENTITIES.register("thermal_bank", () -> BlockEntityType.Builder.of(
                     ThermalBankBlockEntity::new, ModBlocks.THERMAL_BANK.get()).build(null));
