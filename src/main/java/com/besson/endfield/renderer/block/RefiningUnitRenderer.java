@@ -9,4 +9,9 @@ public class RefiningUnitRenderer extends GeoBlockRenderer<RefiningUnitBlockEnti
     public RefiningUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new RefiningUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(RefiningUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

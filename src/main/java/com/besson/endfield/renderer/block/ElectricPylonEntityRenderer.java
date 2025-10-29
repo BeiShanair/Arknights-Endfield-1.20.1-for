@@ -22,6 +22,12 @@ public class ElectricPylonEntityRenderer implements BlockEntityRenderer<Electric
     public ElectricPylonEntityRenderer(BlockEntityRendererProvider.Context context) {
         this.geckoRenderer = new ElectricPylonRenderer(context);
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ElectricPylonBlockEntity pBlockEntity) {
+        return true;
+    }
+
     @Override
     public void render(ElectricPylonBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
         geckoRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay);

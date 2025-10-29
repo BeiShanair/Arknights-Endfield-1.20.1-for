@@ -9,4 +9,9 @@ public class FillingUnitRenderer extends GeoBlockRenderer<FillingUnitBlockEntity
     public FillingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new FillingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(FillingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

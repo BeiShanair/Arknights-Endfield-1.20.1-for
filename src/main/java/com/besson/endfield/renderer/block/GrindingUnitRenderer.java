@@ -9,4 +9,9 @@ public class GrindingUnitRenderer extends GeoBlockRenderer<GrindingUnitBlockEnti
     public GrindingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new GrindingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(GrindingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

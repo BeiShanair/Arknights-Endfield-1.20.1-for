@@ -9,4 +9,9 @@ public class PackagingUnitRenderer extends GeoBlockRenderer<PackagingUnitBlockEn
     public PackagingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new PackagingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(PackagingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

@@ -9,4 +9,9 @@ public class GearingUnitRenderer extends GeoBlockRenderer<GearingUnitBlockEntity
     public GearingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new GearingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(GearingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

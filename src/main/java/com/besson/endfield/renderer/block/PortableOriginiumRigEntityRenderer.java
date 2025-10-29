@@ -19,6 +19,11 @@ public class PortableOriginiumRigEntityRenderer implements BlockEntityRenderer<P
     }
 
     @Override
+    public boolean shouldRenderOffScreen(PortableOriginiumRigBlockEntity pBlockEntity) {
+        return true;
+    }
+
+    @Override
     public void render(PortableOriginiumRigBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
         geckoRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay);
 

@@ -9,4 +9,9 @@ public class MouldingUnitRenderer extends GeoBlockRenderer<MouldingUnitBlockEnti
     public MouldingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new MouldingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(MouldingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

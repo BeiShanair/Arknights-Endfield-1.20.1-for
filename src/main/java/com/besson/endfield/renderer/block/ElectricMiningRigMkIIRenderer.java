@@ -9,4 +9,9 @@ public class ElectricMiningRigMkIIRenderer extends GeoBlockRenderer<ElectricMini
     public ElectricMiningRigMkIIRenderer(BlockEntityRendererProvider.Context context) {
         super(new ElectricMiningRigMkIIModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ElectricMiningRigMkIIBlockEntity pBlockEntity) {
+        return true;
+    }
 }

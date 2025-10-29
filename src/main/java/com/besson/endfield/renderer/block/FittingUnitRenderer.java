@@ -9,4 +9,9 @@ public class FittingUnitRenderer extends GeoBlockRenderer<FittingUnitBlockEntity
     public FittingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new FittingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(FittingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

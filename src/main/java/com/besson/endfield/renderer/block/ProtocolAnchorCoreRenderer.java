@@ -9,4 +9,9 @@ public class ProtocolAnchorCoreRenderer extends GeoBlockRenderer<ProtocolAnchorC
     public ProtocolAnchorCoreRenderer(BlockEntityRendererProvider.Context context) {
         super(new ProtocolAnchorCoreModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ProtocolAnchorCoreBlockEntity pBlockEntity) {
+        return true;
+    }
 }

@@ -3,6 +3,7 @@ package com.besson.endfield.blockEntity.custom;
 import com.besson.endfield.block.custom.ProtocolAnchorCorePortBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -13,6 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
@@ -87,4 +92,14 @@ public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
         return saveWithFullMetadata();
     }
 
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            if (parent != null) {
+                return parent.getCapability(cap, side);
+            }
+        }
+        return super.getCapability(cap, side);
+    }
 }

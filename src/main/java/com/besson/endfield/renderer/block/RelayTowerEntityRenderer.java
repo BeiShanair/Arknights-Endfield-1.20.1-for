@@ -22,6 +22,11 @@ public class RelayTowerEntityRenderer implements BlockEntityRenderer<RelayTowerB
     }
 
     @Override
+    public boolean shouldRenderOffScreen(RelayTowerBlockEntity pBlockEntity) {
+        return true;
+    }
+
+    @Override
     public void render(RelayTowerBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
         geckoRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay);
 

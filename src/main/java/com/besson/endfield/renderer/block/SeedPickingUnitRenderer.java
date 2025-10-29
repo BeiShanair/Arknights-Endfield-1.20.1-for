@@ -9,4 +9,9 @@ public class SeedPickingUnitRenderer extends GeoBlockRenderer<SeedPickingUnitBlo
     public SeedPickingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new SeedPickingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(SeedPickingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

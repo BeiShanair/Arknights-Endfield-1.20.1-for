@@ -1,4 +1,10 @@
 # 更新日志 / Changelog
+## 2025-10-29
+- 修正各设备的渲染问题，以确保在安装`Embeddium`等优化模组时不会出现渲染异常
+- Fixed rendering issues of various devices to ensure no rendering anomalies occur when optimization mods like `Embeddium` are installed
+- 调整`供电桩`供电逻辑
+- Adjusted the power supply logic of `Electric Pylon`
+
 ## 2025-10-28
 - 优化`协议核心`tick方法，提高游戏性能
 - Optimized the tick method of `Protocol Anchor Core` to improve game performance

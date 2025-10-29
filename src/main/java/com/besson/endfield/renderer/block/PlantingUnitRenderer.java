@@ -9,4 +9,9 @@ public class PlantingUnitRenderer extends GeoBlockRenderer<PlantingUnitBlockEnti
     public PlantingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new PlantingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(PlantingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

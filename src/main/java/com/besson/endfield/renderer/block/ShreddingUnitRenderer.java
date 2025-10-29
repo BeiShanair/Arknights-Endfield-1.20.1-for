@@ -9,4 +9,9 @@ public class ShreddingUnitRenderer extends GeoBlockRenderer<ShreddingUnitBlockEn
     public ShreddingUnitRenderer(BlockEntityRendererProvider.Context context) {
         super(new ShreddingUnitModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ShreddingUnitBlockEntity pBlockEntity) {
+        return true;
+    }
 }

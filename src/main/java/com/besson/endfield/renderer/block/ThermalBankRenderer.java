@@ -9,4 +9,9 @@ public class ThermalBankRenderer extends GeoBlockRenderer<ThermalBankBlockEntity
     public ThermalBankRenderer(BlockEntityRendererProvider.Context context) {
         super(new ThermalBankModel());
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(ThermalBankBlockEntity pBlockEntity) {
+        return true;
+    }
 }
