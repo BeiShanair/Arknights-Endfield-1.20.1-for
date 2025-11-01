@@ -1,4 +1,14 @@
 # 更新日志 / Changelog
+## 2025-11-01
+- 优化`协议核心端口`，可以实现物品筛选
+- Optimized `Protocol Anchor Core Port` to support item filtering
+- 增加食物
+- Added food items
+- `工业爆炸物`可以投掷，落地爆炸
+- `Industrial Explosives` can be thrown and will explode upon landing
+- 添加了一些配方
+- Added some recipes
+
 ## 2025-10-29
 - 修正各设备的渲染问题，以确保在安装`Embeddium`等优化模组时不会出现渲染异常
 - Fixed rendering issues of various devices to ensure no rendering anomalies occur when optimization mods like `Embeddium` are installed

@@ -2,6 +2,7 @@ package com.besson.endfield;
 
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.ModBlockEntities;
+import com.besson.endfield.entity.ModItemEntity;
 import com.besson.endfield.item.ModItemGroups;
 import com.besson.endfield.item.ModItems;
 import com.besson.endfield.network.ModNetWorking;
@@ -11,8 +12,10 @@ import com.besson.endfield.screen.custom.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -45,6 +48,7 @@ public class ArknightsEndfield {
         ModBlockEntities.register(modEventBus);
         ModScreens.register(modEventBus);
         ModRecipes.register(modEventBus);
+        ModItemEntity.register(modEventBus);
 
         ModNetWorking.register();
 
@@ -92,6 +96,11 @@ public class ArknightsEndfield {
                 MenuScreens.register(ModScreens.SEED_PICKING_UNIT_SCREEN.get(), SeedPickingUnitScreen::new);
                 MenuScreens.register(ModScreens.SHREDDING_UNIT_SCREEN.get(), ShreddingUnitScreen::new);
             });
+        }
+
+        @SubscribeEvent
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
+            event.registerEntityRenderer(ModItemEntity.INDUSTRIAL_EXPLOSIVE.get(), ThrownItemRenderer::new);
         }
     }
 }

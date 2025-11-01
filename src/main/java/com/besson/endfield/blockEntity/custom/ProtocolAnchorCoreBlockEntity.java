@@ -208,4 +208,8 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         }
         return items;
     }
+
+    public IItemHandler getItemHandler() {
+        return sideHandler;
+    }
 }

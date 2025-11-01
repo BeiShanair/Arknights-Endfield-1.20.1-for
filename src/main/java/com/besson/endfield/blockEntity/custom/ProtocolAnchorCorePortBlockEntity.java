@@ -17,12 +17,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
 
     private BlockPos parentPos;
+    private ItemStack filter = ItemStack.EMPTY;
+
+    private final LazyOptional<IItemHandler> inputHandler = LazyOptional.of(InputHandler::new);
+    private final LazyOptional<IItemHandler> outputHandler = LazyOptional.of(FilteredOutputHandler::new);
+
 
     protected ProtocolAnchorCorePortBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -45,6 +51,30 @@ public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
             }
         }
     }
+
+    public ItemStack getFilter() {
+        return filter;
+    }
+
+    public void setFilter(ItemStack filter) {
+        if (filter == null) {
+            this.filter = ItemStack.EMPTY;
+        }
+        this.filter = filter.copy();
+        this.setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
+    public void clearFilter() {
+        this.filter = ItemStack.EMPTY;
+        this.setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
     public @Nullable ProtocolAnchorCoreBlockEntity getParentBlock() {
         if (parentPos == null || level == null) return null;
         BlockEntity entity = level.getBlockEntity(parentPos);
@@ -72,6 +102,11 @@ public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
         if (parentPos != null) {
             pTag.putLong("parentPos", parentPos.asLong());
         }
+        if (filter != null && !filter.isEmpty()) {
+            CompoundTag filterTag = new CompoundTag();
+            filter.save(filterTag);
+            pTag.put("filter", filterTag);
+        }
     }
 
     @Override
@@ -79,6 +114,12 @@ public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
         super.load(pTag);
         if (pTag.contains("parentPos")) {
             this.parentPos = BlockPos.of(pTag.getLong("parentPos"));
+        }
+        if (pTag.contains("filter")) {
+            CompoundTag filterTag = pTag.getCompound("filter");
+            this.filter = ItemStack.of(filterTag);
+        } else {
+            this.filter = ItemStack.EMPTY;
         }
     }
 
@@ -95,11 +136,97 @@ public class ProtocolAnchorCorePortBlockEntity extends BlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
-            if (parent != null) {
-                return parent.getCapability(cap, side);
+            Direction facing = getBlockState().getValue(ProtocolAnchorCorePortBlock.FACING);
+            if (side == facing) {
+                return inputHandler.cast(); // 输入面
+            } else if (side == facing.getOpposite()) {
+                return outputHandler.cast(); // 输出面
             }
         }
         return super.getCapability(cap, side);
+    }
+
+    private class InputHandler implements IItemHandler {
+        @Override
+        public int getSlots() {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            return parent != null ? parent.getItemHandler().getSlots() : 0;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            return parent != null ? parent.getItemHandler().getStackInSlot(slot) : ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            return parent != null ? parent.getItemHandler().insertItem(slot, stack, simulate) : stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            // 输入面不允许取出
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
+    }
+
+    private class FilteredOutputHandler implements IItemHandler {
+        @Override
+        public int getSlots() {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            return parent != null ? parent.getItemHandler().getSlots() : 0;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            if (parent == null) return ItemStack.EMPTY;
+
+            ItemStack stack = parent.getItemHandler().getStackInSlot(slot);
+            if (filter.isEmpty() || stack.isEmpty() || stack.getItem() == filter.getItem()) {
+                return stack;
+            }
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            // 输出面不允许输入
+            return stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            ProtocolAnchorCoreBlockEntity parent = getParentBlock();
+            if (parent == null) return ItemStack.EMPTY;
+
+            ItemStack stackInSlot = parent.getItemHandler().getStackInSlot(slot);
+            if (filter.isEmpty() || stackInSlot.getItem() == filter.getItem()) {
+                return parent.getItemHandler().extractItem(slot, amount, simulate);
+            }
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return false;
+        }
     }
 }
