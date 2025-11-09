@@ -1,4 +1,8 @@
 # 更新日志 / Changelog
+## 2025-11-09
+- 修正配方问题
+- Fixed recipe issues
+
 ## 2025-11-02
 - 调整了矿物生成的概率
 - Adjusted the probability of mineral generation
