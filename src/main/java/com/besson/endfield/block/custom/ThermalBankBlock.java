@@ -76,7 +76,6 @@ public class ThermalBankBlock extends ModBlockEntityWithFacing {
                     pLevel.destroyBlock(checkPos, false);
                 }
             }
-            notifyNearbyAnchors(pLevel, pPos);
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
         }
     }
@@ -100,19 +99,6 @@ public class ThermalBankBlock extends ModBlockEntityWithFacing {
                 if (entity instanceof ThermalBankSideBlockEntity entity1) {
                     entity1.setParentPos(pPos);
                 }
-            }
-        }
-        notifyNearbyAnchors(pLevel, pPos);
-    }
-
-    private void notifyNearbyAnchors(Level world, BlockPos pos) {
-        if (world.isClientSide()) return;
-
-        int radius = 30;
-        for (BlockPos check : BlockPos.betweenClosed(pos.offset(-radius, -radius, -radius), pos.offset(radius, radius, radius))) {
-            BlockEntity be = world.getBlockEntity(check);
-            if (be instanceof ProtocolAnchorCoreBlockEntity core) {
-                core.refreshNearbyPower();
             }
         }
     }

@@ -1,4 +1,14 @@
 # 更新日志 / Changelog
+## 2025-11-23
+- 优化供电桩逻辑，现在供电桩只会在放置时，只进行一次搜索，搜索半径30格范围内的`协议核心`或`中继器`，如果找到，则会把顶端的连接线渲染出来
+- Optimized the logic of Electric Pylon. Now, the Electric Pylon will only perform a one-time search upon placement, searching for `Protocol Anchor Core` or `Relay Tower` within a 30-block radius. If found, it will render the top connection line.
+- 进一步优化`协议核心`的性能，移除了方块本身的tick方法，全部交给全局电网管理系统处理
+- Further optimized the performance of `Protocol Anchor Core` by removing the block's own tick method and delegating all processing to the Global Power Grid Management System.
+
+## 2025-11-11
+- 测试验证`FE转换单元`
+- Tested and verified `FE Converter`
+
 ## 2025-11-09
 - 修正配方问题
 - Fixed recipe issues

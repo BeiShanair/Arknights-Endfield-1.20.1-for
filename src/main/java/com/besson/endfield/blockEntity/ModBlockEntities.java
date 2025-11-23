@@ -104,6 +104,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("shredding_unit_side", () -> BlockEntityType.Builder.of(
                     ShreddingUnitSideBlockEntity::new, ModBlocks.SHREDDING_UNIT_SIDE.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<FEConverterBlockEntity>> FE_CONVERTER =
+            BLOCK_ENTITIES.register("fe_converter", () -> BlockEntityType.Builder.of(
+                    FEConverterBlockEntity::new, ModBlocks.FE_CONVERTER_BLOCK.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

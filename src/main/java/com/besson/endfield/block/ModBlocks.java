@@ -193,6 +193,8 @@ public class ModBlocks {
     public static final RegistryObject<Block> POTTED_YAZHEN_BLOCK = registerBlocksWithoutItem("potted_yazhen_block",
             () -> new FlowerPotBlock(ModBlocks.YAZHEN_BLOCK.get(), BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
+    public static final RegistryObject<Block> FE_CONVERTER_BLOCK = registerBlocks("fe_converter_block",
+            () -> new FEConverterBlock(BlockBehaviour.Properties.of().strength(3f).noOcclusion()));
 
     private static <T extends Block>RegistryObject<T> registerBlocksWithoutItem(String name, Supplier<T> blocks) {
         return BLOCKS.register(name, blocks);

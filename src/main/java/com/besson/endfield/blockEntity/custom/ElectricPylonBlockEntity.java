@@ -39,32 +39,6 @@ public class ElectricPylonBlockEntity extends BlockEntity implements GeoBlockEnt
         return new AABB(this.getBlockPos()).inflate(0, 8, 0);
     }
 
-    public static void tick(Level world, BlockPos pos, BlockState state, ElectricPylonBlockEntity entity) {
-        if (world.isClientSide()) return;
-
-        if (entity.connectedNode == null || world.getBlockEntity(entity.connectedNode) == null) {
-            BlockPos closest = null;
-            double closestDist = Double.MAX_VALUE;
-
-            for (BlockPos p: BlockPos.betweenClosed(pos.offset(-30, -30, -30), pos.offset(30, 30, 30))) {
-                if (p.equals(pos)) continue;
-
-                BlockEntity candidate = world.getBlockEntity(p);
-
-                if (candidate instanceof ProtocolAnchorCoreBlockEntity || candidate instanceof RelayTowerBlockEntity) {
-                    double d = pos.distSqr(p);
-                    if (d < closestDist) {
-                        closest = p.immutable();
-                        closestDist = d;
-                    }
-                }
-            }
-            entity.connectedNode = closest;
-            setChanged(world, pos, state);
-            world.sendBlockUpdated(pos, state, state, 3);
-        }
-    }
-
     @Override
     public void setLevel(Level pLevel) {
         super.setLevel(pLevel);

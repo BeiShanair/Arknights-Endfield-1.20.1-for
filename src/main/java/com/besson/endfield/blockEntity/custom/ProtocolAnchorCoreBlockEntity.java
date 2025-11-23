@@ -44,7 +44,6 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private int buffer = 0;
-    private int cachedNearbyPower = 0;
 
     private boolean registeredToManager = false;
 
@@ -59,17 +58,6 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
 
     public ProtocolAnchorCoreBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PROTOCOL_ANCHOR_CORE.get(), pos, state);
-    }
-
-    public static void tick(Level world, BlockPos pos, BlockState state, ProtocolAnchorCoreBlockEntity entity) {
-        if (world.isClientSide()) return;
-        int totalPower = entity.getTotalPower();
-        int newBuffer = Math.min(entity.buffer + totalPower, entity.getMaxBuffer());
-
-        if (newBuffer != entity.buffer) {
-            entity.buffer = newBuffer;
-            entity.setChanged();
-        }
     }
 
     @Override
@@ -97,7 +85,7 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         if (!registeredToManager && pLevel instanceof ServerLevel serverLevel) {
             PowerNetworkManager.get(serverLevel).registerGenerator(this.getBlockPos(), () -> {
                 try {
-                    return this.getTotalPower();
+                    return 150;
                 } catch (Throwable t) {
                     return 0;
                 }
@@ -114,20 +102,6 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         super.setRemoved();
     }
 
-    private int getNearbyThermalBankPower() {
-        int sum = 0;
-        BlockPos blockPos = this.getBlockPos();
-        if (level != null) {
-            for (BlockPos pos : BlockPos.betweenClosed(blockPos.offset(-30, -30, -30), blockPos.offset(30, 30, 30))) {
-                BlockEntity be = level.getBlockEntity(pos);
-                if (be instanceof ThermalBankBlockEntity blockEntity) {
-                    sum += blockEntity.getPowerOutput();
-                }
-            }
-        }
-        return sum;
-    }
-
     public void writeScreenData(FriendlyByteBuf buf) {
         buf.writeBlockPos(this.worldPosition);
         ServerLevel level = (ServerLevel) this.getLevel();
@@ -138,24 +112,6 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         buf.writeInt(manager.getCurrentStoredEnergy());
     }
 
-    public int getMaxBuffer() {
-        int baseMaxBuffer = 100000;
-        return baseMaxBuffer + getNearbyThermalBankPower();
-    }
-
-    public void refreshNearbyPower() {
-        this.cachedNearbyPower = getNearbyThermalBankPower();
-        setChanged();
-    }
-
-    private int getExtraPower() {
-        return cachedNearbyPower;
-    }
-
-    public int getTotalPower() {
-        int basePower = 150;
-        return basePower + cachedNearbyPower;
-    }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0,

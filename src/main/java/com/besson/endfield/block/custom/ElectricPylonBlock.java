@@ -21,11 +21,4 @@ public class ElectricPylonBlock extends ModBlockEntityWithFacing {
     public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new ElectricPylonBlockEntity(pPos, pState);
     }
-
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.ELECTRIC_PYLON.get(),
-                (world1, pos, state1, blockEntity) ->
-                        ElectricPylonBlockEntity.tick(world1, pos, state1, (ElectricPylonBlockEntity) blockEntity));
-    }
 }
