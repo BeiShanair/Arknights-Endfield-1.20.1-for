@@ -1,10 +1,11 @@
 package com.besson.endfield.blockEntity.custom;
 
-import com.besson.endfield.block.custom.ProtocolAnchorCoreBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.power.PowerNetworkManager;
+import com.besson.endfield.util.NodeEntry;
+import com.besson.endfield.util.NodeType;
+import com.besson.endfield.util.PowerNetworkManager;
 import com.besson.endfield.screen.custom.ProtocolAnchorCoreScreenHandler;
-import com.besson.endfield.util.ProtocolAnchorCoreStatus;
+import com.besson.endfield.util.PowerNetworkNodeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -19,7 +20,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,7 +30,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
@@ -43,8 +42,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlockEntity, MenuProvider {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    private int buffer = 0;
-
+    private boolean needsInit = true;
     private boolean registeredToManager = false;
 
     private final ItemStackHandler sideHandler = new ItemStackHandler(54) {
@@ -60,6 +58,20 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
         super(ModBlockEntities.PROTOCOL_ANCHOR_CORE.get(), pos, state);
     }
 
+    public static void tick(Level world, BlockPos pos, BlockState state, ProtocolAnchorCoreBlockEntity be) {
+        if (world.isClientSide()) return;
+
+        if (be.needsInit && world instanceof ServerLevel serverWorld) {
+            be.needsInit = false;
+
+            PowerNetworkManager.get(serverWorld).registerGenerator(pos, () -> 150);
+
+            PowerNetworkNodeManager manager = PowerNetworkNodeManager.get(serverWorld);
+            manager.register(new NodeEntry(pos, NodeType.CORE));
+            be.registeredToManager = true;
+        }
+    }
+    
     @Override
     public AABB getRenderBoundingBox() {
         return new AABB(this.getBlockPos()).inflate(2, 27, 2);
@@ -82,15 +94,8 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     @Override
     public void setLevel(Level pLevel) {
         super.setLevel(pLevel);
-        if (!registeredToManager && pLevel instanceof ServerLevel serverLevel) {
-            PowerNetworkManager.get(serverLevel).registerGenerator(this.getBlockPos(), () -> {
-                try {
-                    return 150;
-                } catch (Throwable t) {
-                    return 0;
-                }
-            });
-            registeredToManager = true;
+        if (pLevel instanceof ServerLevel) {
+            needsInit = true;
         }
     }
 
@@ -98,6 +103,8 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     public void setRemoved() {
         if (level instanceof ServerLevel serverLevel) {
             PowerNetworkManager.get(serverLevel).unregisterGenerator(this.getBlockPos());
+            PowerNetworkNodeManager.get(serverLevel).unregister(this.getBlockPos());
+            registeredToManager = false;
         }
         super.setRemoved();
     }
@@ -136,14 +143,12 @@ public class ProtocolAnchorCoreBlockEntity extends BlockEntity implements GeoBlo
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
-        pTag.putInt("buffer", this.buffer);
         pTag.put("inventory", sideHandler.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        this.buffer = pTag.getInt("buffer");
         sideHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 

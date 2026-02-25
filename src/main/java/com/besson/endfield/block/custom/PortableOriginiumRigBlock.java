@@ -31,9 +31,7 @@ public class PortableOriginiumRigBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.PORTABLE_ORIGINIUM_RIG.get(),
-                (world1, pos, state1, blockEntity) ->
-                        blockEntity.tick(world1, pos, state1, (PortableOriginiumRigBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.PORTABLE_ORIGINIUM_RIG.get(), PortableOriginiumRigBlockEntity::tick);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.besson.endfield.block.custom;
 import com.besson.endfield.block.ModBlockEntityWithFacing;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.blockEntity.custom.ProtocolAnchorCoreBlockEntity;
 import com.besson.endfield.blockEntity.custom.ThermalBankBlockEntity;
 import com.besson.endfield.blockEntity.custom.ThermalBankSideBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -37,9 +36,7 @@ public class ThermalBankBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.THERMAL_BANK.get(),
-                (world1, pos, state1, blockEntity) ->
-                        ThermalBankBlockEntity.tick(world1, pos, state1, (ThermalBankBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.THERMAL_BANK.get(), ThermalBankBlockEntity::tick);
     }
 
     @Override

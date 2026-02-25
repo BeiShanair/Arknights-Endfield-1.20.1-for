@@ -1,5 +1,7 @@
 package com.besson.endfield.renderer.block;
 
+import com.besson.endfield.blockEntity.custom.ElectricPylonBlockEntity;
+import com.besson.endfield.blockEntity.custom.ProtocolAnchorCoreBlockEntity;
 import com.besson.endfield.blockEntity.custom.RelayTowerBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -40,7 +42,9 @@ public class RelayTowerEntityRenderer implements BlockEntityRenderer<RelayTowerB
             connectedEntity = entity.getLevel().getBlockEntity(entity.getConnectedNode());
             if (connectedEntity instanceof RelayTowerBlockEntity) {
                 connectedPos = entity.getConnectedNode().offset(0, 10, 0);
-            } else {
+            } else if (connectedEntity instanceof ElectricPylonBlockEntity) {
+                connectedPos = entity.getConnectedNode().offset(0, 7, 0);
+            } else if (connectedEntity instanceof ProtocolAnchorCoreBlockEntity) {
                 connectedPos = entity.getConnectedNode().offset(0, 27, 0);
             }
         }

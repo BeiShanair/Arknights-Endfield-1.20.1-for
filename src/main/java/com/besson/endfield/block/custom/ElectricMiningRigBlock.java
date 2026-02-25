@@ -31,9 +31,7 @@ public class ElectricMiningRigBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.ELECTRIC_MINING_RIG.get(),
-                (world1, pos, state1, blockEntity) ->
-                        ElectricMiningRigBlockEntity.tick(world1, pos, state1, (ElectricMiningRigBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.ELECTRIC_MINING_RIG.get(), ElectricMiningRigBlockEntity::tick);
     }
 
     @Override

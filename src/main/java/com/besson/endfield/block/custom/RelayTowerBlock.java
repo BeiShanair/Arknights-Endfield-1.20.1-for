@@ -24,8 +24,6 @@ public class RelayTowerBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.RELAY_TOWER.get(),
-                (world1, pos, state1, blockEntity) ->
-                        RelayTowerBlockEntity.tick(world1, pos, state1, (RelayTowerBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.RELAY_TOWER.get(), RelayTowerBlockEntity::tick);
     }
 }

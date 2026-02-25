@@ -95,6 +95,10 @@ public class ModBlocks {
     public static final RegistryObject<Block> THERMAL_BANK_SIDE = registerBlocks("thermal_bank_side",
             () -> new ThermalBankSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
 
+    public static final RegistryObject<Block> BELT = registerBlocks("belt",
+            () -> new BeltBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> OUTPUT_PORT = registerBlocks("output_port",
+            () -> new OutputPortBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> AMETHYST_MINERAL_VEIN_BLOCK = registerBlocks("amethyst_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> COAL_MINERAL_VEIN_BLOCK = registerBlocks("coal_mineral_vein_block",
@@ -195,7 +199,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> FE_CONVERTER_BLOCK = registerBlocks("fe_converter_block",
             () -> new FEConverterBlock(BlockBehaviour.Properties.of().strength(3f).noOcclusion()));
-
+    
     private static <T extends Block>RegistryObject<T> registerBlocksWithoutItem(String name, Supplier<T> blocks) {
         return BLOCKS.register(name, blocks);
     }

@@ -44,6 +44,8 @@ public class ElectricPylonEntityRenderer implements BlockEntityRenderer<Electric
                 connectedPos = entity.getConnectedNode().offset(0, 10, 0);
             } else if (be instanceof ProtocolAnchorCoreBlockEntity){
                 connectedPos = entity.getConnectedNode().offset(0, 27, 0);
+            } else if (be instanceof ElectricPylonBlockEntity) {
+                connectedPos = entity.getConnectedNode().offset(0, 7, 0);
             }
         }
 

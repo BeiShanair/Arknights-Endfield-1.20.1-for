@@ -1,6 +1,10 @@
 package com.besson.endfield.screen.custom;
 
 import com.besson.endfield.ArknightsEndfield;
+import com.besson.endfield.blockEntity.custom.ThermalBankBlockEntity;
+import com.besson.endfield.network.ModNetWorking;
+import com.besson.endfield.network.SwitchPacket;
+import com.besson.endfield.screen.ToggleIconButton;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -11,9 +15,23 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class ThermalBankScreen extends AbstractContainerScreen<ThermalBankScreenHandler> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/thermal_bank.png");
-
+    private final ThermalBankBlockEntity entity;
     public ThermalBankScreen(ThermalBankScreenHandler handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
+        this.entity = handler.entity;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.addRenderableWidget(new ToggleIconButton(leftPos + 150, topPos + 30, menu::isEnabled,
+                button -> {
+                    boolean newEnableState = !menu.isEnabled();
+                    menu.setEnabled(newEnableState);
+                    ModNetWorking.CHANNEL.sendToServer(
+                            new SwitchPacket(entity.getBlockPos(), newEnableState)
+                    );
+                }));
     }
 
     @Override
@@ -30,10 +48,10 @@ public class ThermalBankScreen extends AbstractContainerScreen<ThermalBankScreen
     }
 
     private void renderProgressFire(GuiGraphics context, int x, int y) {
-        if (menu.isCrafting()){
-            int totalFireHeight = 14; // 火焰总高度
-            int fireHeight = menu.getScaledProgress(); // 当前火焰高度
-            int fireYOffset = totalFireHeight - fireHeight; // 火焰顶部偏移
+        if (menu.isBurning()){
+            int totalFireHeight = 14;
+            int fireHeight = menu.getScaledProgress();
+            int fireYOffset = totalFireHeight - fireHeight;
 
             context.blit(TEXTURE,x + 80, y + 39 + fireYOffset, 176, fireYOffset, 14, fireHeight);
         }

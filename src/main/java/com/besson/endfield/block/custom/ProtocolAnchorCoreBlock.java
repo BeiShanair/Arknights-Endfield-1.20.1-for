@@ -76,4 +76,9 @@ public class ProtocolAnchorCoreBlock extends ModBlockEntityWithFacing {
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.PROTOCOL_ANCHOR_CORE.get(), ProtocolAnchorCoreBlockEntity::tick);
+    }
 }

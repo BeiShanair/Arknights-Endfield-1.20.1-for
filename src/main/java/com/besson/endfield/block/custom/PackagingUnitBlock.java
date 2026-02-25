@@ -121,8 +121,6 @@ public class PackagingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.PACKAGING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        PackagingUnitBlockEntity.tick(world1, pos, state1, (PackagingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.PACKAGING_UNIT.get(), PackagingUnitBlockEntity::tick);
     }
 }

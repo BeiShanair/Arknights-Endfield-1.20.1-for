@@ -3,12 +3,10 @@ package com.besson.endfield.blockEntity.custom;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,14 +20,6 @@ public class ThermalBankSideBlockEntity extends BlockEntity {
 
     public ThermalBankSideBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.THERMAL_BANK_SIDE.get(), pos, state);
-    }
-
-    public NonNullList<ItemStack> getItems() {
-        ThermalBankBlockEntity parent = getParentBlock();
-        if (parent != null) {
-            return parent.getItems();
-        }
-        return NonNullList.withSize(0, ItemStack.EMPTY);
     }
 
     public @Nullable ThermalBankBlockEntity getParentBlock() {
@@ -49,8 +39,8 @@ public class ThermalBankSideBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
-        if (pTag.contains("parentPos")) {
-            parentPos = BlockPos.of(pTag.getLong("parentPos"));
+        if (pTag.contains("parent")) {
+            parentPos = BlockPos.of(pTag.getLong("parent"));
         }
     }
 
@@ -58,7 +48,7 @@ public class ThermalBankSideBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         if (parentPos != null) {
-            pTag.putLong("parentPos", parentPos.asLong());
+            pTag.putLong("parent", parentPos.asLong());
         }
     }
 

@@ -109,9 +109,7 @@ public class SeedPickingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.SEED_PICKING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        SeedPickingUnitBlockEntity.tick(world1, pos, state1, (SeedPickingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.SEED_PICKING_UNIT.get(), SeedPickingUnitBlockEntity::tick);
     }
 
     @Override

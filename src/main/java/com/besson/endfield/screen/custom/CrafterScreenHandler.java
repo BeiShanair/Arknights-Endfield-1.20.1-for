@@ -127,7 +127,6 @@ public class CrafterScreenHandler extends AbstractContainerMenu {
 
     public void updateResult() {
         Level world = player.level();
-        if (world.isClientSide()) return;
 
         currentRecipes = world.getRecipeManager()
                 .getRecipesFor(CrafterRecipe.Type.INSTANCE, inventory, world);

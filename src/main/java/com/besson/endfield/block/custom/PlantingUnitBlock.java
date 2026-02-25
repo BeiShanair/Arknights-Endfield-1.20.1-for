@@ -36,9 +36,7 @@ public class PlantingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.PLANTING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        PlantingUnitBlockEntity.tick(world1, pos, state1, (PlantingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.PLANTING_UNIT.get(), PlantingUnitBlockEntity::tick);
     }
 
     @Override

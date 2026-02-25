@@ -22,11 +22,8 @@ public class ModNetWorking {
     }
 
     public static void register() {
-        CHANNEL.messageBuilder(CycleRecipePacket.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(CycleRecipePacket::new)
-                .encoder(CycleRecipePacket::toBytes)
-                .consumerMainThread(CycleRecipePacket::handle)
-                .add();
+        CHANNEL.registerMessage(nextId(), CycleRecipePacket.class, CycleRecipePacket::encode, CycleRecipePacket::new, CycleRecipePacket::handle);
+        CHANNEL.registerMessage(nextId(), SwitchPacket.class, SwitchPacket::encode, SwitchPacket::decode, SwitchPacket::handle);
     }
 
 }

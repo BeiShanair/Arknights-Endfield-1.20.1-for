@@ -53,6 +53,11 @@ public class CrafterRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack assemble(Container inventory, RegistryAccess registryManager) {
+        
+        return output.copy();
+    }
+
+    public void consumeInputs(Container inventory) {
         for (Map.Entry<ItemLike, Integer> entry : required.entrySet()) {
             int need = entry.getValue();
             for (int i = 0; i < inventory.getContainerSize(); i++) {
@@ -65,9 +70,8 @@ public class CrafterRecipe implements Recipe<Container> {
                 }
             }
         }
-        return output.copy();
     }
-
+    
     @Override
     public ItemStack getResultItem(RegistryAccess registryManager) {
         return output;

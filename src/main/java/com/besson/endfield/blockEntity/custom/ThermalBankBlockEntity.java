@@ -1,7 +1,9 @@
 package com.besson.endfield.blockEntity.custom;
 
+import com.besson.endfield.block.custom.ThermalBankBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.power.PowerNetworkManager;
+import com.besson.endfield.item.ModItems;
+import com.besson.endfield.util.PowerNetworkManager;
 import com.besson.endfield.screen.custom.ThermalBankScreenHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +19,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,8 +52,12 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     private int fuelTime;
     protected final ContainerData propertyDelegate;
     private boolean registeredToManager = false;
+    protected boolean isWorking;
+    protected boolean enable = true;
+    protected boolean needsInit = true;
 
     public static final int INPUT_SLOT = 0;
+    private Item burnItem = null;
 
     private final LazyOptional<ItemStackHandler> lazyOptional = LazyOptional.of(() -> itemStackHandler);
 
@@ -61,6 +69,7 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
                 return switch (index) {
                     case 0 -> ThermalBankBlockEntity.this.burnTime;
                     case 1 -> ThermalBankBlockEntity.this.fuelTime;
+                    case 2 -> ThermalBankBlockEntity.this.enable ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -70,12 +79,13 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
                 switch (index) {
                     case 0 -> ThermalBankBlockEntity.this.burnTime = value;
                     case 1 -> ThermalBankBlockEntity.this.fuelTime = value;
+                    case 2 -> ThermalBankBlockEntity.this.enable = value == 1;
                 }
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
         };
     }
@@ -98,20 +108,51 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     public static void tick(Level world, BlockPos pos, BlockState state, ThermalBankBlockEntity entity) {
+        if (world.isClientSide()) return;
+
+        if (entity.needsInit && world instanceof ServerLevel serverWorld) {
+            entity.needsInit = false;
+
+            PowerNetworkManager.get(serverWorld).registerGenerator(entity.getBlockPos(), entity::getPowerOutput);
+            entity.registeredToManager = true;
+        }
+
+        if (!entity.getEnable()) {
+            entity.isWorking = false;
+            world.sendBlockUpdated(pos, state, state, 3);
+            entity.setChanged();
+            return;
+        }
+        
         if (entity.burnTime > 0) {
             entity.burnTime--;
         }
 
-        if (entity.burnTime == 0) {
+        if (entity.burnTime == 0 && !entity.itemStackHandler.getStackInSlot(0).isEmpty()) {
+            entity.burnItem = null;
             ItemStack stack = entity.itemStackHandler.getStackInSlot(INPUT_SLOT);
-            Integer fuelValue = ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
+            Integer fuelValue;
 
+            if (stack.is(ModItems.ORIGINIUM_ORE.get())) {
+                fuelValue = 160;
+            } else if (stack.is(ModItems.LC_BATTERY.get()) ||
+                    stack.is(ModItems.SC_BATTERY.get()) ||
+                    stack.is(ModItems.HC_BATTERY.get())) {
+                fuelValue = 800;
+            } else {
+                fuelValue = ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
+            }
+            entity.burnItem = stack.getItem();
             if (fuelValue != null && fuelValue > 0) {
                 int fuelTime = fuelValue / 2;
                 entity.fuelTime = fuelTime;
                 entity.burnTime = fuelTime;
 
-                stack.shrink(1);
+                if (stack.is(Items.LAVA_BUCKET)) {
+                    stack = new ItemStack(Items.BUCKET);
+                } else {
+                    stack.shrink(1);
+                }
                 entity.itemStackHandler.setStackInSlot(INPUT_SLOT, stack);
                 entity.setChanged();
             }
@@ -123,7 +164,17 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     public int getPowerOutput() {
-        return isBurning() ? 150 : 0;
+        if (!enable || !isBurning()) return 0;
+        if (burnItem == ModItems.ORIGINIUM_ORE.get()) {
+            return 50;
+        } else if (burnItem == ModItems.LC_BATTERY.get()) {
+            return 220;
+        } else if (burnItem == ModItems.SC_BATTERY.get()) {
+            return 420;
+        } else if (burnItem == ModItems.HC_BATTERY.get()) {
+            return 1100;
+        }
+        return 50;
     }
 
     public float getFuelProgress() {
@@ -135,16 +186,20 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         itemStackHandler.serializeNBT();
-        pTag.putInt("thermal_bank.burnTime", burnTime);
-        pTag.putInt("thermal_bank.fuelTime", fuelTime);
+        pTag.putInt("burnTime", burnTime);
+        pTag.putInt("fuelTime", fuelTime);
+        pTag.putBoolean("isWorking", this.isWorking);
+        pTag.putBoolean("enable", this.enable);
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
         itemStackHandler.deserializeNBT(pTag.getCompound("inventory"));
-        this.burnTime = pTag.getInt("thermal_bank.burnTime");
-        this.fuelTime = pTag.getInt("thermal_bank.fuelTime");
+        this.burnTime = pTag.getInt("burnTime");
+        this.fuelTime = pTag.getInt("fuelTime");
+        this.isWorking = pTag.getBoolean("isWorking");
+        this.enable = pTag.getBoolean("enable");
     }
 
     @Override
@@ -175,15 +230,8 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     @Override
     public void setLevel(Level pLevel) {
         super.setLevel(pLevel);
-        if (!registeredToManager && pLevel instanceof ServerLevel serverLevel) {
-            PowerNetworkManager.get(serverLevel).registerGenerator(this.getBlockPos(), () -> {
-                try {
-                    return getPowerOutput();
-                } catch (Exception e) {
-                    return 0;
-                }
-            });
-            registeredToManager = true;
+        if (pLevel instanceof ServerLevel) {
+            needsInit = true;
         }
     }
 
@@ -191,6 +239,7 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
     public void setRemoved() {
         if (level instanceof ServerLevel serverLevel) {
             PowerNetworkManager.get(serverLevel).unregisterGenerator(this.getBlockPos());
+            registeredToManager = false;
         }
         super.setRemoved();
     }
@@ -211,5 +260,21 @@ public class ThermalBankBlockEntity extends BlockEntity implements GeoBlockEntit
 
     public ContainerData getPropertyDelegate() {
         return propertyDelegate;
+    }
+
+    protected Direction getFacing(BlockState state) {
+        return state.getValue(ThermalBankBlock.FACING);
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), level.getBlockState(getBlockPos()), level.getBlockState(getBlockPos()), 3);
+        }
+    }
+
+    public boolean getEnable() {
+        return this.enable;
     }
 }

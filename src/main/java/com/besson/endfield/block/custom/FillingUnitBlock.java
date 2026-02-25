@@ -36,9 +36,7 @@ public class FillingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.FILLING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        FillingUnitBlockEntity.tick(world1, pos, state1, (FillingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.FILLING_UNIT.get(), FillingUnitBlockEntity::tick);
     }
 
     @Override

@@ -15,9 +15,22 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class CrafterScreen extends AbstractContainerScreen<CrafterScreenHandler> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/crafter.png");
-
+    private boolean buttonAdded = false;
     public CrafterScreen(CrafterScreenHandler pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        if (!buttonAdded) {
+            int x = (this.width - this.imageWidth) / 2;
+            int y = (this.height - this.imageHeight) / 2;
+            this.addRenderableWidget(Button.builder(Component.literal(">"), button -> {
+                ModNetWorking.CHANNEL.sendToServer(new CycleRecipePacket());
+            }).bounds(x + 150, y + 30, 20, 20).build());
+            buttonAdded = true;
+        }
     }
 
     @Override
@@ -36,8 +49,5 @@ public class CrafterScreen extends AbstractContainerScreen<CrafterScreenHandler>
         int y = (this.height - this.imageHeight) / 2;
 
         pGuiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
-        this.addRenderableWidget(Button.builder(Component.literal(">"), button -> {
-            ModNetWorking.CHANNEL.sendToServer(new CycleRecipePacket());
-        }).bounds(x + 150, y + 30, 20, 20).build());
     }
 }

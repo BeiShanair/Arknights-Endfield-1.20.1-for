@@ -1,4 +1,8 @@
 # 更新日志 / Changelog
+## 2025-12-08 -> 2026-02-19
+- 一系列更新，参见Fab版的更新日志
+- A series of updates, see the changelog for the Fabric version
+
 ## 2025-11-23
 - 优化供电桩逻辑，现在供电桩只会在放置时，只进行一次搜索，搜索半径30格范围内的`协议核心`或`中继器`，如果找到，则会把顶端的连接线渲染出来
 - Optimized the logic of Electric Pylon. Now, the Electric Pylon will only perform a one-time search upon placement, searching for `Protocol Anchor Core` or `Relay Tower` within a 30-block radius. If found, it will render the top connection line.

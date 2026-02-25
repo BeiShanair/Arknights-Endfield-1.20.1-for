@@ -27,9 +27,9 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.FERRIUM_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.FERRIUM_ORE_BLOCK.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_FERRIUM_ORE.get());
-                        pOutput.accept(ModBlocks.CUPRIUM_MINERAL_VEIN_BLOCK.get());
-                        pOutput.accept(ModBlocks.CUPRIUM_ORE_BLOCK.get());
-                        pOutput.accept(ModBlocks.DEEPSLATE_CUPRIUM_ORE.get());
+//                        pOutput.accept(ModBlocks.CUPRIUM_MINERAL_VEIN_BLOCK.get());
+//                        pOutput.accept(ModBlocks.CUPRIUM_ORE_BLOCK.get());
+//                        pOutput.accept(ModBlocks.DEEPSLATE_CUPRIUM_ORE.get());
 
                         pOutput.accept(ModBlocks.COAL_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.COPPER_MINERAL_VEIN_BLOCK.get());
@@ -40,6 +40,8 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.LAPIS_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.REDSTONE_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.PROTOCOL_ANCHOR_CORE_PORT.get());
+                        pOutput.accept(ModBlocks.BELT.get());
+                        pOutput.accept(ModBlocks.OUTPUT_PORT.get());
 
 //                        pOutput.accept(ModBlocks.FE_CONVERTER_BLOCK.get());
 
@@ -79,12 +81,12 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.FERRIUM_BOTTLE.get());
                         pOutput.accept(ModItems.FERRIUM_PART.get());
                         pOutput.accept(ModItems.FERRIUM_COMPONENT.get());
-                        pOutput.accept(ModItems.CUPRIUM_ORE.get());
-                        pOutput.accept(ModItems.CUPRIUM_POWDER.get());
-                        pOutput.accept(ModItems.CUPRIUM.get());
-                        pOutput.accept(ModItems.CUPRIUM_PART.get());
-                        pOutput.accept(ModItems.CUPRIUM_COMPONENT.get());
-                        pOutput.accept(ModItems.CUPRIUM_JAR.get());
+//                        pOutput.accept(ModItems.CUPRIUM_ORE.get());
+//                        pOutput.accept(ModItems.CUPRIUM_POWDER.get());
+//                        pOutput.accept(ModItems.CUPRIUM.get());
+//                        pOutput.accept(ModItems.CUPRIUM_PART.get());
+//                        pOutput.accept(ModItems.CUPRIUM_COMPONENT.get());
+//                        pOutput.accept(ModItems.CUPRIUM_JAR.get());
                         pOutput.accept(ModItems.CRYSTON_PART.get());
                         pOutput.accept(ModItems.CRYSTON_POWDER.get());
                         pOutput.accept(ModItems.CRYSTON_FIBER.get());

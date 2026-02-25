@@ -8,18 +8,15 @@ import java.util.function.Supplier;
 
 public class CycleRecipePacket {
     public CycleRecipePacket() {
-
     }
 
     public CycleRecipePacket(FriendlyByteBuf buf) {
-
     }
 
-    public void toBytes(FriendlyByteBuf buf) {
-
+    public static void encode(CycleRecipePacket msg, FriendlyByteBuf buf) {
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(CycleRecipePacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             var player = ctx.get().getSender();
             if (player != null && player.containerMenu instanceof CrafterScreenHandler screenHandler) {

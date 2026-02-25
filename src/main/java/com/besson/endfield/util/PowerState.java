@@ -1,4 +1,4 @@
-package com.besson.endfield.power;
+package com.besson.endfield.util;
 
 
 import net.minecraft.nbt.CompoundTag;

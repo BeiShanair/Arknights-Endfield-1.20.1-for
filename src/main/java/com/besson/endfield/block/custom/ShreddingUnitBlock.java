@@ -36,9 +36,7 @@ public class ShreddingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.SHREDDING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        ShreddingUnitBlockEntity.tick(world1, pos, state1, (ShreddingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.SHREDDING_UNIT.get(), ShreddingUnitBlockEntity::tick);
     }
 
     @Override

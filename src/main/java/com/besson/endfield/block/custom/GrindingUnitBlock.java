@@ -36,9 +36,7 @@ public class GrindingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.GRINDING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        GrindingUnitBlockEntity.tick(world1, pos, state1, (GrindingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.GRINDING_UNIT.get(), GrindingUnitBlockEntity::tick);
     }
 
     @Override

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "arknights_endfield:fluid_pump"
+          "name": "arknights_endfield:output_port"
         }
       ],
       "rolls": 1.0

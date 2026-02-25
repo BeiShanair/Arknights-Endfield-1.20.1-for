@@ -1,8 +1,8 @@
 package com.besson.endfield.screen.custom;
 
-import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.custom.ThermalBankBlockEntity;
 import com.besson.endfield.screen.ModScreens;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,22 +13,22 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
+import java.util.Objects;
+
 public class ThermalBankScreenHandler extends AbstractContainerMenu {
     private final ContainerData propertyDelegate;
     public final ThermalBankBlockEntity entity;
-    private Level level;
 
     public  ThermalBankScreenHandler(int syncId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(syncId, playerInventory, playerInventory.player.level().getBlockEntity(buf.readBlockPos()),
-                new SimpleContainerData(2));
+        this(syncId, playerInventory, Objects.requireNonNull(getClientEntity(playerInventory, buf)),
+                new SimpleContainerData(3));
     }
 
-    public ThermalBankScreenHandler(int syncId, Inventory playerInventory, BlockEntity blockEntity, ContainerData propertyDelegate) {
+    public ThermalBankScreenHandler(int syncId, Inventory playerInventory, ThermalBankBlockEntity blockEntity, ContainerData propertyDelegate) {
         super(ModScreens.THERMAL_BANK_SCREEN.get(), syncId);
         checkContainerSize(playerInventory, 1);
         this.propertyDelegate = propertyDelegate;
-        this.entity = (ThermalBankBlockEntity) blockEntity;
-        this.level = playerInventory.player.level();
+        this.entity = blockEntity;
 
         this.entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 104, 37));
@@ -40,6 +40,12 @@ public class ThermalBankScreenHandler extends AbstractContainerMenu {
         addDataSlots(propertyDelegate);
     }
 
+    private static ThermalBankBlockEntity getClientEntity(Inventory playerInventory, FriendlyByteBuf buf) {
+        BlockPos pos = buf.readBlockPos();
+        BlockEntity be = playerInventory.player.level().getBlockEntity(pos);
+        return be instanceof ThermalBankBlockEntity e ? e : null;
+    }
+    
     @Override
     public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -70,8 +76,9 @@ public class ThermalBankScreenHandler extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, entity.getBlockPos()),
-                player, ModBlocks.THERMAL_BANK.get());
+        return this.entity != null
+                && this.entity.getLevel() != null
+                && this.entity.getBlockPos().closerThan(player.getOnPos(), 8);
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -87,10 +94,16 @@ public class ThermalBankScreenHandler extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
-    public boolean isCrafting(){
+    public boolean isBurning(){
         return propertyDelegate.get(0) > 0;
     }
+    public boolean isEnabled() {
+        return propertyDelegate.get(2) == 1;
+    }
 
+    public void setEnabled(boolean enabled) {
+        propertyDelegate.set(2, enabled ? 1 : 0);
+    }
     public int getScaledProgress() {
         int burnTime = this.propertyDelegate.get(0);
         int fuelTime = this.propertyDelegate.get(1);

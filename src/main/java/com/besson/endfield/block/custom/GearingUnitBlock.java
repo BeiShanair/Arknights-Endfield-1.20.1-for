@@ -36,9 +36,7 @@ public class GearingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.GEARING_UNIT.get(),
-                (world1, pos, state1, blockEntity) ->
-                        GearingUnitBlockEntity.tick(world1, pos, state1, (GearingUnitBlockEntity) blockEntity));
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.GEARING_UNIT.get(), GearingUnitBlockEntity::tick);
     }
 
     @Override
