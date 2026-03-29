@@ -14,11 +14,17 @@ public class OreRigRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final Ingredient input;
     private final ItemStack output;
+    private final int tier;
 
-    public OreRigRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
+    public OreRigRecipe(ResourceLocation id, Ingredient input, ItemStack output, int tier) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.tier = tier;
+    }
+
+    public int getTier() {
+        return tier;
     }
 
     @Override
@@ -75,20 +81,23 @@ public class OreRigRecipe implements Recipe<Container> {
         public OreRigRecipe fromJson(ResourceLocation id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            return new OreRigRecipe(id, input, output);
+            int tier = GsonHelper.getAsInt(json, "tier");
+            return new OreRigRecipe(id, input, output, tier);
         }
 
         @Override
         public OreRigRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             Ingredient input = Ingredient.fromNetwork(buf);
             ItemStack output = buf.readItem();
-            return new OreRigRecipe(id, input, output);
+            int tier = buf.readInt();
+            return new OreRigRecipe(id, input, output, tier);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, OreRigRecipe recipe) {
             recipe.input.toNetwork(buf);
             buf.writeItem(recipe.output);
+            buf.writeInt(recipe.tier);
         }
     }
 }

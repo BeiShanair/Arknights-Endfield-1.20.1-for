@@ -1,8 +1,8 @@
 package com.besson.endfield.renderer.block;
 
-import com.besson.endfield.block.custom.BeltBlock;
-import com.besson.endfield.block.custom.BeltShape;
-import com.besson.endfield.blockEntity.custom.BeltBlockEntity;
+import com.besson.endfield.block.custom.logicitis.BeltBlock;
+import com.besson.endfield.block.custom.logicitis.BeltShape;
+import com.besson.endfield.blockEntity.custom.logicitis.BeltBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

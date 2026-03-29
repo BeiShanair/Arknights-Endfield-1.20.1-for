@@ -5,8 +5,10 @@ import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.blockEntity.custom.FillingUnitBlockEntity;
 import com.besson.endfield.blockEntity.custom.FillingUnitSideBlockEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +16,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,6 +27,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class FillingUnitBlock extends ModBlockEntityWithFacing {
 
@@ -59,26 +66,7 @@ public class FillingUnitBlock extends ModBlockEntityWithFacing {
                 Containers.dropContents(pLevel, pos, ((FillingUnitBlockEntity) blockEntity).getItems());
                 pLevel.updateNeighbourForOutputSignal(pos, this);
             }
-
-            Direction facing = pState.getValue(FACING);
-            Direction left = facing.getCounterClockWise();
-            Direction right = facing.getClockWise();
-            Direction back = facing.getOpposite();
-            Direction backLeft = back.getClockWise();
-            Direction backRight = back.getCounterClockWise();
-
-            BlockPos[] adjacentPositions = {
-                    pos.relative(facing),
-                    pos.relative(facing).relative(left), pos.relative(facing).relative(right),
-                    pos.relative(facing).relative(left, 2), pos.relative(facing).relative(right, 2), pos.relative(facing).relative(right, 3),
-                    pos.relative(right), pos.relative(left),
-                    pos.relative(right, 2), pos.relative(right, 3), pos.relative(left, 2),
-                    pos.relative(back), pos.relative(back, 2),
-                    pos.relative(back).relative(backLeft), pos.relative(back).relative(backRight),
-                    pos.relative(back).relative(backLeft, 2), pos.relative(back).relative(backRight, 2), pos.relative(back).relative(backRight, 3),
-                    pos.relative(back, 2).relative(backLeft), pos.relative(back, 2).relative(backRight),
-                    pos.relative(back, 2).relative(backLeft, 2), pos.relative(back, 2).relative(backRight, 2), pos.relative(back, 2).relative(backRight, 3)
-            };
+            BlockPos[] adjacentPositions = getAdjacentPositions(pState, pos);
 
             for (BlockPos p : adjacentPositions) {
                 if (pLevel.getBlockState(p).getBlock() == ModBlocks.FILLING_UNIT_SIDE.get()) {
@@ -93,25 +81,7 @@ public class FillingUnitBlock extends ModBlockEntityWithFacing {
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (!pLevel.isClientSide()) {
-            Direction facing = pState.getValue(FACING);
-            Direction left = facing.getCounterClockWise();
-            Direction right = facing.getClockWise();
-            Direction back = facing.getOpposite();
-            Direction backLeft = back.getClockWise();
-            Direction backRight = back.getCounterClockWise();
-
-            BlockPos[] sidePositions = {
-                    pos.relative(facing),
-                    pos.relative(facing).relative(left), pos.relative(facing).relative(right),
-                    pos.relative(facing).relative(left, 2), pos.relative(facing).relative(right, 2), pos.relative(facing).relative(right, 3),
-                    pos.relative(right), pos.relative(left),
-                    pos.relative(right, 2), pos.relative(right, 3), pos.relative(left, 2),
-                    pos.relative(back), pos.relative(back, 2),
-                    pos.relative(back).relative(backLeft), pos.relative(back).relative(backRight),
-                    pos.relative(back).relative(backLeft, 2), pos.relative(back).relative(backRight, 2), pos.relative(back).relative(backRight, 3),
-                    pos.relative(back, 2).relative(backLeft), pos.relative(back, 2).relative(backRight),
-                    pos.relative(back, 2).relative(backLeft, 2), pos.relative(back, 2).relative(backRight, 2), pos.relative(back, 2).relative(backRight, 3)
-            };
+            BlockPos[] sidePositions = getAdjacentPositions(pState, pos);
 
             for (BlockPos p : sidePositions) {
                 pLevel.setBlockAndUpdate(p, ModBlocks.FILLING_UNIT_SIDE.get().defaultBlockState().setValue(FACING, pState.getValue(FACING)));
@@ -121,5 +91,47 @@ public class FillingUnitBlock extends ModBlockEntityWithFacing {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        if (!pLevel.isClientSide()) {
+            BlockPos[] sidePositions = getAdjacentPositions(pState, pPos);
+
+            for (BlockPos p : sidePositions) {
+                if (!pLevel.getBlockState(p).getBlock().defaultBlockState().isAir()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private BlockPos[] getAdjacentPositions(BlockState state, BlockPos pos) {
+        Direction facing = state.getValue(FACING);
+        Direction left = facing.getCounterClockWise();
+        Direction right = facing.getClockWise();
+        Direction back = facing.getOpposite();
+        Direction backLeft = back.getClockWise();
+        Direction backRight = back.getCounterClockWise();
+
+        return new BlockPos[]{
+                pos.relative(facing),
+                pos.relative(facing).relative(left), pos.relative(facing).relative(right),
+                pos.relative(facing).relative(left, 2), pos.relative(facing).relative(right, 2), pos.relative(facing).relative(right, 3),
+                pos.relative(right), pos.relative(left),
+                pos.relative(right, 2), pos.relative(right, 3), pos.relative(left, 2),
+                pos.relative(back), pos.relative(back, 2),
+                pos.relative(back).relative(backLeft), pos.relative(back).relative(backRight),
+                pos.relative(back).relative(backLeft, 2), pos.relative(back).relative(backRight, 2), pos.relative(back).relative(backRight, 3),
+                pos.relative(back, 2).relative(backLeft), pos.relative(back, 2).relative(backRight),
+                pos.relative(back, 2).relative(backLeft, 2), pos.relative(back, 2).relative(backRight, 2), pos.relative(back, 2).relative(backRight, 3)
+        };
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        pTooltip.add(Component.translatable("endfield.powerCost", 20).withStyle(ChatFormatting.GRAY));
     }
 }

@@ -217,12 +217,18 @@ public class GearingUnitBlockEntity extends BaseIOBlockEntity<GearingUnitRecipe>
 
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            if (slot == INPUT_SLOT1) {
-                return parent.insertItem(GearingUnitBlockEntity.INPUT_SLOT1, stack, simulate);
-            } else if (slot == INPUT_SLOT2) {
-                return parent.insertItem(GearingUnitBlockEntity.INPUT_SLOT2, stack, simulate);
+            if (stack.isEmpty()) return ItemStack.EMPTY;
+            
+            if (slot != 0 && slot != 1) return stack;
+            
+            int otherParentIndex = (slot == 0) ? 1 : 0;
+            ItemStack other = parent.getStackInSlot(otherParentIndex);
+            if (!other.isEmpty() && other.getItem() == stack.getItem()) {
+                return stack;
             }
-            return stack;
+            
+            int parentIndex = (slot == 0) ? 0 : 1;
+            return parent.insertItem(parentIndex, stack, simulate);
         }
 
         @Override

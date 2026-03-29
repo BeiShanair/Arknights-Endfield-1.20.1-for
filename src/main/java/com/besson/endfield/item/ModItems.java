@@ -3,17 +3,21 @@ package com.besson.endfield.item;
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.item.custom.*;
+import com.besson.endfield.item.custom.combat.*;
+import com.besson.endfield.item.custom.powering.ElectricPylonItem;
+import com.besson.endfield.item.custom.powering.ProtocolAnchorCoreItem;
+import com.besson.endfield.item.custom.powering.RelayTowerItem;
+import com.besson.endfield.item.custom.powering.ThermalBankItem;
+import com.besson.endfield.item.custom.resourcing.ElectricMiningRigItem;
+import com.besson.endfield.item.custom.resourcing.ElectricMiningRigMkIIItem;
+import com.besson.endfield.item.custom.resourcing.PortableOriginiumRigItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.function.Supplier;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -54,6 +58,29 @@ public class ModItems {
     public static final RegistryObject<Item> SEED_PICKING_UNIT_ITEM = ITEMS.register("seed_picking_unit",
             () -> new SeedPickingUnitItem(ModBlocks.SEED_PICKING_UNIT.get(), new Item.Properties().rarity(Rarity.RARE)));
 
+    public static final RegistryObject<Item> BEAM_TOWER_ITEM = ITEMS.register("beam_tower",
+            () -> new BeamTowerItem(ModBlocks.BEAM_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> GRENADE_TOWER_ITEM = ITEMS.register("grenade_tower",
+            () -> new GrenadeTowerItem(ModBlocks.GRENADE_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> GUN_TOWER_ITEM = ITEMS.register("gun_tower",
+            () -> new GunTowerItem(ModBlocks.GUN_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> HEAVY_GUN_TOWER_ITEM = ITEMS.register("heavy_gun_tower",
+            () -> new HeavyGunTowerItem(ModBlocks.HEAVY_GUN_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> HE_GRENADE_TOWER_ITEM = ITEMS.register("he_grenade_tower",
+            () -> new HeGrenadeTowerItem(ModBlocks.HE_GRENADE_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> LN_TOWER_ITEM = ITEMS.register("ln_tower",
+            () -> new LNTowerItem(ModBlocks.LN_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> MARSH_GAS_MK_I_ITEM = ITEMS.register("marsh_gas_mk_i",
+            () -> new MarshGasMkIItem(ModBlocks.MARSH_GAS_MK_I.get(), new Item.Properties()));
+    public static final RegistryObject<Item> MEDICAL_TOWER_ITEM = ITEMS.register("medical_tower",
+            () -> new MedicalTowerItem(ModBlocks.MEDICAL_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> OMNIDIRECTIONAL_SONIC_TOWER_ITEM = ITEMS.register("omnidirectional_sonic_tower",
+            () -> new OmnidirectionalSonicTowerItem(ModBlocks.OMNIDIRECTIONAL_SONIC_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SENTRY_TOWER_ITEM = ITEMS.register("sentry_tower",
+            () -> new SentryTowerItem(ModBlocks.SENTRY_TOWER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SURGE_TOWER_ITEM = ITEMS.register("surge_tower",
+            () -> new SurgeTowerItem(ModBlocks.SURGE_TOWER.get(), new Item.Properties()));
+    
     public static final RegistryObject<Item> AGGAGRIT = ITEMS.register("aggagrit", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AGGAGRIT_BLOCK = ITEMS.register("aggagrit_block", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> AGGAGRIT_CLUSTER = ITEMS.register("aggagrit_cluster", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));

@@ -1,5 +1,5 @@
 # 更新日志 / Changelog
-## 2025-12-08 -> 2026-02-19
+## 2025-12-08 -> 2026-03-06
 - 一系列更新，参见Fab版的更新日志
 - A series of updates, see the changelog for the Fabric version
 

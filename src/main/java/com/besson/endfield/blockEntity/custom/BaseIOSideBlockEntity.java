@@ -1,5 +1,6 @@
 package com.besson.endfield.blockEntity.custom;
 
+import com.besson.endfield.blockEntity.custom.logicitis.BeltBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

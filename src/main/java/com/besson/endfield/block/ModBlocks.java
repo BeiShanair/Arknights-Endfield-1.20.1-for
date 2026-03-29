@@ -2,6 +2,12 @@ package com.besson.endfield.block;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.custom.*;
+import com.besson.endfield.block.custom.combat.*;
+import com.besson.endfield.block.custom.logicitis.*;
+import com.besson.endfield.block.custom.powering.*;
+import com.besson.endfield.block.custom.resourcing.ElectricMiningRigBlock;
+import com.besson.endfield.block.custom.resourcing.ElectricMiningRigMkIIBlock;
+import com.besson.endfield.block.custom.resourcing.PortableOriginiumRigBlock;
 import com.besson.endfield.item.ModItems;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -22,83 +28,113 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, ArknightsEndfield.MOD_ID);
 
     public static final RegistryObject<Block> CRAFTER = registerBlocks("crafter",
-            () -> new CrafterBlock(BlockBehaviour.Properties.of().strength(3f).noOcclusion()));
+            () -> new CrafterBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PORTABLE_ORIGINIUM_RIG = registerBlocksWithoutItem("portable_originium_rig",
-            () -> new PortableOriginiumRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new PortableOriginiumRigBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE = registerBlocksWithoutItem("protocol_anchor_core",
-            () -> new ProtocolAnchorCoreBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ProtocolAnchorCoreBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE_PORT = registerBlocks("protocol_anchor_core_port",
-            () -> new ProtocolAnchorCorePortBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ProtocolAnchorCorePortBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PROTOCOL_ANCHOR_CORE_SIDE = registerBlocks("protocol_anchor_core_side",
-            () -> new ProtocolAnchorCoreSideBlock(BlockBehaviour.Properties.of().strength(1f, 1f).noOcclusion()));
+            () -> new ProtocolAnchorCoreSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> RELAY_TOWER = registerBlocksWithoutItem("relay_tower",
-            () -> new RelayTowerBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new RelayTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_PYLON = registerBlocksWithoutItem("electric_pylon",
-            () -> new ElectricPylonBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ElectricPylonBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_MINING_RIG = registerBlocksWithoutItem("electric_mining_rig",
-            () -> new ElectricMiningRigBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ElectricMiningRigBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_MINING_RIG_MK_II = registerBlocksWithoutItem("electric_mining_rig_mk_ii",
-            () -> new ElectricMiningRigMkIIBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ElectricMiningRigMkIIBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> REFINING_UNIT = registerBlocksWithoutItem("refining_unit",
-            () -> new RefiningUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new RefiningUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> REFINING_UNIT_SIDE = registerBlocks("refining_unit_side",
-            () -> new RefiningUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new RefiningUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> FILLING_UNIT = registerBlocksWithoutItem("filling_unit",
-            () -> new FillingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new FillingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> FILLING_UNIT_SIDE = registerBlocks("filling_unit_side",
-            () -> new FillingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new FillingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> FITTING_UNIT = registerBlocksWithoutItem("fitting_unit",
-            () -> new FittingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new FittingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> FITTING_UNIT_SIDE = registerBlocks("fitting_unit_side",
-            () -> new FittingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new FittingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> SHREDDING_UNIT = registerBlocksWithoutItem("shredding_unit",
-            () -> new ShreddingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ShreddingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> SHREDDING_UNIT_SIDE = registerBlocks("shredding_unit_side",
-            () -> new ShreddingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ShreddingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> GEARING_UNIT = registerBlocksWithoutItem("gearing_unit",
-            () -> new GearingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new GearingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> GEARING_UNIT_SIDE = registerBlocks("gearing_unit_side",
-            () -> new GearingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new GearingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> GRINDING_UNIT = registerBlocksWithoutItem("grinding_unit",
-            () -> new GrindingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new GrindingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> GRINDING_UNIT_SIDE = registerBlocks("grinding_unit_side",
-            () -> new GrindingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new GrindingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> MOULDING_UNIT = registerBlocksWithoutItem("moulding_unit",
-            () -> new MouldingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new MouldingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> MOULDING_UNIT_SIDE = registerBlocksWithoutItem("moulding_unit_side",
-            () -> new MouldingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new MouldingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> PACKAGING_UNIT = registerBlocksWithoutItem("packaging_unit",
-            () -> new PackagingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new PackagingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PACKAGING_UNIT_SIDE = registerBlocks("packaging_unit_side",
-            () -> new PackagingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new PackagingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> PLANTING_UNIT = registerBlocksWithoutItem("planting_unit",
-            () -> new PlantingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new PlantingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> PLANTING_UNIT_SIDE = registerBlocks("planting_unit_side",
-            () -> new PlantingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new PlantingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> SEED_PICKING_UNIT = registerBlocksWithoutItem("seed_picking_unit",
-            () -> new SeedPickingUnitBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new SeedPickingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> SEED_PICKING_UNIT_SIDE = registerBlocks("seed_picking_unit_side",
-            () -> new SeedPickingUnitSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new SeedPickingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> THERMAL_BANK = registerBlocksWithoutItem("thermal_bank",
-            () -> new ThermalBankBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ThermalBankBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> THERMAL_BANK_SIDE = registerBlocks("thermal_bank_side",
-            () -> new ThermalBankSideBlock(BlockBehaviour.Properties.of().strength(3f, 5f).noOcclusion()));
+            () -> new ThermalBankSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> BELT = registerBlocks("belt",
             () -> new BeltBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> OUTPUT_PORT = registerBlocks("output_port",
             () -> new OutputPortBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> BELT_BRIDGE = registerBlocks("belt_bridge",
+            () -> new BeltBridgeBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> CONVERGER = registerBlocks("converger",
+            () -> new ConvergerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> SPLITTER = registerBlocks("splitter",
+            () -> new SplitterBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    
+    public static final RegistryObject<Block> BEAM_TOWER = registerBlocksWithoutItem("beam_tower",
+            () -> new BeamTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> GRENADE_TOWER = registerBlocksWithoutItem("grenade_tower",
+            () -> new GrenadeTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> GUN_TOWER = registerBlocksWithoutItem("gun_tower",
+            () -> new GunTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> HEAVY_GUN_TOWER = registerBlocksWithoutItem("heavy_gun_tower",
+            () -> new HeavyGunTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> HE_GRENADE_TOWER = registerBlocksWithoutItem("he_grenade_tower",
+            () -> new HeGrenadeTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> LN_TOWER = registerBlocksWithoutItem("ln_tower",
+            () -> new LNTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> MARSH_GAS_MK_I = registerBlocksWithoutItem("marsh_gas_mk_i",
+            () -> new MarshGasMkIBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> MEDICAL_TOWER = registerBlocksWithoutItem("medical_tower",
+            () -> new MedicalTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> OMNIDIRECTIONAL_SONIC_TOWER = registerBlocksWithoutItem("omnidirectional_sonic_tower",
+            () -> new OmnidirectionalSonicTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> SENTRY_TOWER = registerBlocksWithoutItem("sentry_tower",
+            () -> new SentryTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> SURGE_TOWER = registerBlocksWithoutItem("surge_tower",
+            () -> new SurgeTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    
     public static final RegistryObject<Block> AMETHYST_MINERAL_VEIN_BLOCK = registerBlocks("amethyst_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> COAL_MINERAL_VEIN_BLOCK = registerBlocks("coal_mineral_vein_block",

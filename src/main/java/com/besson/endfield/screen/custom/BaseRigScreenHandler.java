@@ -1,6 +1,6 @@
 package com.besson.endfield.screen.custom;
 
-import com.besson.endfield.blockEntity.custom.BaseRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.BaseRigBlockEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

@@ -3,6 +3,12 @@ package com.besson.endfield.blockEntity;
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.custom.*;
+import com.besson.endfield.blockEntity.custom.combat.*;
+import com.besson.endfield.blockEntity.custom.logicitis.*;
+import com.besson.endfield.blockEntity.custom.powering.*;
+import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigMkIIBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.PortableOriginiumRigBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -110,9 +116,53 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<OutputPortBlockEntity>> OUTPUT_PORT =
             BLOCK_ENTITIES.register("output_port", () -> BlockEntityType.Builder.of(
                     OutputPortBlockEntity::new, ModBlocks.OUTPUT_PORT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BeltBridgeBlockEntity>> BELT_BRIDGE =
+            BLOCK_ENTITIES.register("belt_bridge", () -> BlockEntityType.Builder.of(
+                    BeltBridgeBlockEntity::new, ModBlocks.BELT_BRIDGE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ConvergerBlockEntity>> CONVERGER =
+            BLOCK_ENTITIES.register("converger", () -> BlockEntityType.Builder.of(
+                    ConvergerBlockEntity::new, ModBlocks.CONVERGER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SplitterBlockEntity>> SPLITTER =
+            BLOCK_ENTITIES.register("splitter", () -> BlockEntityType.Builder.of(
+                    SplitterBlockEntity::new, ModBlocks.SPLITTER.get()).build(null));
+    
     public static final RegistryObject<BlockEntityType<FEConverterBlockEntity>> FE_CONVERTER =
             BLOCK_ENTITIES.register("fe_converter", () -> BlockEntityType.Builder.of(
                     FEConverterBlockEntity::new, ModBlocks.FE_CONVERTER_BLOCK.get()).build(null));
+    
+    public static final RegistryObject<BlockEntityType<BeamTowerBlockEntity>> BEAM_TOWER =
+            BLOCK_ENTITIES.register("beam_tower", () -> BlockEntityType.Builder.of(
+                    BeamTowerBlockEntity::new, ModBlocks.BEAM_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GrenadeTowerBlockEntity>> GRENADE_TOWER =
+            BLOCK_ENTITIES.register("grenade_tower", () -> BlockEntityType.Builder.of(
+                    GrenadeTowerBlockEntity::new, ModBlocks.GRENADE_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GunTowerBlockEntity>> GUN_TOWER =
+            BLOCK_ENTITIES.register("gun_tower", () -> BlockEntityType.Builder.of(
+                    GunTowerBlockEntity::new, ModBlocks.GUN_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HeavyGunTowerBlockEntity>> HEAVY_GUN_TOWER =
+            BLOCK_ENTITIES.register("heavy_gun_tower", () -> BlockEntityType.Builder.of(
+                    HeavyGunTowerBlockEntity::new, ModBlocks.HEAVY_GUN_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HeGrenadeTowerBlockEntity>> HE_GRENADE_TOWER =
+            BLOCK_ENTITIES.register("he_grenade_tower", () -> BlockEntityType.Builder.of(
+                    HeGrenadeTowerBlockEntity::new, ModBlocks.HE_GRENADE_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<LNTowerBlockEntity>> LN_TOWER =
+            BLOCK_ENTITIES.register("ln_tower", () -> BlockEntityType.Builder.of(
+                    LNTowerBlockEntity::new, ModBlocks.LN_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MarshGasMkIBlockEntity>> MARSH_GAS_MK_I =
+            BLOCK_ENTITIES.register("marsh_gas_mk_i", () -> BlockEntityType.Builder.of(
+                    MarshGasMkIBlockEntity::new, ModBlocks.MARSH_GAS_MK_I.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MedicalTowerBlockEntity>> MEDICAL_TOWER =
+            BLOCK_ENTITIES.register("medical_tower", () -> BlockEntityType.Builder.of(
+                    MedicalTowerBlockEntity::new, ModBlocks.MEDICAL_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<OmnidirectionalSonicTowerBlockEntity>> OMNIDIRECTIONAL_SONIC_TOWER =
+            BLOCK_ENTITIES.register("omnidirectional_sonic_tower", () -> BlockEntityType.Builder.of(
+                    OmnidirectionalSonicTowerBlockEntity::new, ModBlocks.OMNIDIRECTIONAL_SONIC_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SentryTowerBlockEntity>> SENTRY_TOWER =
+            BLOCK_ENTITIES.register("sentry_tower", () -> BlockEntityType.Builder.of(
+                    SentryTowerBlockEntity::new, ModBlocks.SENTRY_TOWER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SurgeTowerBlockEntity>> SURGE_TOWER =
+            BLOCK_ENTITIES.register("surge_tower", () -> BlockEntityType.Builder.of(
+                    SurgeTowerBlockEntity::new, ModBlocks.SURGE_TOWER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

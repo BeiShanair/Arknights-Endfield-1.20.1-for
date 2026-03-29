@@ -41,9 +41,12 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.REDSTONE_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.PROTOCOL_ANCHOR_CORE_PORT.get());
                         pOutput.accept(ModBlocks.BELT.get());
+                        pOutput.accept(ModBlocks.BELT_BRIDGE.get());
+                        pOutput.accept(ModBlocks.CONVERGER.get());
+                        pOutput.accept(ModBlocks.SPLITTER.get());
                         pOutput.accept(ModBlocks.OUTPUT_PORT.get());
 
-//                        pOutput.accept(ModBlocks.FE_CONVERTER_BLOCK.get());
+                        pOutput.accept(ModBlocks.FE_CONVERTER_BLOCK.get());
 
                         pOutput.accept(ModBlocks.CRAFTER.get());
                         pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM.get());
@@ -63,6 +66,18 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.PLANTING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.THERMAL_BANK_ITEM.get());
+                        
+                        pOutput.accept(ModItems.BEAM_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.GRENADE_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.GUN_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.HEAVY_GUN_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.HE_GRENADE_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.LN_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.MARSH_GAS_MK_I_ITEM.get());
+                        pOutput.accept(ModItems.MEDICAL_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.OMNIDIRECTIONAL_SONIC_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.SENTRY_TOWER_ITEM.get());
+                        pOutput.accept(ModItems.SURGE_TOWER_ITEM.get());
 
                         pOutput.accept(ModItems.ORIGINIUM_ORE.get());
                         pOutput.accept(ModItems.ORIGINIUM_POWDER.get());
@@ -95,7 +110,7 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.STEEL.get());
                         pOutput.accept(ModItems.STEEL_BOTTLE.get());
                         pOutput.accept(ModItems.STEEL_PART.get());
-                        pOutput.accept(ModItems.STEEL_JAR.get());
+//                        pOutput.accept(ModItems.STEEL_JAR.get());
                         pOutput.accept(ModItems.DENSE_ORIGINIUM_POWDER.get());
                         pOutput.accept(ModItems.DENSE_ORIGOCRUST_POWDER.get());
                         pOutput.accept(ModItems.DENSE_FERRIUM_POWDER.get());
@@ -118,10 +133,10 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.CANNED_CITROME_C.get());
                         pOutput.accept(ModItems.CANNED_CITROME_B.get());
                         pOutput.accept(ModItems.CANNED_CITROME_A.get());
-                        pOutput.accept(ModItems.CITROME_JAM.get());
-                        pOutput.accept(ModItems.CITROME_JELLY.get());
-                        pOutput.accept(ModItems.CITROME_PUDDING.get());
-                        pOutput.accept(ModItems.CITROBUCKY_MIX.get());
+//                        pOutput.accept(ModItems.CITROME_JAM.get());
+//                        pOutput.accept(ModItems.CITROME_JELLY.get());
+//                        pOutput.accept(ModItems.CITROME_PUDDING.get());
+//                        pOutput.accept(ModItems.CITROBUCKY_MIX.get());
                         pOutput.accept(ModItems.UMBRALINE.get());
                         pOutput.accept(ModItems.CITROMIX.get());
                         pOutput.accept(ModItems.CITROMIX_S.get());
@@ -166,16 +181,16 @@ public class ModItemGroups {
 
                         pOutput.accept(ModItems.TARTPEPPER.get());
                         pOutput.accept(ModItems.TARTPEPPER_SEED.get());
-                        pOutput.accept(ModItems.TARTPEPPER_PICKLE.get());
-                        pOutput.accept(ModItems.TARTPEPPER_SALAD.get());
+//                        pOutput.accept(ModItems.TARTPEPPER_PICKLE.get());
+//                        pOutput.accept(ModItems.TARTPEPPER_SALAD.get());
 
                         pOutput.accept(ModItems.CARBON.get());
                         pOutput.accept(ModItems.CARBON_POWDER.get());
                         pOutput.accept(ModItems.STABILIZED_CARBON.get());
 
-                        pOutput.accept(ModItems.AGGAGRIT.get());
-                        pOutput.accept(ModItems.AGGAGRIT_BLOCK.get());
-                        pOutput.accept(ModItems.AGGAGRIT_CLUSTER.get());
+//                        pOutput.accept(ModItems.AGGAGRIT.get());
+//                        pOutput.accept(ModItems.AGGAGRIT_BLOCK.get());
+//                        pOutput.accept(ModItems.AGGAGRIT_CLUSTER.get());
 
                         pOutput.accept(ModItems.LC_BATTERY.get());
                         pOutput.accept(ModItems.SC_BATTERY.get());
@@ -188,20 +203,20 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.KUNST_VIAL.get());
                         pOutput.accept(ModItems.PERPLEXING_MEDICATION.get());
 
-                        pOutput.accept(ModItems.ASHPIN_REMEDY.get());
-                        pOutput.accept(ModItems.BLANCHED_REMEDY.get());
+//                        pOutput.accept(ModItems.ASHPIN_REMEDY.get());
+//                        pOutput.accept(ModItems.BLANCHED_REMEDY.get());
                         pOutput.accept(ModItems.BIZARROTACK.get());
                         pOutput.accept(ModItems.BIZARRO_CHILI.get());
-                        pOutput.accept(ModItems.BUGTACK.get());
-                        pOutput.accept(ModItems.CARTILAGE_TACK.get());
+//                        pOutput.accept(ModItems.BUGTACK.get());
+//                        pOutput.accept(ModItems.CARTILAGE_TACK.get());
 
                         pOutput.accept(ModItems.COARSE_FLATBREAD.get());
                         pOutput.accept(ModItems.CORRECTIVE_REMEDY.get());
 
                         pOutput.accept(ModItems.FILLET.get());
-                        pOutput.accept(ModItems.FILLET_CONFIT.get());
-                        pOutput.accept(ModItems.FIRESTOVE_RICE.get());
-                        pOutput.accept(ModItems.FIRETACK.get());
+//                        pOutput.accept(ModItems.FILLET_CONFIT.get());
+//                        pOutput.accept(ModItems.FIRESTOVE_RICE.get());
+//                        pOutput.accept(ModItems.FIRETACK.get());
                         pOutput.accept(ModItems.FORTIFYING_INFUSION.get());
                         pOutput.accept(ModItems.GARDEN_FRIED_RICE.get());
                         pOutput.accept(ModItems.GARDEN_STIR_FRY.get());
@@ -209,24 +224,24 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.GRASS_CHAFF.get());
                         pOutput.accept(ModItems.CHITIN_BIT.get());
                         pOutput.accept(ModItems.CARTILAGE_BIT.get());
-                        pOutput.accept(ModItems.HOLLOW_BONE.get());
-                        pOutput.accept(ModItems.HOLLOW_BONECHIP.get());
-                        pOutput.accept(ModItems.HOT_CRUNCHY_RIBS.get());
+//                        pOutput.accept(ModItems.HOLLOW_BONE.get());
+//                        pOutput.accept(ModItems.HOLLOW_BONECHIP.get());
+//                        pOutput.accept(ModItems.HOT_CRUNCHY_RIBS.get());
 
                         pOutput.accept(ModItems.MEAT_STIR_FRY.get());
-                        pOutput.accept(ModItems.MOSSFIELD_PIE.get());
-                        pOutput.accept(ModItems.PRESERVE_STEW.get());
-                        pOutput.accept(ModItems.SAVORY_FILLET.get());
-                        pOutput.accept(ModItems.SAVORY_TANGBAO.get());
-                        pOutput.accept(ModItems.SAVORY_TANGMIAN.get());
+//                        pOutput.accept(ModItems.MOSSFIELD_PIE.get());
+//                        pOutput.accept(ModItems.PRESERVE_STEW.get());
+//                        pOutput.accept(ModItems.SAVORY_FILLET.get());
+//                        pOutput.accept(ModItems.SAVORY_TANGBAO.get());
+//                        pOutput.accept(ModItems.SAVORY_TANGMIAN.get());
                         pOutput.accept(ModItems.SCORCHBUG.get());
                         pOutput.accept(ModItems.GLOWBUG.get());
-                        pOutput.accept(ModItems.SENSORY_REMEDY.get());
-                        pOutput.accept(ModItems.SMOKED_RICEBALL.get());
+//                        pOutput.accept(ModItems.SENSORY_REMEDY.get());
+//                        pOutput.accept(ModItems.SMOKED_RICEBALL.get());
                         pOutput.accept(ModItems.WOOD.get());
-                        pOutput.accept(ModItems.SOAKED_WOOD.get());
-                        pOutput.accept(ModItems.SOAKED_WOODCHIP.get());
-                        pOutput.accept(ModItems.VALLEY_GRAYBREAD.get());
+//                        pOutput.accept(ModItems.SOAKED_WOOD.get());
+//                        pOutput.accept(ModItems.SOAKED_WOODCHIP.get());
+//                        pOutput.accept(ModItems.VALLEY_GRAYBREAD.get());
                         pOutput.accept(ModItems.WULING_FRIED_RICE.get());
                     }).build()
             );

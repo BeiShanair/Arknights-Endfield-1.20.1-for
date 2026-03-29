@@ -3,6 +3,14 @@ package com.besson.endfield.renderer;
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.renderer.block.*;
+import com.besson.endfield.renderer.block.combat.*;
+import com.besson.endfield.renderer.block.powering.ElectricPylonEntityRenderer;
+import com.besson.endfield.renderer.block.powering.ProtocolAnchorCoreRenderer;
+import com.besson.endfield.renderer.block.powering.RelayTowerEntityRenderer;
+import com.besson.endfield.renderer.block.powering.ThermalBankRenderer;
+import com.besson.endfield.renderer.block.resourcing.ElectricMiningRigMkIIRenderer;
+import com.besson.endfield.renderer.block.resourcing.ElectricMiningRigRenderer;
+import com.besson.endfield.renderer.block.resourcing.PortableOriginiumRigEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,5 +56,28 @@ public class ModBlockEntityRenderers {
                 ShreddingUnitRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BELT.get(),
                 BeltRenderer::new);
+        
+        event.registerBlockEntityRenderer(ModBlockEntities.BEAM_TOWER.get(), 
+                BeamTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.GRENADE_TOWER.get(),
+                GrenadeTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.GUN_TOWER.get(), 
+                GunTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.HEAVY_GUN_TOWER.get(),
+                HeavyGunTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.HE_GRENADE_TOWER.get(),
+                HeGrenadeTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.LN_TOWER.get(),
+                LNTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MARSH_GAS_MK_I.get(),
+                MarshGasMkIBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MEDICAL_TOWER.get(),
+                MedicalTowerRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.OMNIDIRECTIONAL_SONIC_TOWER.get(),
+                OmnidirectionalSonicTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SENTRY_TOWER.get(),
+                SentryTowerBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SURGE_TOWER.get(),
+                SurgeTowerBlockRenderer::new);
     }
 }

@@ -1,6 +1,6 @@
 package com.besson.endfield.screen.custom;
 
-import com.besson.endfield.blockEntity.custom.BaseRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.BaseRigBlockEntity;
 import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.network.SwitchPacket;
 import com.besson.endfield.screen.ToggleIconButton;

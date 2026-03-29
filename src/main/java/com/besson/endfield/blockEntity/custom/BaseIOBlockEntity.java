@@ -1,9 +1,12 @@
 package com.besson.endfield.blockEntity.custom;
 
 
+import com.besson.endfield.blockEntity.custom.powering.ElectricPylonBlockEntity;
+import com.besson.endfield.blockEntity.custom.powering.RelayTowerBlockEntity;
+import com.besson.endfield.util.NodeType;
 import com.besson.endfield.util.PowerNetworkManager;
+import com.besson.endfield.util.PowerNetworkNodeManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -24,6 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class BaseIOBlockEntity<R extends Recipe<?>> extends BlockEntity implements MenuProvider {
     protected int tickNum = 0;
@@ -89,23 +93,25 @@ public abstract class BaseIOBlockEntity<R extends Recipe<?>> extends BlockEntity
 
         be.tickNum++;
 
-        if (be.tickNum % 20 == 0) {
-            // TODO: 使用全局电网节点管理器来获取最近的 供电桩 / 中继器 ，不再使用遍历
-            for (BlockPos target : BlockPos.betweenClosed(pos.offset(-10, 0, -10), pos.offset(10, 0, 10))) {
-                BlockEntity b = world.getBlockEntity(target);
-                if (b instanceof ElectricPylonBlockEntity) {
-                    be.isPowered = ((ElectricPylonBlockEntity) b).isPowered;
-                    break;
+        if (be.tickNum % 20 == 0 && world instanceof ServerLevel serverWorld) {
+            AtomicReference<BlockPos> t = new AtomicReference<>();
+            PowerNetworkNodeManager manager = PowerNetworkNodeManager.get(serverWorld);
+            manager.findNearest(pos, NodeType.CONSUMER, 10).ifPresent(target -> t.set(target.pos()));
+            if (t.get() != null) {
+                BlockEntity b = world.getBlockEntity(t.get());
+                if (b instanceof ElectricPylonBlockEntity || b instanceof RelayTowerBlockEntity) {
+                    be.isPowered = true;
+                } else {
+                    be.isPowered = false;
+                    be.isWorking = false;
+                    be.setChanged();
+                    world.sendBlockUpdated(pos, state, state, 3);
                 }
-                be.isPowered = false;
-                be.isWorking = false;
-                be.setChanged();
-                world.sendBlockUpdated(pos, state, state, 3);
             }
             be.tickNum = 0;
         }
 
-        if (!be.isPowered) return;
+        if (!be.isPowered && be.storedPower < be.getPowerCostPerTick()) return;
 
         if (be.isOutputSlotAvailable()) {
             boolean hasRecipe = be.hasCorrectRecipe(world);
@@ -175,7 +181,7 @@ public abstract class BaseIOBlockEntity<R extends Recipe<?>> extends BlockEntity
     }
     
     public void receiveElectricCharge(int amount) {
-        this.storedPower = Math.min(this.storedPower + amount, MAX_STORED_POWER);
+        this.storedPower = Math.min(this.storedPower + amount * 20, MAX_STORED_POWER);
     }
 
     public boolean needsPower() {
@@ -183,7 +189,7 @@ public abstract class BaseIOBlockEntity<R extends Recipe<?>> extends BlockEntity
     }
 
     public int getRequiredPower() {
-        if (isWorking && isPowered || storedPower < MAX_STORED_POWER) {
+        if (isWorking || isPowered && storedPower < MAX_STORED_POWER) {
             return getPowerCostPerTick();
         }
         return 0;

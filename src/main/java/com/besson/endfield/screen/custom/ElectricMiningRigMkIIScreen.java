@@ -1,7 +1,7 @@
 package com.besson.endfield.screen.custom;
 
 import com.besson.endfield.ArknightsEndfield;
-import com.besson.endfield.blockEntity.custom.ElectricMiningRigMkIIBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigMkIIBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

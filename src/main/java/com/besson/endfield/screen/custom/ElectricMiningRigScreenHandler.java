@@ -1,7 +1,6 @@
 package com.besson.endfield.screen.custom;
 
-import com.besson.endfield.block.ModBlocks;
-import com.besson.endfield.blockEntity.custom.ElectricMiningRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigBlockEntity;
 import com.besson.endfield.screen.ModScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

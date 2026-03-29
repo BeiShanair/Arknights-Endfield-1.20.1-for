@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class ModJEIPlugin implements IModPlugin {
@@ -67,12 +68,6 @@ public class ModJEIPlugin implements IModPlugin {
                 recipeManager.getAllRecipesFor(GrindingUnitRecipe.Type.INSTANCE));
         registration.addRecipes(MouldingRecipeCategory.MOULDING_UNIT,
                 recipeManager.getAllRecipesFor(MouldingUnitRecipe.Type.INSTANCE));
-        registration.addRecipes(PortableOriginiumRigRecipeCategory.PORTABLE_ORIGINIUM_RIG,
-                recipeManager.getAllRecipesFor(OreRigRecipe.Type.INSTANCE));
-        registration.addRecipes(ElectricMiningRigRecipeCategory.ELECTRIC_MINING_RIG,
-                recipeManager.getAllRecipesFor(OreRigRecipe.Type.INSTANCE));
-        registration.addRecipes(ElectricMiningRigMkIIRecipeCategory.ELECTRIC_MINING_RIG_MK_II,
-                recipeManager.getAllRecipesFor(OreRigRecipe.Type.INSTANCE));
         registration.addRecipes(PackagingRecipeCategory.PACKAGING,
                 recipeManager.getAllRecipesFor(PackagingUnitRecipe.Type.INSTANCE));
         registration.addRecipes(PlantingRecipeCategory.PLANTING_UNIT,
@@ -81,6 +76,18 @@ public class ModJEIPlugin implements IModPlugin {
                 recipeManager.getAllRecipesFor(SeedPickingUnitRecipe.Type.INSTANCE));
         registration.addRecipes(ShreddingRecipeCategory.SHREDDING_UNIT,
                 recipeManager.getAllRecipesFor(ShreddingUnitRecipe.Type.INSTANCE));
+
+        List<OreRigRecipe> all = recipeManager.getAllRecipesFor(OreRigRecipe.Type.INSTANCE);
+
+        registration.addRecipes(PortableOriginiumRigRecipeCategory.PORTABLE_ORIGINIUM_RIG,
+                all.stream().filter(r -> r.getTier() == 1)
+                        .collect(Collectors.toList()));
+        registration.addRecipes(ElectricMiningRigRecipeCategory.ELECTRIC_MINING_RIG,
+                all.stream().filter(r -> r.getTier() <= 2)
+                        .collect(Collectors.toList()));
+        registration.addRecipes(ElectricMiningRigMkIIRecipeCategory.ELECTRIC_MINING_RIG_MK_II,
+                all.stream().filter(r -> r.getTier() <= 3)
+                        .collect(Collectors.toList()));
     }
 
     @Override

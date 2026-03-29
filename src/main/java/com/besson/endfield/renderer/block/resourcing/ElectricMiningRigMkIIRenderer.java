@@ -1,0 +1,17 @@
+package com.besson.endfield.renderer.block.resourcing;
+
+import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigMkIIBlockEntity;
+import com.besson.endfield.model.block.resourcing.ElectricMiningRigMkIIModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import software.bernie.geckolib.renderer.GeoBlockRenderer;
+
+public class ElectricMiningRigMkIIRenderer extends GeoBlockRenderer<ElectricMiningRigMkIIBlockEntity> {
+    public ElectricMiningRigMkIIRenderer(BlockEntityRendererProvider.Context context) {
+        super(new ElectricMiningRigMkIIModel());
+    }
+
+    @Override
+    public boolean shouldRenderOffScreen(ElectricMiningRigMkIIBlockEntity pBlockEntity) {
+        return true;
+    }
+}

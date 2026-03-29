@@ -1,15 +1,12 @@
 package com.besson.endfield.screen.custom;
 
-import com.besson.endfield.blockEntity.custom.ProtocolAnchorCoreBlockEntity;
+import com.besson.endfield.blockEntity.custom.powering.ProtocolAnchorCoreBlockEntity;
 import com.besson.endfield.screen.ModScreens;
-import com.besson.endfield.util.ProtocolAnchorCoreStatus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
