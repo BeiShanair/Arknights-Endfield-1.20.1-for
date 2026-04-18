@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 public class OmnidirectionalSonicTowerItemModel extends GeoModel<OmnidirectionalSonicTowerItem> {
     @Override
     public ResourceLocation getModelResource(OmnidirectionalSonicTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "geo/omnidirectional_sonic_tower.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "geo/omnidirectional_sonic_tower.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(OmnidirectionalSonicTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "textures/block/omnidirectional_sonic_tower.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/block/omnidirectional_sonic_tower.png");
     }
 
     @Override

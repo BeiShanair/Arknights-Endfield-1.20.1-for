@@ -1,7 +1,7 @@
 package com.besson.endfield.renderer.block;
 
-import com.besson.endfield.blockEntity.custom.MouldingUnitBlockEntity;
-import com.besson.endfield.model.block.MouldingUnitModel;
+import com.besson.endfield.blockEntity.custom.production1.MouldingUnitBlockEntity;
+import com.besson.endfield.model.block.production1.MouldingUnitModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 

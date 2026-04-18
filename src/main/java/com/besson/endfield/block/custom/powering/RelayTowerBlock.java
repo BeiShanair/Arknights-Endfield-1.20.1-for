@@ -3,7 +3,7 @@ package com.besson.endfield.block.custom.powering;
 import com.besson.endfield.block.ModBlockEntityWithFacing;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.blockEntity.custom.powering.RelayTowerBlockEntity;
-import com.besson.endfield.util.PowerNetworkManager;
+import com.besson.endfield.util.power.PowerNetworkManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

@@ -2,6 +2,20 @@ package com.besson.endfield.screen;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.screen.custom.*;
+import com.besson.endfield.screen.custom.logicitis.DepotUnloaderScreenHandler;
+import com.besson.endfield.screen.custom.logicitis.ProtocolStashScreenHandler;
+import com.besson.endfield.screen.custom.logicitis.StorageScreenHandler;
+import com.besson.endfield.screen.custom.powering.ProtocolAnchorCorePortScreenHandler;
+import com.besson.endfield.screen.custom.powering.ProtocolAnchorCoreScreenHandler;
+import com.besson.endfield.screen.custom.powering.ThermalBankScreenHandler;
+import com.besson.endfield.screen.custom.production1.*;
+import com.besson.endfield.screen.custom.production2.FillingUnitScreenHandler;
+import com.besson.endfield.screen.custom.production2.GearingUnitScreenHandler;
+import com.besson.endfield.screen.custom.production2.GrindingUnitScreenHandler;
+import com.besson.endfield.screen.custom.production2.PackagingUnitScreenHandler;
+import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigMkIIScreenHandler;
+import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigScreenHandler;
+import com.besson.endfield.screen.custom.resourcing.PortableOriginiumRigScreenHandler;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -48,6 +62,16 @@ public class ModScreens {
     public static final RegistryObject<MenuType<ShreddingUnitScreenHandler>> SHREDDING_UNIT_SCREEN =
             register("shredding_unit", ShreddingUnitScreenHandler::new);
 
+    public static final RegistryObject<MenuType<ProtocolAnchorCorePortScreenHandler>> PROTOCOL_ANCHOR_CORE_PORT_SCREEN =
+            register("protocol_anchor_core_port_screen", ProtocolAnchorCorePortScreenHandler::new);
+    public static final RegistryObject<MenuType<DepotUnloaderScreenHandler>> DEPOT_UNLOADER_SCREEN =
+            register("depot_unloader_screen", DepotUnloaderScreenHandler::new);
+    public static final RegistryObject<MenuType<ProtocolStashScreenHandler>> PROTOCOL_STASH_SCREEN =
+            register("protocol_stash_screen", ProtocolStashScreenHandler::new);
+
+    public static final RegistryObject<MenuType<StorageScreenHandler>> STORAGE_SCREEN =
+            register("storage_screen", StorageScreenHandler::new);
+    
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> register(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IForgeMenuType.create(factory));
     }

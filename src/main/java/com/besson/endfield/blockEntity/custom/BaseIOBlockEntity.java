@@ -3,9 +3,9 @@ package com.besson.endfield.blockEntity.custom;
 
 import com.besson.endfield.blockEntity.custom.powering.ElectricPylonBlockEntity;
 import com.besson.endfield.blockEntity.custom.powering.RelayTowerBlockEntity;
-import com.besson.endfield.util.NodeType;
-import com.besson.endfield.util.PowerNetworkManager;
-import com.besson.endfield.util.PowerNetworkNodeManager;
+import com.besson.endfield.util.power.NodeType;
+import com.besson.endfield.util.power.PowerNetworkManager;
+import com.besson.endfield.util.power.PowerNetworkNodeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;

@@ -23,7 +23,7 @@ public class PackagingRecipeCategory implements IRecipeCategory<PackagingUnitRec
     public static final RecipeType<PackagingUnitRecipe> PACKAGING =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "packaging"), PackagingUnitRecipe.class);
     public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/packaging.png");
+            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/packaging_unit.png");
 
     private final IDrawable background;
     private final IDrawable icon;

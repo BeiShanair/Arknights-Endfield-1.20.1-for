@@ -1,9 +1,9 @@
 package com.besson.endfield.blockEntity.custom.powering;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.util.NodeEntry;
-import com.besson.endfield.util.NodeType;
-import com.besson.endfield.util.PowerNetworkNodeManager;
+import com.besson.endfield.util.power.NodeEntry;
+import com.besson.endfield.util.power.NodeType;
+import com.besson.endfield.util.power.PowerNetworkNodeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

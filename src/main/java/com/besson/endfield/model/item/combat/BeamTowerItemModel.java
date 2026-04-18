@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 public class BeamTowerItemModel extends GeoModel<BeamTowerItem> {
     @Override
     public ResourceLocation getModelResource(BeamTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "geo/beam_tower.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "geo/beam_tower.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(BeamTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "textures/block/beam_tower.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/block/beam_tower.png");
     }
 
     @Override

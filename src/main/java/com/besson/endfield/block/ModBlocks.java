@@ -5,6 +5,8 @@ import com.besson.endfield.block.custom.*;
 import com.besson.endfield.block.custom.combat.*;
 import com.besson.endfield.block.custom.logicitis.*;
 import com.besson.endfield.block.custom.powering.*;
+import com.besson.endfield.block.custom.production1.*;
+import com.besson.endfield.block.custom.production2.*;
 import com.besson.endfield.block.custom.resourcing.ElectricMiningRigBlock;
 import com.besson.endfield.block.custom.resourcing.ElectricMiningRigMkIIBlock;
 import com.besson.endfield.block.custom.resourcing.PortableOriginiumRigBlock;
@@ -134,7 +136,25 @@ public class ModBlocks {
             () -> new SentryTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> SURGE_TOWER = registerBlocksWithoutItem("surge_tower",
             () -> new SurgeTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
-    
+
+    public static final RegistryObject<Block> PROTOCOL_STASH = registerBlocksWithoutItem("protocol_stash",
+            () -> new ProtocolStashBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> PROTOCOL_STASH_SIDE = registerBlocks("protocol_stash_side",
+            () -> new ProtocolStashSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_BUS_SECTION = registerBlocksWithoutItem("depot_bus_section",
+            () -> new DepotBusSectionBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_BUS_SECTION_SIDE = registerBlocks("depot_bus_section_side",
+            () -> new DepotBusSectionSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_LOADER = registerBlocksWithoutItem("depot_loader",
+            () -> new DepotLoaderBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_LOADER_SIDE = registerBlocks("depot_loader_side",
+            () ->  new DepotLoaderSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_UNLOADER = registerBlocksWithoutItem("depot_unloader",
+            () -> new DepotUnloaderBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> DEPOT_UNLOADER_SIDE = registerBlocks("depot_unloader_side",
+            () -> new DepotUnloaderSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+
     public static final RegistryObject<Block> AMETHYST_MINERAL_VEIN_BLOCK = registerBlocks("amethyst_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> COAL_MINERAL_VEIN_BLOCK = registerBlocks("coal_mineral_vein_block",

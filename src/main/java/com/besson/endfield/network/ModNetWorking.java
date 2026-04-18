@@ -24,6 +24,9 @@ public class ModNetWorking {
     public static void register() {
         CHANNEL.registerMessage(nextId(), CycleRecipePacket.class, CycleRecipePacket::encode, CycleRecipePacket::new, CycleRecipePacket::handle);
         CHANNEL.registerMessage(nextId(), SwitchPacket.class, SwitchPacket::encode, SwitchPacket::decode, SwitchPacket::handle);
+        CHANNEL.registerMessage(nextId(), SyncStoragePacket.class, SyncStoragePacket::encode, SyncStoragePacket::decode, SyncStoragePacket::handle);
+        CHANNEL.registerMessage(nextId(), OpenStoragePacket.class, OpenStoragePacket::encode, OpenStoragePacket::new, OpenStoragePacket::handle);
+        CHANNEL.registerMessage(nextId(), RequestItemPacket.class, RequestItemPacket::encode, RequestItemPacket::decode, RequestItemPacket::handle);
     }
 
 }

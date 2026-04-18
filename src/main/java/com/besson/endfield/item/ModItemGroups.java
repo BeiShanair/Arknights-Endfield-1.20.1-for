@@ -66,6 +66,11 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.PLANTING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.THERMAL_BANK_ITEM.get());
+
+                        pOutput.accept(ModItems.PROTOCOL_STASH_ITEM.get());
+                        pOutput.accept(ModItems.DEPOT_BUS_SECTION_ITEM.get());
+                        pOutput.accept(ModItems.DEPOT_LOADER_ITEM.get());
+                        pOutput.accept(ModItems.DEPOT_UNLOADER_ITEM.get());
                         
                         pOutput.accept(ModItems.BEAM_TOWER_ITEM.get());
                         pOutput.accept(ModItems.GRENADE_TOWER_ITEM.get());

@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 public class SentryTowerItemModel extends GeoModel<SentryTowerItem> {
     @Override
     public ResourceLocation getModelResource(SentryTowerItem sentryTowerItem) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "geo/sentry_tower.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "geo/sentry_tower.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(SentryTowerItem sentryTowerItem) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "textures/block/sentry_tower.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/block/sentry_tower.png");
     }
 
     @Override

@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 public class SurgeTowerItemModel extends GeoModel<SurgeTowerItem> {
     @Override
     public ResourceLocation getModelResource(SurgeTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "geo/surge_tower.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "geo/surge_tower.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(SurgeTowerItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "textures/block/surge_tower.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/block/surge_tower.png");
     }
 
     @Override

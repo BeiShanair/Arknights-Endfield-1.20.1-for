@@ -1,8 +1,7 @@
 package com.besson.endfield.blockEntity.custom.powering;
 
-import com.besson.endfield.block.ElectrifiableDevice;
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.util.PowerNetworkManager;
+import com.besson.endfield.util.power.PowerNetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

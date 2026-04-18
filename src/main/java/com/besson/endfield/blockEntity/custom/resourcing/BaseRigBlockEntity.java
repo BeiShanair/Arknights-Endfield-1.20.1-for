@@ -3,9 +3,10 @@ package com.besson.endfield.blockEntity.custom.resourcing;
 import com.besson.endfield.blockEntity.custom.logicitis.BeltBlockEntity;
 import com.besson.endfield.blockEntity.custom.powering.ElectricPylonBlockEntity;
 import com.besson.endfield.blockEntity.custom.powering.RelayTowerBlockEntity;
-import com.besson.endfield.util.NodeType;
-import com.besson.endfield.util.PowerNetworkManager;
-import com.besson.endfield.util.PowerNetworkNodeManager;
+import com.besson.endfield.util.power.NodeType;
+import com.besson.endfield.util.power.PowerNetworkManager;
+import com.besson.endfield.util.power.PowerNetworkNodeManager;
+import com.besson.endfield.util.storage.GlobalStorageManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -44,6 +45,9 @@ public abstract class BaseRigBlockEntity<R extends Recipe<?>> extends BlockEntit
     protected int progress = 0;
     protected int maxProgress;
     protected int tier;
+
+    protected static final int SUBMIT_INTERVAL = 100;
+    protected int submitTimer = 0;
 
     protected final ContainerData propertyDelegate;
     protected boolean needsInit = true;
@@ -109,6 +113,14 @@ public abstract class BaseRigBlockEntity<R extends Recipe<?>> extends BlockEntit
 
         if (!be.isPowered && be.storedPower < be.getPowerCostPerTick()) return;
 
+        if (be.isPowered) {
+            be.submitTimer++;
+            if (be.submitTimer >= SUBMIT_INTERVAL) {
+                be.submitTimer = 0;
+                be.flushToGlobalStorage(world);
+            }
+        }
+
         if (be.isOutputSlotAvailable()) {
             boolean hasRecipe = be.hasCorrectRecipe(world);
             if (be.needsPower() || !hasRecipe) {
@@ -134,6 +146,27 @@ public abstract class BaseRigBlockEntity<R extends Recipe<?>> extends BlockEntit
         }
         be.tryPushToBelt(world, pos, state);
         be.setChanged();
+    }
+
+    public void flushToGlobalStorage(Level world) {
+        if (!(world instanceof ServerLevel serverWorld)) return;
+
+        GlobalStorageManager manager = GlobalStorageManager.get(serverWorld);
+        boolean changed = false;
+
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            ItemStack stack = itemStackHandler.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                long inserted = manager.insert(stack);
+                if (inserted > 0) {
+                    stack.shrink((int) inserted);
+                    changed = true;
+                }
+            }
+        }
+
+        if (changed) setChanged();
+
     }
 
     protected void tryPushToBelt(Level world, BlockPos pos, BlockState state) {

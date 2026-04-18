@@ -1,7 +1,7 @@
 package com.besson.endfield.renderer.item;
 
-import com.besson.endfield.item.custom.ShreddingUnitItem;
-import com.besson.endfield.model.item.ShreddingUnitItemModel;
+import com.besson.endfield.item.custom.production1.ShreddingUnitItem;
+import com.besson.endfield.model.item.production1.ShreddingUnitItemModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class ShreddingUnitItemRenderer extends GeoItemRenderer<ShreddingUnitItem> {

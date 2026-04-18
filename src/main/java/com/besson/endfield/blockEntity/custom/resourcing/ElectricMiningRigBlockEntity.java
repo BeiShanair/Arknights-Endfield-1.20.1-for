@@ -2,7 +2,7 @@ package com.besson.endfield.blockEntity.custom.resourcing;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.recipe.custom.OreRigRecipe;
-import com.besson.endfield.screen.custom.ElectricMiningRigScreenHandler;
+import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigScreenHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

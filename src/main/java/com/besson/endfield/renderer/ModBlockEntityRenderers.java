@@ -56,7 +56,16 @@ public class ModBlockEntityRenderers {
                 ShreddingUnitRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BELT.get(),
                 BeltRenderer::new);
-        
+
+        event.registerBlockEntityRenderer(ModBlockEntities.DEPOT_BUS_SECTION.get(),
+                DepotBusSectionRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.DEPOT_LOADER.get(),
+                DepotLoaderRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.DEPOT_UNLOADER.get(),
+                DepotUnloaderRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.PROTOCOL_STASH.get(),
+                ProtocolStashRenderer::new);
+
         event.registerBlockEntityRenderer(ModBlockEntities.BEAM_TOWER.get(), 
                 BeamTowerBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.GRENADE_TOWER.get(),

@@ -1,7 +1,7 @@
 package com.besson.endfield.renderer.item;
 
-import com.besson.endfield.item.custom.GrindingUnitItem;
-import com.besson.endfield.model.item.GrindingUnitItemModel;
+import com.besson.endfield.item.custom.production2.GrindingUnitItem;
+import com.besson.endfield.model.item.production2.GrindingUnitItemModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class GrindingUnitItemRenderer extends GeoItemRenderer<GrindingUnitItem> {

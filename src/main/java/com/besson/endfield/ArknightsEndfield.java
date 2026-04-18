@@ -9,6 +9,21 @@ import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.recipe.ModRecipes;
 import com.besson.endfield.screen.ModScreens;
 import com.besson.endfield.screen.custom.*;
+import com.besson.endfield.screen.custom.logicitis.DepotUnloaderScreen;
+import com.besson.endfield.screen.custom.logicitis.ProtocolStashScreen;
+import com.besson.endfield.screen.custom.logicitis.StorageScreen;
+import com.besson.endfield.screen.custom.powering.ProtocolAnchorCorePortScreen;
+import com.besson.endfield.screen.custom.powering.ProtocolAnchorCoreScreen;
+import com.besson.endfield.screen.custom.powering.ThermalBankScreen;
+import com.besson.endfield.screen.custom.production1.*;
+import com.besson.endfield.screen.custom.production2.FillingUnitScreen;
+import com.besson.endfield.screen.custom.production2.GearingUnitScreen;
+import com.besson.endfield.screen.custom.production2.GrindingUnitScreen;
+import com.besson.endfield.screen.custom.production2.PackagingUnitScreen;
+import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigMkIIScreen;
+import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigScreen;
+import com.besson.endfield.screen.custom.resourcing.PortableOriginiumRigScreen;
+import com.besson.endfield.util.ModKeyBindings;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -16,6 +31,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -95,12 +111,21 @@ public class ArknightsEndfield {
                 MenuScreens.register(ModScreens.PLANTING_UNIT_SCREEN.get(), PlantingUnitScreen::new);
                 MenuScreens.register(ModScreens.SEED_PICKING_UNIT_SCREEN.get(), SeedPickingUnitScreen::new);
                 MenuScreens.register(ModScreens.SHREDDING_UNIT_SCREEN.get(), ShreddingUnitScreen::new);
+                MenuScreens.register(ModScreens.DEPOT_UNLOADER_SCREEN.get(), DepotUnloaderScreen::new);
+                MenuScreens.register(ModScreens.PROTOCOL_STASH_SCREEN.get(), ProtocolStashScreen::new);
+                MenuScreens.register(ModScreens.PROTOCOL_ANCHOR_CORE_PORT_SCREEN.get(), ProtocolAnchorCorePortScreen::new);
+                MenuScreens.register(ModScreens.STORAGE_SCREEN.get(), StorageScreen::new);
             });
         }
 
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
             event.registerEntityRenderer(ModItemEntity.INDUSTRIAL_EXPLOSIVE.get(), ThrownItemRenderer::new);
+        }
+        
+        @SubscribeEvent
+        public static void registerKeyMappings(RegisterKeyMappingsEvent event){
+            ModKeyBindings.register(event);
         }
     }
 }

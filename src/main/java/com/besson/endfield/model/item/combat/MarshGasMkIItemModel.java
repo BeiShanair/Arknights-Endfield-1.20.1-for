@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 public class MarshGasMkIItemModel extends GeoModel<MarshGasMkIItem> {
     @Override
     public ResourceLocation getModelResource(MarshGasMkIItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "geo/marsh_gas_mk_i.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "geo/marsh_gas_mk_i.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(MarshGasMkIItem animatable) {
-        return new ResourceLocation(ArknightsEndfield.MOD_ID, "textures/block/marsh_gas_mk_i.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/block/marsh_gas_mk_i.png");
     }
 
     @Override
