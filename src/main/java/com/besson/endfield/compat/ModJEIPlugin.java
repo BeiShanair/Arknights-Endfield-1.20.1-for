@@ -6,12 +6,16 @@ import com.besson.endfield.compat.custom.*;
 import com.besson.endfield.recipe.custom.*;
 import com.besson.endfield.screen.custom.*;
 import com.besson.endfield.screen.custom.production1.*;
+import com.besson.endfield.screen.custom.production2.ExpandedCrucibleScreen;
 import com.besson.endfield.screen.custom.production2.FillingUnitScreen;
+import com.besson.endfield.screen.custom.production2.ForgeOfTheSkyScreen;
 import com.besson.endfield.screen.custom.production2.GearingUnitScreen;
 import com.besson.endfield.screen.custom.production2.GrindingUnitScreen;
 import com.besson.endfield.screen.custom.production2.PackagingUnitScreen;
+import com.besson.endfield.screen.custom.production2.ReactorCrucibleScreen;
 import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigMkIIScreen;
 import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigScreen;
+import com.besson.endfield.screen.custom.resourcing.HydroMiningRigScreen;
 import com.besson.endfield.screen.custom.resourcing.PortableOriginiumRigScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -54,6 +58,9 @@ public class ModJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new PlantingRecipeCategory(guiHelper));
         registration.addRecipeCategories(new SeedPickingRecipeCategory(guiHelper));
         registration.addRecipeCategories(new ShreddingRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new ReactorCrucibleRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new ForgeOfTheSkyRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new HydroMiningRigRecipeCategory(guiHelper));
     }
 
     @Override
@@ -84,6 +91,10 @@ public class ModJEIPlugin implements IModPlugin {
                 recipeManager.getAllRecipesFor(SeedPickingUnitRecipe.Type.INSTANCE));
         registration.addRecipes(ShreddingRecipeCategory.SHREDDING_UNIT,
                 recipeManager.getAllRecipesFor(ShreddingUnitRecipe.Type.INSTANCE));
+        registration.addRecipes(ReactorCrucibleRecipeCategory.REACTOR_CRUCIBLE,
+                recipeManager.getAllRecipesFor(ReactorCrucibleRecipe.Type.INSTANCE));
+        registration.addRecipes(ForgeOfTheSkyRecipeCategory.FORGE_OF_THE_SKY,
+                recipeManager.getAllRecipesFor(ForgeOfTheSkyRecipe.Type.INSTANCE));
 
         List<OreRigRecipe> all = recipeManager.getAllRecipesFor(OreRigRecipe.Type.INSTANCE);
 
@@ -95,6 +106,9 @@ public class ModJEIPlugin implements IModPlugin {
                         .collect(Collectors.toList()));
         registration.addRecipes(ElectricMiningRigMkIIRecipeCategory.ELECTRIC_MINING_RIG_MK_II,
                 all.stream().filter(r -> r.getTier() <= 3)
+                        .collect(Collectors.toList()));
+        registration.addRecipes(HydroMiningRigRecipeCategory.HYDRO_MINING_RIG,
+                all.stream().filter(r -> r.getTier() <= 4)
                         .collect(Collectors.toList()));
     }
 
@@ -128,13 +142,22 @@ public class ModJEIPlugin implements IModPlugin {
                 SeedPickingRecipeCategory.SEED_PICKING_UNIT);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.SHREDDING_UNIT.get()),
                 ShreddingRecipeCategory.SHREDDING_UNIT);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.REACTOR_CRUCIBLE.get()),
+                ReactorCrucibleRecipeCategory.REACTOR_CRUCIBLE);
+        // 扩容反应池与普通反应池共用同一套配方
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.EXPANDED_CRUCIBLE.get()),
+                ReactorCrucibleRecipeCategory.REACTOR_CRUCIBLE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.FORGE_OF_THE_SKY.get()),
+                ForgeOfTheSkyRecipeCategory.FORGE_OF_THE_SKY);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.HYDRO_MINING_RIG.get()),
+                HydroMiningRigRecipeCategory.HYDRO_MINING_RIG);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(RefiningUnitScreen.class, 60, 30, 20, 30,
                 RefiningUnitRecipeCategory.REFINING_UNIT);
-        registration.addRecipeClickArea(CrafterScreen.class, 90, 36, 20, 30,
+        registration.addRecipeClickArea(CrafterScreen.class, 74, 13, 36, 57,
                 CrafterRecipeCategory.CRAFTER);
         registration.addRecipeClickArea(FillingUnitScreen.class, 90, 36, 20, 30,
                 FillingRecipeCategory.FILLING_UNIT);
@@ -160,5 +183,13 @@ public class ModJEIPlugin implements IModPlugin {
                 SeedPickingRecipeCategory.SEED_PICKING_UNIT);
         registration.addRecipeClickArea(ShreddingUnitScreen.class, 60, 30, 20, 30,
                 ShreddingRecipeCategory.SHREDDING_UNIT);
+        registration.addRecipeClickArea(ReactorCrucibleScreen.class, 64, 107, 48, 10,
+                ReactorCrucibleRecipeCategory.REACTOR_CRUCIBLE);
+        registration.addRecipeClickArea(ExpandedCrucibleScreen.class, 64, 107, 48, 10,
+                ReactorCrucibleRecipeCategory.REACTOR_CRUCIBLE);
+        registration.addRecipeClickArea(ForgeOfTheSkyScreen.class, 85, 30, 8, 64,
+                ForgeOfTheSkyRecipeCategory.FORGE_OF_THE_SKY);
+        registration.addRecipeClickArea(HydroMiningRigScreen.class, 66, 39, 30, 12,
+                HydroMiningRigRecipeCategory.HYDRO_MINING_RIG);
     }
 }

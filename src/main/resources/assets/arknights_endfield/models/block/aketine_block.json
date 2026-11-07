@@ -1,6 +1,5 @@
 {
   "parent": "minecraft:block/cross",
-  "render_type": "cutout",
   "textures": {
     "cross": "arknights_endfield:block/aketine_block"
   }

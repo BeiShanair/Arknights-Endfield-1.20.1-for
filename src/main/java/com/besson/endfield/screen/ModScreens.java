@@ -9,13 +9,15 @@ import com.besson.endfield.screen.custom.powering.ProtocolAnchorCorePortScreenHa
 import com.besson.endfield.screen.custom.powering.ProtocolAnchorCoreScreenHandler;
 import com.besson.endfield.screen.custom.powering.ThermalBankScreenHandler;
 import com.besson.endfield.screen.custom.production1.*;
+import com.besson.endfield.screen.custom.production2.ExpandedCrucibleScreenHandler;
 import com.besson.endfield.screen.custom.production2.FillingUnitScreenHandler;
+import com.besson.endfield.screen.custom.production2.ForgeOfTheSkyScreenHandler;
 import com.besson.endfield.screen.custom.production2.GearingUnitScreenHandler;
 import com.besson.endfield.screen.custom.production2.GrindingUnitScreenHandler;
 import com.besson.endfield.screen.custom.production2.PackagingUnitScreenHandler;
-import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigMkIIScreenHandler;
-import com.besson.endfield.screen.custom.resourcing.ElectricMiningRigScreenHandler;
-import com.besson.endfield.screen.custom.resourcing.PortableOriginiumRigScreenHandler;
+import com.besson.endfield.screen.custom.production2.ReactorCrucibleScreenHandler;
+import com.besson.endfield.screen.custom.production2.SeparatingUnitScreenHandler;
+import com.besson.endfield.screen.custom.resourcing.*;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -39,6 +41,10 @@ public class ModScreens {
             register("thermal_bank", ThermalBankScreenHandler::new);
     public static final RegistryObject<MenuType<ElectricMiningRigScreenHandler>> ELECTRIC_MINING_RIG_SCREEN =
             register("electric_mining_rig", ElectricMiningRigScreenHandler::new);
+    public static final RegistryObject<MenuType<HydroMiningRigScreenHandler>> HYDRO_MINING_RIG_SCREEN =
+            register("hydro_mining_rig", HydroMiningRigScreenHandler::new);
+    public static final RegistryObject<MenuType<WaterTreatmentUnitScreenHandler>> WATER_TREATMENT_UNIT_SCREEN =
+            register("water_treatment_unit", WaterTreatmentUnitScreenHandler::new);
     public static final RegistryObject<MenuType<ElectricMiningRigMkIIScreenHandler>> ELECTRIC_MINING_RIG_MK_II_SCREEN =
             register("electric_mining_rig_mk_ii", ElectricMiningRigMkIIScreenHandler::new);
     public static final RegistryObject<MenuType<RefiningUnitScreenHandler>> REFINING_UNIT_SCREEN =
@@ -71,6 +77,23 @@ public class ModScreens {
 
     public static final RegistryObject<MenuType<StorageScreenHandler>> STORAGE_SCREEN =
             register("storage_screen", StorageScreenHandler::new);
+
+    public static final RegistryObject<MenuType<FluidPumpScreenHandler>> FLUID_PUMP_SCREEN =
+            register("fluid_pump", FluidPumpScreenHandler::new);
+    public static final RegistryObject<MenuType<AcidResistantPumpMkIIScreenHandler>> ACID_RESISTANT_PUMP_MK_II_SCREEN =
+            register("acid_resistant_pump_mk_ii", AcidResistantPumpMkIIScreenHandler::new);
+    public static final RegistryObject<MenuType<FluidTankScreenHandler>> FLUID_TANK_SCREEN =
+            register("fluid_tank", FluidTankScreenHandler::new);
+
+    public static final RegistryObject<MenuType<ReactorCrucibleScreenHandler>> REACTOR_CRUCIBLE_SCREEN =
+            register("reactor_crucible", ReactorCrucibleScreenHandler::new);
+    public static final RegistryObject<MenuType<ExpandedCrucibleScreenHandler>> EXPANDED_CRUCIBLE_SCREEN =
+            register("expanded_crucible", ExpandedCrucibleScreenHandler::new);
+
+    public static final RegistryObject<MenuType<SeparatingUnitScreenHandler>> SEPARATING_UNIT_SCREEN =
+            register("separating_unit", SeparatingUnitScreenHandler::new);
+    public static final RegistryObject<MenuType<ForgeOfTheSkyScreenHandler>> FORGE_OF_THE_SKY_SCREEN =
+            register("forge_of_the_sky", ForgeOfTheSkyScreenHandler::new);
     
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> register(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IForgeMenuType.create(factory));

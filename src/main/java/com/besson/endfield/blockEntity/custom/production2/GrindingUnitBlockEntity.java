@@ -164,8 +164,8 @@ public class GrindingUnitBlockEntity extends BaseIOBlockEntity<GrindingUnitRecip
             for (InputEntry entry: recipeInputs) {
                 for (int i = 0; i < used.length; i++) {
                     ItemStack stack = this.itemStackHandler.getStackInSlot(i);
-                    if (!used[i] && entry.getIngredient().test(stack) && stack.getCount() >= entry.getCount()) {
-                        this.itemStackHandler.extractItem(i, entry.getCount(), false);
+                    if (!used[i] && entry.ingredient().test(stack) && stack.getCount() >= entry.count()) {
+                        this.itemStackHandler.extractItem(i, entry.count(), false);
                         used[i] = true;
                         break;
 
@@ -185,7 +185,7 @@ public class GrindingUnitBlockEntity extends BaseIOBlockEntity<GrindingUnitRecip
                 boolean matched = false;
                 for (int i = 0; i < used.length; i++) {
                     ItemStack stack = this.itemStackHandler.getStackInSlot(i);
-                    if (!used[i] && entry.getIngredient().test(stack) && stack.getCount() >= entry.getCount()) {
+                    if (!used[i] && entry.ingredient().test(stack) && stack.getCount() >= entry.count()) {
                         matched = true;
                         used[i] = true;
                         break;

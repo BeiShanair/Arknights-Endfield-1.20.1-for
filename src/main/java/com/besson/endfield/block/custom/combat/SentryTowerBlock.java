@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SentryTowerBlock extends BaseEntityBlock {
+public class SentryTowerBlock extends BaseTowerBlock {
     public SentryTowerBlock(Properties settings) {
         super(settings);
     }

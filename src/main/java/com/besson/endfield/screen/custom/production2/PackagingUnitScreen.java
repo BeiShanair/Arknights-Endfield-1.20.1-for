@@ -16,7 +16,7 @@ public class PackagingUnitScreen extends BaseIOScreen<PackagingUnitScreenHandler
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/packaging_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/221.png");
     }
 
     @Override

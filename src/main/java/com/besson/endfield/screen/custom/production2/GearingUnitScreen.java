@@ -15,7 +15,7 @@ public class GearingUnitScreen extends BaseIOScreen<GearingUnitScreenHandler, Ge
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/gearing_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/221.png");
     }
     
     @Override

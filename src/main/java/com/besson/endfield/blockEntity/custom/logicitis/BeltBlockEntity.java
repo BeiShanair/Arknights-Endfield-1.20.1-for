@@ -3,6 +3,7 @@ package com.besson.endfield.blockEntity.custom.logicitis;
 import com.besson.endfield.block.custom.logicitis.BeltBlock;
 import com.besson.endfield.block.custom.logicitis.BeltShape;
 import com.besson.endfield.blockEntity.ModBlockEntities;
+import com.besson.endfield.blockEntity.custom.depot.DepotLoaderBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

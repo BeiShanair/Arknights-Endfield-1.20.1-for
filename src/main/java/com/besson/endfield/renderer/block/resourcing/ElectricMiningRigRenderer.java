@@ -1,5 +1,6 @@
 package com.besson.endfield.renderer.block.resourcing;
 
+import com.besson.endfield.Config;
 import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigBlockEntity;
 import com.besson.endfield.model.block.resourcing.ElectricMiningRigModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -13,5 +14,10 @@ public class ElectricMiningRigRenderer extends GeoBlockRenderer<ElectricMiningRi
     @Override
     public boolean shouldRenderOffScreen(ElectricMiningRigBlockEntity pBlockEntity) {
         return true;
+    }
+
+    @Override
+    public int getViewDistance() {
+        return Config.equipmentRenderDistance();
     }
 }

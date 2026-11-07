@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -16,18 +18,24 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.Objects;
 
 public class RefiningUnitScreenHandler extends BaseIOScreenHandler<RefiningUnitBlockEntity> {
+    private static final int MACHINE_SLOTS = 2;
 
     public RefiningUnitScreenHandler(int syncId, Inventory playerInventory, FriendlyByteBuf packetByteBuf) {
         this(syncId, playerInventory, Objects.requireNonNull(getClientEntity(playerInventory, packetByteBuf)),
-                new SimpleContainerData(3));
+                new SimpleContainerData(11));
     }
 
     public RefiningUnitScreenHandler(int syncId, Inventory playerInventory, RefiningUnitBlockEntity blockEntity, ContainerData propertyDelegate) {
-        super(ModScreens.REFINING_UNIT_SCREEN.get(), syncId, playerInventory, blockEntity, propertyDelegate, 2);
+        super(ModScreens.REFINING_UNIT_SCREEN.get(), syncId, playerInventory, blockEntity, propertyDelegate, MACHINE_SLOTS);
 
         this.entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 80, 59));
+            this.addSlot(new SlotItemHandler(iItemHandler, RefiningUnitBlockEntity.INPUT_SLOT, 80, 11));
+            this.addSlot(new SlotItemHandler(iItemHandler, RefiningUnitBlockEntity.OUTPUT_SLOT, 80, 59) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
         });
     }
 
@@ -36,7 +44,7 @@ public class RefiningUnitScreenHandler extends BaseIOScreenHandler<RefiningUnitB
         BlockEntity be = playerInventory.player.level().getBlockEntity(pos);
         return be instanceof RefiningUnitBlockEntity e ? e : null;
     }
-    
+
     @Override
     public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -44,12 +52,12 @@ public class RefiningUnitScreenHandler extends BaseIOScreenHandler<RefiningUnitB
         if (slot != null && slot.hasItem()) {
             ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            int containerSlots = 1;
-            if (invSlot < containerSlots) {
-                if (!this.moveItemStackTo(originalStack, containerSlots, this.slots.size(), true)) {
+            int machineStart = this.slots.size() - MACHINE_SLOTS;
+            if (invSlot >= machineStart) {
+                if (!this.moveItemStackTo(originalStack, 0, machineStart, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(originalStack, 0, containerSlots, false)) {
+            } else if (!this.moveItemStackTo(originalStack, machineStart, machineStart + 1, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -61,5 +69,36 @@ public class RefiningUnitScreenHandler extends BaseIOScreenHandler<RefiningUnitB
         }
 
         return newStack;
+    }
+
+    public boolean nowFluidMode() {
+        return propertyDelegate.get(8) == 1;
+    }
+
+    public int getFluidAmount() {
+        return propertyDelegate.get(3);
+    }
+
+    public int getFluidCapacity() {
+        return propertyDelegate.get(4);
+    }
+
+    public int getSewageAmount() {
+        return propertyDelegate.get(5);
+    }
+
+    public int getSewageCapacity() {
+        return propertyDelegate.get(6);
+    }
+
+    public int getStoredPower() {
+        return this.propertyDelegate.get(7);
+    }
+    
+    public int getFluidId() {
+        return this.propertyDelegate.get(9);
+    }
+    public int getSewageId() {
+        return this.propertyDelegate.get(10);
     }
 }

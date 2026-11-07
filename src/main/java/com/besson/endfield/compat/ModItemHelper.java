@@ -2,7 +2,6 @@ package com.besson.endfield.compat;
 
 import com.besson.endfield.recipe.InputEntry;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
@@ -17,9 +16,9 @@ public class ModItemHelper {
 
     public static List<ItemStack> fromInputEntries(InputEntry entry) {
         List<ItemStack> list = new ArrayList<>();
-        for (ItemStack stack : entry.getIngredient().getItems()) {
+        for (ItemStack stack : entry.ingredient().getItems()) {
             ItemStack copy = stack.copy();
-            copy.setCount(entry.getCount());
+            copy.setCount(entry.count());
             list.add(copy);
         }
         return list;

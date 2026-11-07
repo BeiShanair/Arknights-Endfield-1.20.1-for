@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class HeavyGunTowerBlock extends BaseEntityBlock {
+public class HeavyGunTowerBlock extends BaseTowerBlock {
     public HeavyGunTowerBlock(Properties settings) {
         super(settings);
     }

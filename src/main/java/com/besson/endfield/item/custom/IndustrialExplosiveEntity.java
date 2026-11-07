@@ -31,7 +31,7 @@ public class IndustrialExplosiveEntity extends ThrowableItemProjectile {
             double y = this.getY();
             double z = this.getZ();
 
-            float power = 10.0f;
+            float power = 5.0f;
 
             this.level().explode(this, x, y, z, power, Level.ExplosionInteraction.TNT);
             this.discard();

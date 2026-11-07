@@ -1,6 +1,5 @@
 {
   "parent": "minecraft:block/cross",
-  "render_type": "cutout",
   "textures": {
     "cross": "arknights_endfield:block/reed_rye_block"
   }

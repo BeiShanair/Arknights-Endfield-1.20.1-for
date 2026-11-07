@@ -8,8 +8,13 @@ import com.besson.endfield.renderer.block.powering.ElectricPylonEntityRenderer;
 import com.besson.endfield.renderer.block.powering.ProtocolAnchorCoreRenderer;
 import com.besson.endfield.renderer.block.powering.RelayTowerEntityRenderer;
 import com.besson.endfield.renderer.block.powering.ThermalBankRenderer;
+import com.besson.endfield.renderer.block.powering.XiranitePylonEntityRenderer;
+import com.besson.endfield.renderer.block.powering.XiraniteRelayEntityRenderer;
+import com.besson.endfield.renderer.block.resourcing.AcidResistantPumpMkIIBlockRenderer;
 import com.besson.endfield.renderer.block.resourcing.ElectricMiningRigMkIIRenderer;
 import com.besson.endfield.renderer.block.resourcing.ElectricMiningRigRenderer;
+import com.besson.endfield.renderer.block.resourcing.FluidPumpBlockRenderer;
+import com.besson.endfield.renderer.block.resourcing.HydroMiningRigRenderer;
 import com.besson.endfield.renderer.block.resourcing.PortableOriginiumRigEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -30,10 +35,18 @@ public class ModBlockEntityRenderers {
                 RelayTowerEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ELECTRIC_PYLON.get(),
                 ElectricPylonEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.XIRANITE_PYLON.get(),
+                XiranitePylonEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.XIRANITE_RELAY.get(),
+                XiraniteRelayEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ELECTRIC_MINING_RIG.get(),
                 ElectricMiningRigRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.ELECTRIC_MINING_RIG_MK_II.get(),
                 ElectricMiningRigMkIIRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.HYDRO_MINING_RIG.get(),
+                HydroMiningRigRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.WATER_TREATMENT_UNIT.get(),
+                WaterTreatmentUnitRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.REFINING_UNIT.get(),
                 RefiningUnitRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.FILLING_UNIT.get(),
@@ -56,6 +69,14 @@ public class ModBlockEntityRenderers {
                 ShreddingUnitRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.BELT.get(),
                 BeltRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.REACTOR_CRUCIBLE.get(),
+                ReactorCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.EXPANDED_CRUCIBLE.get(),
+                ExpandedCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SEPARATING_UNIT.get(),
+                SeparatingUnitRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FORGE_OF_THE_SKY.get(),
+                ForgeOfTheSkyRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.DEPOT_BUS_SECTION.get(),
                 DepotBusSectionRenderer::new);
@@ -88,5 +109,12 @@ public class ModBlockEntityRenderers {
                 SentryTowerBlockRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.SURGE_TOWER.get(),
                 SurgeTowerBlockRenderer::new);
+
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_PUMP.get(),
+                FluidPumpBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.ACID_RESISTANT_PUMP_MK_II.get(),
+                AcidResistantPumpMkIIBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK.get(),
+                FluidTankBlockRenderer::new);
     }
 }

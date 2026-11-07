@@ -2,73 +2,46 @@ package com.besson.endfield.compat.custom;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
+import com.besson.endfield.compat.ModItemHelper;
 import com.besson.endfield.recipe.custom.GearingUnitRecipe;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
-public class GearingRecipeCategory implements IRecipeCategory<GearingUnitRecipe> {
+import java.util.List;
+
+public class GearingRecipeCategory extends AbstractMachineRecipeCategory<GearingUnitRecipe> {
     public static final RecipeType<GearingUnitRecipe> GEARING_UNIT =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "gearing_unit"), GearingUnitRecipe.class);
-    public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/gearing_unit.png");
-
-    private final IDrawable background;
-    private final IDrawable icon;
 
     public GearingRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 76);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.GEARING_UNIT.get()));
+        super(GEARING_UNIT, "blockEntity.gearing_unit", helper, ModBlocks.GEARING_UNIT.get());
     }
 
     @Override
-    public int getWidth() {
-        return background.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return background.getHeight();
-    }
-
-    @Override
-    public void draw(GearingUnitRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        background.draw(guiGraphics);
-    }
-
-    @Override
-    public RecipeType<GearingUnitRecipe> getRecipeType() {
-        return GEARING_UNIT;
-    }
-
-    @Override
-    public Component getTitle() {
-        return Component.translatable("blockEntity.gearing_unit");
-    }
-
-    @Override
-    public @Nullable IDrawable getIcon() {
-        return this.icon;
+    protected int inputSlotCount(GearingUnitRecipe recipe) {
+        return recipe.getInput().size();
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, GearingUnitRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 43, 18)
-                .addIngredients(recipe.getInput().get(0).getIngredient());
-        builder.addSlot(RecipeIngredientRole.INPUT, 43, 45)
-                .addIngredients(recipe.getInput().get(1).getIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 31)
+        int inputs = slots(inputSlotCount(recipe));
+        int startX = inputStartX(inputs, 1);
+
+        for (int i = 0; i < inputs; i++) {
+            List<ItemStack> stacks = ModItemHelper.fromInputEntries(recipe.getInput().get(i));
+            if (stacks.isEmpty()) continue;
+            builder.addSlot(RecipeIngredientRole.INPUT, startX + i * PITCH, SLOT_Y)
+                    .setStandardSlotBackground()
+                    .addItemStacks(stacks);
+        }
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, outputStartX(inputs, 1), SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStack(recipe.getResultItem(null));
     }
 }

@@ -34,6 +34,12 @@ public class PlantingUnitSideBlockEntity extends BaseIOSideBlockEntity {
                 return parent.getCapability(cap, side);
             }
         }
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            PlantingUnitBlockEntity parent = getParentBlock();
+            if (parent != null && parent.nowFluidMode) {
+                return parent.getFluidInterface().cast();
+            }
+        }
         return super.getCapability(cap, side);
     }
 }

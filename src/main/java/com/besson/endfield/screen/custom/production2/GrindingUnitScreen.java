@@ -15,7 +15,7 @@ public class GrindingUnitScreen extends BaseIOScreen<GrindingUnitScreenHandler, 
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/grinding_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/221.png");
     }
 
     @Override

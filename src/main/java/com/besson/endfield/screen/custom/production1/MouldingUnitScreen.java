@@ -15,7 +15,7 @@ public class MouldingUnitScreen extends BaseIOScreen<MouldingUnitScreenHandler, 
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/moulding_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/121.png");
     }
 
     @Override

@@ -4,12 +4,19 @@ import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.custom.*;
 import com.besson.endfield.blockEntity.custom.combat.*;
+import com.besson.endfield.blockEntity.custom.depot.*;
 import com.besson.endfield.blockEntity.custom.logicitis.*;
 import com.besson.endfield.blockEntity.custom.powering.*;
 import com.besson.endfield.blockEntity.custom.production1.*;
 import com.besson.endfield.blockEntity.custom.production2.*;
+import com.besson.endfield.blockEntity.custom.resourcing.AcidResistantPumpMkIIBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.AcidResistantPumpMkIISideBlockEntity;
 import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigBlockEntity;
 import com.besson.endfield.blockEntity.custom.resourcing.ElectricMiningRigMkIIBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.FluidPumpBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.FluidPumpSideBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.HydroMiningRigBlockEntity;
+import com.besson.endfield.blockEntity.custom.resourcing.HydroMiningRigSideBlockEntity;
 import com.besson.endfield.blockEntity.custom.resourcing.PortableOriginiumRigBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -45,6 +52,12 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<ElectricPylonBlockEntity>> ELECTRIC_PYLON =
             BLOCK_ENTITIES.register("electric_pylon", () -> BlockEntityType.Builder.of(
                     ElectricPylonBlockEntity::new, ModBlocks.ELECTRIC_PYLON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<XiranitePylonBlockEntity>> XIRANITE_PYLON =
+            BLOCK_ENTITIES.register("xiranite_pylon", () -> BlockEntityType.Builder.of(
+                    XiranitePylonBlockEntity::new, ModBlocks.XIRANITE_PYLON.get()).build(null));
+    public static final RegistryObject<BlockEntityType<XiraniteRelayBlockEntity>> XIRANITE_RELAY =
+            BLOCK_ENTITIES.register("xiranite_relay", () -> BlockEntityType.Builder.of(
+                    XiraniteRelayBlockEntity::new, ModBlocks.XIRANITE_RELAY.get()).build(null));
     public static final RegistryObject<BlockEntityType<ElectricMiningRigBlockEntity>> ELECTRIC_MINING_RIG =
             BLOCK_ENTITIES.register("electric_mining_rig", () -> BlockEntityType.Builder.of(
                     ElectricMiningRigBlockEntity::new, ModBlocks.ELECTRIC_MINING_RIG.get()).build(null));
@@ -191,6 +204,79 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<SurgeTowerBlockEntity>> SURGE_TOWER =
             BLOCK_ENTITIES.register("surge_tower", () -> BlockEntityType.Builder.of(
                     SurgeTowerBlockEntity::new, ModBlocks.SURGE_TOWER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
+            BLOCK_ENTITIES.register("fluid_pipe", () -> BlockEntityType.Builder.of(
+                    FluidPipeBlockEntity::new, ModBlocks.FLUID_PIPE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<PipeBridgeBlockEntity>> PIPE_BRIDGE =
+            BLOCK_ENTITIES.register("pipe_bridge", () -> BlockEntityType.Builder.of(
+                    PipeBridgeBlockEntity::new, ModBlocks.PIPE_BRIDGE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PipeSplitterBlockEntity>> PIPE_SPLITTER =
+            BLOCK_ENTITIES.register("pipe_splitter", () -> BlockEntityType.Builder.of(
+                    PipeSplitterBlockEntity::new, ModBlocks.PIPE_SPLITTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PipeConvergerBlockEntity>> PIPE_CONVERGER =
+            BLOCK_ENTITIES.register("pipe_converger", () -> BlockEntityType.Builder.of(
+                    PipeConvergerBlockEntity::new, ModBlocks.PIPE_CONVERGER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ReactorCrucibleBlockEntity>> REACTOR_CRUCIBLE =
+            BLOCK_ENTITIES.register("reactor_crucible", () -> BlockEntityType.Builder.of(
+                    ReactorCrucibleBlockEntity::new, ModBlocks.REACTOR_CRUCIBLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ReactorCrucibleSideBlockEntity>> REACTOR_CRUCIBLE_SIDE =
+            BLOCK_ENTITIES.register("reactor_crucible_side", () -> BlockEntityType.Builder.of(
+                    ReactorCrucibleSideBlockEntity::new, ModBlocks.REACTOR_CRUCIBLE_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ExpandedCrucibleBlockEntity>> EXPANDED_CRUCIBLE =
+            BLOCK_ENTITIES.register("expanded_crucible", () -> BlockEntityType.Builder.of(
+                    ExpandedCrucibleBlockEntity::new, ModBlocks.EXPANDED_CRUCIBLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ExpandedCrucibleSideBlockEntity>> EXPANDED_CRUCIBLE_SIDE =
+            BLOCK_ENTITIES.register("expanded_crucible_side", () -> BlockEntityType.Builder.of(
+                    ExpandedCrucibleSideBlockEntity::new, ModBlocks.EXPANDED_CRUCIBLE_SIDE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SeparatingUnitBlockEntity>> SEPARATING_UNIT =
+            BLOCK_ENTITIES.register("separating_unit", () -> BlockEntityType.Builder.of(
+                    SeparatingUnitBlockEntity::new, ModBlocks.SEPARATING_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SeparatingUnitSideBlockEntity>> SEPARATING_UNIT_SIDE =
+            BLOCK_ENTITIES.register("separating_unit_side", () -> BlockEntityType.Builder.of(
+                    SeparatingUnitSideBlockEntity::new, ModBlocks.SEPARATING_UNIT_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ForgeOfTheSkyBlockEntity>> FORGE_OF_THE_SKY =
+            BLOCK_ENTITIES.register("forge_of_the_sky", () -> BlockEntityType.Builder.of(
+                    ForgeOfTheSkyBlockEntity::new, ModBlocks.FORGE_OF_THE_SKY.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ForgeOfTheSkySideBlockEntity>> FORGE_OF_THE_SKY_SIDE =
+            BLOCK_ENTITIES.register("forge_of_the_sky_side", () -> BlockEntityType.Builder.of(
+                    ForgeOfTheSkySideBlockEntity::new, ModBlocks.FORGE_OF_THE_SKY_SIDE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<WaterTreatmentUnitBlockEntity>> WATER_TREATMENT_UNIT =
+            BLOCK_ENTITIES.register("water_treatment_unit", () -> BlockEntityType.Builder.of(
+                    WaterTreatmentUnitBlockEntity::new, ModBlocks.WATER_TREATMENT_UNIT.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WaterTreatmentUnitSideBlockEntity>> WATER_TREATMENT_UNIT_SIDE =
+            BLOCK_ENTITIES.register("water_treatment_unit_side", () -> BlockEntityType.Builder.of(
+                    WaterTreatmentUnitSideBlockEntity::new, ModBlocks.WATER_TREATMENT_UNIT_SIDE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<HydroMiningRigBlockEntity>> HYDRO_MINING_RIG =
+            BLOCK_ENTITIES.register("hydro_mining_rig", () -> BlockEntityType.Builder.of(
+                    HydroMiningRigBlockEntity::new, ModBlocks.HYDRO_MINING_RIG.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HydroMiningRigSideBlockEntity>> HYDRO_MINING_RIG_SIDE =
+            BLOCK_ENTITIES.register("hydro_mining_rig_side", () -> BlockEntityType.Builder.of(
+                    HydroMiningRigSideBlockEntity::new, ModBlocks.HYDRO_MINING_RIG_SIDE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FluidPumpBlockEntity>> FLUID_PUMP =
+            BLOCK_ENTITIES.register("fluid_pump", () -> BlockEntityType.Builder.of(
+                    FluidPumpBlockEntity::new, ModBlocks.FLUID_PUMP.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FluidPumpSideBlockEntity>> FLUID_PUMP_SIDE =
+            BLOCK_ENTITIES.register("fluid_pump_side", () -> BlockEntityType.Builder.of(
+                    FluidPumpSideBlockEntity::new, ModBlocks.FLUID_PUMP_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<AcidResistantPumpMkIIBlockEntity>> ACID_RESISTANT_PUMP_MK_II =
+            BLOCK_ENTITIES.register("acid_resistant_pump_mk_ii", () -> BlockEntityType.Builder.of(
+                    AcidResistantPumpMkIIBlockEntity::new, ModBlocks.ACID_RESISTANT_PUMP_MK_II.get()).build(null));
+    public static final RegistryObject<BlockEntityType<AcidResistantPumpMkIISideBlockEntity>> ACID_RESISTANT_PUMP_MK_II_SIDE =
+            BLOCK_ENTITIES.register("acid_resistant_pump_mk_ii_side", () -> BlockEntityType.Builder.of(
+                    AcidResistantPumpMkIISideBlockEntity::new, ModBlocks.ACID_RESISTANT_PUMP_MK_II_SIDE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FluidTankBlockEntity>> FLUID_TANK =
+            BLOCK_ENTITIES.register("fluid_tank", () -> BlockEntityType.Builder.of(
+                    FluidTankBlockEntity::new, ModBlocks.FLUID_TANK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FluidTankSideBlockEntity>> FLUID_TANK_SIDE =
+            BLOCK_ENTITIES.register("fluid_tank_side", () -> BlockEntityType.Builder.of(
+                    FluidTankSideBlockEntity::new, ModBlocks.FLUID_TANK_SIDE.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

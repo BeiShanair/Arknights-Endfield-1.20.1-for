@@ -36,6 +36,12 @@ public class ModRecipes {
             RECIPE_SERIALIZERS.register("seed_picking_unit", () -> SeedPickingUnitRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<ShreddingUnitRecipe>> SHREDDING_UNIT_SERIALIZER =
             RECIPE_SERIALIZERS.register("shredding_unit", () -> ShreddingUnitRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<SeparatingUnitRecipe>> SEPARATING_UNIT_SERIALIZER =
+            RECIPE_SERIALIZERS.register("separating_unit", () -> SeparatingUnitRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<ForgeOfTheSkyRecipe>> FORGE_OF_THE_SKY_SERIALIZER =
+            RECIPE_SERIALIZERS.register("forge_of_the_sky", () -> ForgeOfTheSkyRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<ReactorCrucibleRecipe>> REACTOR_CRUCIBLE_SERIALIZER =
+            RECIPE_SERIALIZERS.register("reactor_crucible", () -> ReactorCrucibleRecipe.Serializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class OmnidirectionalSonicTowerBlock extends BaseEntityBlock {
+public class OmnidirectionalSonicTowerBlock extends BaseTowerBlock {
     public OmnidirectionalSonicTowerBlock(Properties settings) {
         super(settings);
     }

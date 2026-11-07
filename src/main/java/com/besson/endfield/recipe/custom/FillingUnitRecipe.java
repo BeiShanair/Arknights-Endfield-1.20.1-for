@@ -17,14 +17,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FillingUnitRecipe implements Recipe<Container> {
+    public static final int FLUID_PROCESSING_TIME = 40;
+    public static final int DEFAULT_PROCESSING_TIME = 200;
+
     private final ResourceLocation id;
     private final NonNullList<InputEntry> input;
     private final ItemStack output;
+    private final ResourceLocation requiredFluid;
+    private final int requiredFluidAmount;
 
     public FillingUnitRecipe(ResourceLocation id, NonNullList<InputEntry> input, ItemStack output) {
+        this(id, input, output, null, 0);
+    }
+
+    public FillingUnitRecipe(ResourceLocation id, NonNullList<InputEntry> input, ItemStack output,
+                             ResourceLocation requiredFluid, int requiredFluidAmount) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.requiredFluid = requiredFluid;
+        this.requiredFluidAmount = requiredFluidAmount;
+    }
+
+    public ResourceLocation getRequiredFluid() {
+        return requiredFluid;
+    }
+
+    public int getRequiredFluidAmount() {
+        return requiredFluidAmount;
+    }
+
+    public boolean requiresFluid() {
+        return requiredFluid != null && requiredFluidAmount > 0;
+    }
+
+    public int getProcessingTime() {
+        return requiresFluid() ? FLUID_PROCESSING_TIME : DEFAULT_PROCESSING_TIME;
     }
 
     @Override
@@ -39,7 +67,7 @@ public class FillingUnitRecipe implements Recipe<Container> {
         for (InputEntry inputEntry : input) {
             boolean matched = false;
             for (ItemStack stack : inputs) {
-                if (inputEntry.getIngredient().test(stack)) {
+                if (inputEntry.ingredient().test(stack)) {
                     matched = true;
                     break;
                 }
@@ -79,6 +107,11 @@ public class FillingUnitRecipe implements Recipe<Container> {
         return Type.INSTANCE;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public NonNullList<InputEntry> getInput() {
         return input;
     }
@@ -87,7 +120,7 @@ public class FillingUnitRecipe implements Recipe<Container> {
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         for (InputEntry entry : input) {
-            ingredients.add(entry.getIngredient());
+            ingredients.add(entry.ingredient());
         }
         return ingredients;
     }
@@ -113,8 +146,16 @@ public class FillingUnitRecipe implements Recipe<Container> {
                 int count = obj.has("count") ? obj.get("count").getAsInt() : 1;
                 inputs.set(i, new InputEntry(ingredient, count));
             }
+            
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (json.has("fluid")) {
+                JsonObject fluidObj = GsonHelper.getAsJsonObject(json, "fluid");
+                requiredFluid = new ResourceLocation(GsonHelper.getAsString(fluidObj, "id"));
+                requiredFluidAmount = fluidObj.has("amount") ? GsonHelper.getAsInt(fluidObj, "amount") : 1000;
+            }
 
-            return new FillingUnitRecipe(id, inputs, output);
+            return new FillingUnitRecipe(id, inputs, output, requiredFluid, requiredFluidAmount);
         }
 
         @Override
@@ -126,17 +167,33 @@ public class FillingUnitRecipe implements Recipe<Container> {
                 inputs.set(i, new InputEntry(ingredient, count));
             }
             ItemStack output = buf.readItem();
-            return new FillingUnitRecipe(id, inputs, output);
+
+            boolean hasFluid = buf.readBoolean();
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (hasFluid) {
+                requiredFluid = buf.readResourceLocation();
+                requiredFluidAmount = buf.readInt();
+            }
+
+            return new FillingUnitRecipe(id, inputs, output, requiredFluid, requiredFluidAmount);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, FillingUnitRecipe recipe) {
-            buf.writeInt(recipe.getIngredients().size());
-            for (InputEntry entry: recipe.input) {
-                entry.getIngredient().toNetwork(buf);
-                buf.writeInt(entry.getCount());
+            buf.writeInt(recipe.input.size());
+            for (InputEntry entry : recipe.input) {
+                entry.ingredient().toNetwork(buf);
+                buf.writeInt(entry.count());
             }
             buf.writeItem(recipe.output);
+
+            boolean hasFluid = recipe.requiresFluid();
+            buf.writeBoolean(hasFluid);
+            if (hasFluid) {
+                buf.writeResourceLocation(recipe.requiredFluid);
+                buf.writeInt(recipe.requiredFluidAmount);
+            }
         }
     }
 }

@@ -31,13 +31,14 @@ public class OpenStoragePacket {
                         buf -> {
                             ServerLevel level = player.serverLevel();
                             StorageState state = GlobalStorageManager.get(level).getState();
-                            
-                            var entries = state.getStorage();
+
+                            var entries = state.getEntries();
                             buf.writeInt(entries.size());
-                            
-                            for (StorageEntry entry : entries.values()) {
+
+                            for (StorageEntry entry : entries) {
                                 buf.writeResourceLocation(
                                         ForgeRegistries.ITEMS.getKey(entry.getItem()));
+                                buf.writeNbt(entry.getTag());
                                 buf.writeLong(entry.getCount());
                             }
                         });

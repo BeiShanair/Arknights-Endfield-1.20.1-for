@@ -1,12 +1,14 @@
 package com.besson.endfield.screen.custom.logicitis;
 
 import com.besson.endfield.ArknightsEndfield;
+import com.besson.endfield.network.DepositItemPacket;
 import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.network.RequestItemPacket;
 import com.besson.endfield.util.storage.StorageEntry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -73,11 +75,10 @@ public class StorageScreen extends AbstractContainerScreen<StorageScreenHandler>
         StorageEntry entry = visible.get(index);
         long count = entry.getCount();
     
-        List<Component> tooltip = new ArrayList<>();
+        // 用槽位里带 NBT 的栈生成提示，变体差异（自定义名、附魔等）也能显示出来
         ItemStack stack = slot.getItem();
-        if (!stack.isEmpty()) {
-            tooltip.add(stack.getDisplayName());
-        } else {
+        List<Component> tooltip = new ArrayList<>(getTooltipFromItem(this.minecraft, stack));
+        if (tooltip.isEmpty()) {
             tooltip.add(Component.literal("Unknown Item"));
         }
         
@@ -171,16 +172,87 @@ public class StorageScreen extends AbstractContainerScreen<StorageScreenHandler>
 
     @Override
     protected void slotClicked(Slot slot, int slotId, int button, ClickType actionType) {
-        if (slot != null) {
-            int index = menu.slots.indexOf(slot);
-            if (index >= menu.getVisibleEntries().size()) return;
-            
-            StorageEntry entry = menu.getVisibleEntries().get(index);
-            requestItem(entry.getItem(), button == 1 ? 64 : 1);
+        if (slot == null) {
+            super.slotClicked(slot, slotId, button, actionType);
+            return;
         }
+
+        int index = menu.slots.indexOf(slot);
+        if (index < 0) {
+            super.slotClicked(slot, slotId, button, actionType);
+            return;
+        }
+
+        int storageSlotCount = menu.getStorageSlotCount();
+
+        if (index < menu.getVisibleEntries().size() && index < storageSlotCount) {
+            StorageEntry entry = menu.getVisibleEntries().get(index);
+            Item item = entry.getItem();
+
+            int amount;
+            boolean shift = Screen.hasShiftDown();
+
+            if (shift && button == 0) {
+                amount = item.getMaxStackSize();
+            } else if (button == 0) {
+                amount = 1;
+            } else if (button == 1) {
+                int max = item.getMaxStackSize();
+                amount = Math.max(1, (max + 1) / 2);
+            } else {
+                super.slotClicked(slot, slotId, button, actionType);
+                return;
+            }
+
+            long available = entry.getCount();
+            int toRequest = (int) Math.min((long) amount, available);
+            if (toRequest <= 0) return;
+
+            requestItem(entry, toRequest);
+            return;
+        }
+
+        if (index >= storageSlotCount) {
+            ItemStack stack = slot.getItem();
+            if (stack == null || stack.isEmpty()) {
+                super.slotClicked(slot, slotId, button, actionType);
+                return;
+            }
+
+            boolean shift = Screen.hasShiftDown();
+            int amountToDeposit;
+
+            if (shift && button == 0) {
+                amountToDeposit = stack.getCount();
+            } else if (button == 0) {
+                amountToDeposit = 1;
+            } else if (button == 1) {
+                amountToDeposit = Math.max(1, (stack.getCount() + 1) / 2);
+            } else {
+                super.slotClicked(slot, slotId, button, actionType);
+                return;
+            }
+
+            if (amountToDeposit <= 0) return;
+
+            amountToDeposit = Math.min(amountToDeposit, stack.getCount());
+
+            sendDepositPacket(stack, amountToDeposit);
+            return;
+        }
+
+        super.slotClicked(slot, slotId, button, actionType);
     }
 
-    private void requestItem(Item item, int amount) {
-        ModNetWorking.CHANNEL.sendToServer(new RequestItemPacket(item, amount));
+    private void requestItem(StorageEntry entry, int amount) {
+        // 带上该条目的 NBT 变体，服务端才能精确取出对应的那一条
+        ModNetWorking.CHANNEL.sendToServer(
+                new RequestItemPacket(entry.getItem(), entry.getTag(), amount));
+    }
+
+    private void sendDepositPacket(ItemStack stack, int amount) {
+        // 带上点击格的 NBT，只扣这个变体
+        ModNetWorking.CHANNEL.sendToServer(
+                new DepositItemPacket(stack.getItem(), stack.getTag(), amount));
     }
 }

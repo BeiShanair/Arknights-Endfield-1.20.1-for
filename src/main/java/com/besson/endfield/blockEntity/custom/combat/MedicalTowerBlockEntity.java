@@ -1,8 +1,8 @@
 package com.besson.endfield.blockEntity.custom.combat;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
-import com.besson.endfield.blockEntity.custom.powering.ElectricPylonBlockEntity;
-import com.besson.endfield.blockEntity.custom.powering.RelayTowerBlockEntity;
+import com.besson.endfield.blockEntity.custom.powering.BasePylonBlockEntity;
+import com.besson.endfield.blockEntity.custom.powering.BaseRelayBlockEntity;
 import com.besson.endfield.util.power.NodeType;
 import com.besson.endfield.util.power.PowerNetworkManager;
 import com.besson.endfield.util.power.PowerNetworkNodeManager;
@@ -79,7 +79,7 @@ public class MedicalTowerBlockEntity extends BaseGunTower {
             manager.findNearest(pos, NodeType.CONSUMER, 10).ifPresent(target -> t.set(target.pos()));
             if (t.get() != null) {
                 BlockEntity b = world.getBlockEntity(t.get());
-                if (b instanceof ElectricPylonBlockEntity || b instanceof RelayTowerBlockEntity) {
+                if (b instanceof BasePylonBlockEntity || b instanceof BaseRelayBlockEntity) {
                     be.isPowered = true;
                 } else {
                     be.isPowered = false;

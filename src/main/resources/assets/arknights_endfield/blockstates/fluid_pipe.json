@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "fluid_pipe_shape=ascending_east": {
+      "model": "arknights_endfield:block/fluid_pipe_raised_ne",
+      "y": 90
+    },
+    "fluid_pipe_shape=ascending_north": {
+      "model": "arknights_endfield:block/fluid_pipe_raised_ne"
+    },
+    "fluid_pipe_shape=ascending_south": {
+      "model": "arknights_endfield:block/fluid_pipe_raised_sw"
+    },
+    "fluid_pipe_shape=ascending_west": {
+      "model": "arknights_endfield:block/fluid_pipe_raised_sw",
+      "y": 90
+    },
+    "fluid_pipe_shape=east_west": {
+      "model": "arknights_endfield:block/fluid_pipe",
+      "y": 90
+    },
+    "fluid_pipe_shape=north_east": {
+      "model": "arknights_endfield:block/fluid_pipe_corner",
+      "y": 270
+    },
+    "fluid_pipe_shape=north_south": {
+      "model": "arknights_endfield:block/fluid_pipe"
+    },
+    "fluid_pipe_shape=north_west": {
+      "model": "arknights_endfield:block/fluid_pipe_corner",
+      "y": 180
+    },
+    "fluid_pipe_shape=south_east": {
+      "model": "arknights_endfield:block/fluid_pipe_corner"
+    },
+    "fluid_pipe_shape=south_west": {
+      "model": "arknights_endfield:block/fluid_pipe_corner",
+      "y": 90
+    }
+  }
+}

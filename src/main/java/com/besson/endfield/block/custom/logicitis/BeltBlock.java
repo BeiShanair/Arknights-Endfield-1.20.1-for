@@ -251,7 +251,8 @@ public class BeltBlock extends BaseEntityBlock {
         }
         super.onRemove(state, world, pos, newState, moved);
     }
-    
+
+    // TODO: 放置方法仍需修改，因为方块也是单例
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         this.isStraight = ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown();

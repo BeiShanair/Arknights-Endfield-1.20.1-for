@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -16,17 +18,24 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.Objects;
 
 public class PlantingUnitScreenHandler extends BaseIOScreenHandler<PlantingUnitBlockEntity> {
+    private static final int MACHINE_SLOTS = 2;
+
     public PlantingUnitScreenHandler(int syncId, Inventory playerInventory, FriendlyByteBuf packetByteBuf) {
         this(syncId, playerInventory, Objects.requireNonNull(getClientEntity(playerInventory, packetByteBuf)),
-                new SimpleContainerData(3));
+                new SimpleContainerData(8));
     }
 
     public PlantingUnitScreenHandler(int syncId, Inventory playerInventory, PlantingUnitBlockEntity blockEntity, ContainerData propertyDelegate) {
-        super(ModScreens.PLANTING_UNIT_SCREEN.get(), syncId, playerInventory, blockEntity, propertyDelegate, 2);
+        super(ModScreens.PLANTING_UNIT_SCREEN.get(), syncId, playerInventory, blockEntity, propertyDelegate, MACHINE_SLOTS);
 
         this.entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 80, 59));
+            this.addSlot(new SlotItemHandler(iItemHandler, PlantingUnitBlockEntity.INPUT_SLOT, 80, 11));
+            this.addSlot(new SlotItemHandler(iItemHandler, PlantingUnitBlockEntity.OUTPUT_SLOT, 80, 59) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
         });
     }
 
@@ -35,7 +44,7 @@ public class PlantingUnitScreenHandler extends BaseIOScreenHandler<PlantingUnitB
         BlockEntity be = playerInventory.player.level().getBlockEntity(pos);
         return be instanceof PlantingUnitBlockEntity e ? e : null;
     }
-    
+
     @Override
     public ItemStack quickMoveStack(Player player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -43,12 +52,12 @@ public class PlantingUnitScreenHandler extends BaseIOScreenHandler<PlantingUnitB
         if (slot != null && slot.hasItem()) {
             ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            int containerSlots = 1;
-            if (invSlot < containerSlots) {
-                if (!this.moveItemStackTo(originalStack, containerSlots, this.slots.size(), true)) {
+            int machineStart = this.slots.size() - MACHINE_SLOTS;
+            if (invSlot >= machineStart) {
+                if (!this.moveItemStackTo(originalStack, 0, machineStart, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(originalStack, 0, containerSlots, false)) {
+            } else if (!this.moveItemStackTo(originalStack, machineStart, machineStart + 1, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -60,5 +69,21 @@ public class PlantingUnitScreenHandler extends BaseIOScreenHandler<PlantingUnitB
         }
 
         return newStack;
+    }
+
+    public int getStoredPower() {
+        return propertyDelegate.get(3);
+    }
+    public boolean nowFluidMode() {
+        return propertyDelegate.get(6) == 1;
+    }
+    public int getFluidAmount() {
+        return propertyDelegate.get(4);
+    }
+    public int getFluidCapacity() {
+        return propertyDelegate.get(5);
+    }
+    public int getFluidId() {
+        return propertyDelegate.get(7);
     }
 }

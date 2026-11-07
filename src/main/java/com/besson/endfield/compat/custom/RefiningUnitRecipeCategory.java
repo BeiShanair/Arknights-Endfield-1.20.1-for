@@ -2,72 +2,69 @@ package com.besson.endfield.compat.custom;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
+import com.besson.endfield.compat.ModFluidHelper;
 import com.besson.endfield.compat.ModItemHelper;
 import com.besson.endfield.recipe.custom.RefiningUnitRecipe;
-import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.fluids.FluidStack;
 
-public class RefiningUnitRecipeCategory implements IRecipeCategory<RefiningUnitRecipe> {
+public class RefiningUnitRecipeCategory extends AbstractMachineRecipeCategory<RefiningUnitRecipe> {
     public static final RecipeType<RefiningUnitRecipe> REFINING_UNIT =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "refining_unit"), RefiningUnitRecipe.class);
-    public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/refining_unit.png");
-
-    private final IDrawable background;
-    private final IDrawable icon;
 
     public RefiningUnitRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 76);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.REFINING_UNIT.get()));
+        super(REFINING_UNIT, "blockEntity.refining_unit", helper, ModBlocks.REFINING_UNIT.get());
     }
 
     @Override
-    public RecipeType<RefiningUnitRecipe> getRecipeType() {
-        return REFINING_UNIT;
+    protected int inputSlotCount(RefiningUnitRecipe recipe) {
+        return 1 + (recipe.requiresFluid() ? 1 : 0);
     }
 
     @Override
-    public Component getTitle() {
-        return Component.translatable("blockEntity.refining_unit");
+    protected int outputSlotCount(RefiningUnitRecipe recipe) {
+        return 1 + (recipe.producesFluid() ? 1 : 0);
     }
 
     @Override
-    public int getWidth() {
-        return background.getWidth();
-    }
+    public void setRecipe(IRecipeLayoutBuilder builder, RefiningUnitRecipe recipe, IFocusGroup focuses) {
+        int inputs = slots(inputSlotCount(recipe));
+        int outputs = slots(outputSlotCount(recipe));
+        int inputX = inputStartX(inputs, outputs);
+        int outputX = outputStartX(inputs, outputs);
 
-    @Override
-    public int getHeight() {
-        return background.getHeight();
-    }
-
-    @Override
-    public void draw(RefiningUnitRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        background.draw(guiGraphics);
-    }
-
-    @Override
-    public @Nullable IDrawable getIcon() {
-        return this.icon;
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder iRecipeLayoutBuilder, RefiningUnitRecipe recipe, IFocusGroup iFocusGroup) {
-        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 76, 7)
+        builder.addSlot(RecipeIngredientRole.INPUT, inputX, SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStacks(ModItemHelper.fromInputEntries(recipe.getInput()));
-        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 76, 55)
+
+        if (recipe.requiresFluid()) {
+            FluidStack fluid = ModFluidHelper.stack(recipe.getRequiredFluid(), recipe.getRequiredFluidAmount());
+            if (!fluid.isEmpty()) {
+                builder.addSlot(RecipeIngredientRole.INPUT, inputX + PITCH, SLOT_Y)
+                        .setStandardSlotBackground()
+                        .setFluidRenderer(fluid.getAmount(), false, SLOT_SIZE - 2, SLOT_SIZE - 2)
+                        .addIngredient(ForgeTypes.FLUID_STACK, fluid);
+            }
+        }
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, outputX, SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStack(recipe.getResultItem(null));
+
+        if (recipe.producesFluid()) {
+            FluidStack fluid = ModFluidHelper.stack(recipe.getOutputFluid(), recipe.getOutputFluidAmount());
+            if (!fluid.isEmpty()) {
+                builder.addSlot(RecipeIngredientRole.OUTPUT, outputX + PITCH, SLOT_Y)
+                        .setStandardSlotBackground()
+                        .setFluidRenderer(fluid.getAmount(), false, SLOT_SIZE - 2, SLOT_SIZE - 2)
+                        .addIngredient(ForgeTypes.FLUID_STACK, fluid);
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.besson.endfield.screen.custom.logicitis;
 
-import com.besson.endfield.blockEntity.custom.logicitis.DepotUnloaderBlockEntity;
+import com.besson.endfield.blockEntity.custom.depot.DepotUnloaderBlockEntity;
 import com.besson.endfield.screen.ModScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

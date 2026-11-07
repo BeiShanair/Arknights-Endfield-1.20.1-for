@@ -1,5 +1,6 @@
 package com.besson.endfield.renderer.block.powering;
 
+import com.besson.endfield.Config;
 import com.besson.endfield.blockEntity.custom.powering.ProtocolAnchorCoreBlockEntity;
 import com.besson.endfield.model.block.powering.ProtocolAnchorCoreModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -13,5 +14,10 @@ public class ProtocolAnchorCoreRenderer extends GeoBlockRenderer<ProtocolAnchorC
     @Override
     public boolean shouldRenderOffScreen(ProtocolAnchorCoreBlockEntity pBlockEntity) {
         return true;
+    }
+
+    @Override
+    public int getViewDistance() {
+        return Config.equipmentRenderDistance();
     }
 }

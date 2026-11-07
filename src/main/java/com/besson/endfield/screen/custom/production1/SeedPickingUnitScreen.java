@@ -15,7 +15,7 @@ public class SeedPickingUnitScreen extends BaseIOScreen<SeedPickingUnitScreenHan
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/seed_picking_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/121.png");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.besson.endfield.blockEntity.custom;
 
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.screen.custom.CrafterScreenHandler;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -83,7 +84,9 @@ public class CrafterBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+        if (pkt.getTag() != null) {
+            load(pkt.getTag());
+        }
     }
 
 }

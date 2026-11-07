@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BeamTowerBlock extends BaseEntityBlock {
+public class BeamTowerBlock extends BaseTowerBlock {
     public BeamTowerBlock(Properties settings) {
         super(settings);
     }

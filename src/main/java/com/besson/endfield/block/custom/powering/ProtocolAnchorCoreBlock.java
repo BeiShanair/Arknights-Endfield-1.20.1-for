@@ -1,5 +1,6 @@
 package com.besson.endfield.block.custom.powering;
 
+import com.besson.endfield.util.MultiBlockPlacementUtil;
 import com.besson.endfield.block.ModBlockEntityWithFacing;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.ModBlockEntities;
@@ -91,20 +92,18 @@ public class ProtocolAnchorCoreBlock extends ModBlockEntityWithFacing {
 
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        if (!pLevel.isClientSide()) {
-            for (BlockPos p : BlockPos.betweenClosed(pPos.offset(4, 0, 4), pPos.offset(-4, 0, -4))) {
-                if (!pLevel.getBlockState(p).getBlock().defaultBlockState().isAir()) {
-                    return false;
-                }
+        for (BlockPos p : BlockPos.betweenClosed(pPos.offset(4, 0, 4), pPos.offset(-4, 0, -4))) {
+            if (!MultiBlockPlacementUtil.isReplaceable(pLevel, p)) {
+                return false;
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         pTooltip.add(Component.translatable("endfield.protocolAnchorCoreTooltip").withStyle(ChatFormatting.RED));
         pTooltip.add(Component.translatable("endfield.protocolAnchorCoreTooltip2").withStyle(ChatFormatting.GRAY));
+        pTooltip.add(Component.translatable("endfield.require_area", "9×9").withStyle(ChatFormatting.GRAY));
     }
 }

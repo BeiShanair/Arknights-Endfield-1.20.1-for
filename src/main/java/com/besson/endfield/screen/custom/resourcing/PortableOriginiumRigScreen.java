@@ -14,7 +14,7 @@ public class PortableOriginiumRigScreen extends BaseRigScreen<PortableOriginiumR
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/portable_originium_rig.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/021_no_power.png");
     }
 
     @Override

@@ -20,11 +20,9 @@ public class OutputPortBlockEntity extends BlockEntity {
     public static void tick(Level world, BlockPos pos, BlockState state, OutputPortBlockEntity be) {
 
         if (world.isClientSide()) return;
-
-        // 机器方向
+        
         Direction facing = state.getValue(OutputPortBlock.FACING);
-
-        // 获取机器 Storage
+        
         BlockPos machinePos = pos.relative(facing.getOpposite());
 
         BlockEntity machineBe = world.getBlockEntity(machinePos);
@@ -36,8 +34,7 @@ public class OutputPortBlockEntity extends BlockEntity {
         if (!optional.isPresent()) return;
 
         IItemHandler handler = optional.orElse(null);
-
-        // 传送带方向（反方向）
+        
         BlockPos beltPos = pos.relative(facing);
 
         BlockEntity targetBe = world.getBlockEntity(beltPos);

@@ -151,8 +151,8 @@ public class MouldingUnitBlockEntity extends BaseIOBlockEntity<MouldingUnitRecip
                     new ItemStack(result.getItem(), itemStackHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
             InputEntry recipeInput = r.getInput();
             ItemStack stack = this.itemStackHandler.getStackInSlot(INPUT_SLOT);
-            if (recipeInput.getIngredient().test(stack) && stack.getCount() >= recipeInput.getCount()) {
-                itemStackHandler.extractItem(INPUT_SLOT, recipeInput.getCount(), false);
+            if (recipeInput.ingredient().test(stack) && stack.getCount() >= recipeInput.count()) {
+                itemStackHandler.extractItem(INPUT_SLOT, recipeInput.count(), false);
             }
         });
 
@@ -176,7 +176,7 @@ public class MouldingUnitBlockEntity extends BaseIOBlockEntity<MouldingUnitRecip
             InputEntry recipeInput = match.get().getInput();
             boolean matched = false;
             ItemStack stack = this.itemStackHandler.getStackInSlot(INPUT_SLOT);
-            if (recipeInput.getIngredient().test(stack) && stack.getCount() >= recipeInput.getCount()) {
+            if (recipeInput.ingredient().test(stack) && stack.getCount() >= recipeInput.count()) {
                 matched = true;
             }
             if (!matched) return false;

@@ -96,6 +96,11 @@ public class CrafterRecipe implements Recipe<Container> {
         return required;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public static class Type implements RecipeType<CrafterRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "crafter";

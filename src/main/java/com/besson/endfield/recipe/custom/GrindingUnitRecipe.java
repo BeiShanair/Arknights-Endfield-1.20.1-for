@@ -39,7 +39,7 @@ public class GrindingUnitRecipe implements Recipe<Container> {
         for (InputEntry inputEntry : input) {
             boolean matched = false;
             for (ItemStack stack : inputs) {
-                if (inputEntry.getIngredient().test(stack)) {
+                if (inputEntry.ingredient().test(stack)) {
                     matched = true;
                     break;
                 }
@@ -73,7 +73,7 @@ public class GrindingUnitRecipe implements Recipe<Container> {
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         for (InputEntry entry : input) {
-            ingredients.add(entry.getIngredient());
+            ingredients.add(entry.ingredient());
         }
         return ingredients;
     }
@@ -86,6 +86,11 @@ public class GrindingUnitRecipe implements Recipe<Container> {
     @Override
     public RecipeType<?> getType() {
         return Type.INSTANCE;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     public NonNullList<InputEntry> getInput() {
@@ -133,8 +138,8 @@ public class GrindingUnitRecipe implements Recipe<Container> {
         public void toNetwork(FriendlyByteBuf buf, GrindingUnitRecipe recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for (InputEntry entry: recipe.input) {
-                entry.getIngredient().toNetwork(buf);
-                buf.writeInt(entry.getCount());
+                entry.ingredient().toNetwork(buf);
+                buf.writeInt(entry.count());
             }
             buf.writeItem(recipe.output);
         }

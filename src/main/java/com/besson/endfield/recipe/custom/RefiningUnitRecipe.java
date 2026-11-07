@@ -2,6 +2,7 @@ package com.besson.endfield.recipe.custom;
 
 import com.besson.endfield.recipe.InputEntry;
 import com.google.gson.JsonObject;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -15,22 +16,56 @@ public class RefiningUnitRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final InputEntry input;
     private final ItemStack output;
+    private final ResourceLocation requiredFluid;
+    private final int requiredFluidAmount;
+    private final ResourceLocation outputFluid;
+    private final int outputFluidAmount;
 
-    public RefiningUnitRecipe(ResourceLocation id, InputEntry input, ItemStack output) {
+    public RefiningUnitRecipe(ResourceLocation id, InputEntry input, ItemStack output,
+                              ResourceLocation requiredFluid, int requiredFluidAmount,
+                              ResourceLocation outputFluid, int outputFluidAmount) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.requiredFluid = requiredFluid;
+        this.requiredFluidAmount = requiredFluidAmount;
+        this.outputFluid = outputFluid;
+        this.outputFluidAmount = outputFluidAmount;
     }
 
     @Override
     public boolean matches(Container inventory, Level world) {
         if (world.isClientSide()) return false;
         ItemStack inputs = inventory.getItem(0);
-        return input.getIngredient().test(inputs);
+        return input.ingredient().test(inputs);
     }
 
     public InputEntry getInput() {
         return input;
+    }
+
+    public ResourceLocation getRequiredFluid() {
+        return requiredFluid;
+    }
+
+    public int getRequiredFluidAmount() {
+        return requiredFluidAmount;
+    }
+
+    public boolean requiresFluid() {
+        return requiredFluid != null && requiredFluidAmount > 0;
+    }
+
+    public ResourceLocation getOutputFluid() {
+        return outputFluid;
+    }
+
+    public int getOutputFluidAmount() {
+        return outputFluidAmount;
+    }
+
+    public boolean producesFluid() {
+        return outputFluid != null && outputFluidAmount > 0;
     }
 
     @Override
@@ -54,6 +89,13 @@ public class RefiningUnitRecipe implements Recipe<Container> {
     }
 
     @Override
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        ingredients.add(input.ingredient());
+        return ingredients;
+    }
+
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return Serializer.INSTANCE;
     }
@@ -61,6 +103,11 @@ public class RefiningUnitRecipe implements Recipe<Container> {
     @Override
     public RecipeType<?> getType() {
         return Type.INSTANCE;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     public static class Type implements RecipeType<RefiningUnitRecipe> {
@@ -83,7 +130,25 @@ public class RefiningUnitRecipe implements Recipe<Container> {
             int count = ingredients.has("count") ? ingredients.get("count").getAsInt() : 1;
             inputs = new InputEntry(ingredient, count);
 
-            return new RefiningUnitRecipe(id, inputs, output);
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (json.has("fluid")) {
+                JsonObject fluidObj = GsonHelper.getAsJsonObject(json, "fluid");
+                ResourceLocation fluidId = new ResourceLocation(GsonHelper.getAsString(fluidObj, "id"));
+                requiredFluid = fluidId;
+                requiredFluidAmount = fluidObj.has("amount") ? fluidObj.get("amount").getAsInt() : 1000;
+            }
+
+            ResourceLocation outputFluid = null;
+            int outputFluidAmount = 0;
+            if (json.has("output_fluid")) {
+                JsonObject fluidObj = GsonHelper.getAsJsonObject(json, "output_fluid");
+                ResourceLocation fluidId = new ResourceLocation(GsonHelper.getAsString(fluidObj, "id"));
+                outputFluid = fluidId;
+                outputFluidAmount = fluidObj.has("amount") ? fluidObj.get("amount").getAsInt() : 1000;
+            }
+
+            return new RefiningUnitRecipe(id, inputs, output, requiredFluid, requiredFluidAmount, outputFluid, outputFluidAmount);
         }
 
         @Override
@@ -92,15 +157,46 @@ public class RefiningUnitRecipe implements Recipe<Container> {
             int count = buf.readInt();
             InputEntry inputs = new InputEntry(ingredient, count);
             ItemStack output = buf.readItem();
-            return new RefiningUnitRecipe(id, inputs, output);
+
+            boolean hasFluid = buf.readBoolean();
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (hasFluid) {
+                requiredFluid = buf.readResourceLocation();
+                requiredFluidAmount = buf.readInt();
+            }
+
+            boolean hasOutputFluid = buf.readBoolean();
+            ResourceLocation outputFluid = null;
+            int outputFluidAmount = 0;
+            if (hasOutputFluid) {
+                outputFluid = buf.readResourceLocation();
+                outputFluidAmount = buf.readInt();
+            }
+
+            return new RefiningUnitRecipe(id, inputs, output, requiredFluid, requiredFluidAmount, outputFluid, outputFluidAmount);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, RefiningUnitRecipe recipe) {
             InputEntry entry = recipe.getInput();
-            entry.getIngredient().toNetwork(buf);
-            buf.writeInt(entry.getCount());
+            entry.ingredient().toNetwork(buf);
+            buf.writeInt(entry.count());
             buf.writeItem(recipe.output);
+
+            boolean hasFluid = recipe.requiresFluid();
+            buf.writeBoolean(hasFluid);
+            if (hasFluid) {
+                buf.writeResourceLocation(recipe.requiredFluid);
+                buf.writeInt(recipe.requiredFluidAmount);
+            }
+
+            boolean hasOutputFluid = recipe.producesFluid();
+            buf.writeBoolean(hasOutputFluid);
+            if (hasOutputFluid) {
+                buf.writeResourceLocation(recipe.outputFluid);
+                buf.writeInt(recipe.outputFluidAmount);
+            }
         }
     }
 }

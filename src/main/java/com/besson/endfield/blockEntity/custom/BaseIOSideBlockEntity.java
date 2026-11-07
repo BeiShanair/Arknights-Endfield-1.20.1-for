@@ -54,13 +54,13 @@ public abstract class BaseIOSideBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag() {
         return saveWithFullMetadata();
     }
-
-    public abstract @Nullable BaseIOBlockEntity<?> getParentBlock();
+    
+    public abstract @Nullable BlockEntity getParentBlock();
     
     public static <T extends BaseIOSideBlockEntity> void tick(Level world, BlockPos pos, BlockState state, T be) {
         if (world.isClientSide()) return;
 
-        BaseIOBlockEntity<?> parent = be.getParentBlock();
+        BlockEntity parent = be.getParentBlock();
         if (parent != null) {
             Direction facing = state.getValue(FACING);
             BlockEntity machineBe = world.getBlockEntity(pos);

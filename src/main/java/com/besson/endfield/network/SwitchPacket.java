@@ -1,10 +1,10 @@
 package com.besson.endfield.network;
 
 import com.besson.endfield.blockEntity.custom.*;
-import com.besson.endfield.blockEntity.custom.logicitis.ProtocolStashBlockEntity;
+import com.besson.endfield.blockEntity.custom.depot.ProtocolStashBlockEntity;
 import com.besson.endfield.blockEntity.custom.powering.ThermalBankBlockEntity;
+import com.besson.endfield.blockEntity.custom.production1.WaterTreatmentUnitBlockEntity;
 import com.besson.endfield.blockEntity.custom.resourcing.BaseRigBlockEntity;
-import com.mojang.datafixers.kinds.IdF;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,6 +50,9 @@ public class SwitchPacket {
             }
             if (be instanceof ProtocolStashBlockEntity bs) {
                 bs.setEnable(msg.enable);
+            }
+            if (be instanceof WaterTreatmentUnitBlockEntity wt) {
+                wt.setEnable(msg.enable);
             }
         });
         ctx.get().setPacketHandled(true);

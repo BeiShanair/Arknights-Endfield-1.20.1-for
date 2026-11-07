@@ -1,10 +1,9 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
-	"render_type": "translucent",
 	"textures": {
 		"0": "arknights_endfield:block/belt_corner",
-		"particle": "arknights_endfield:block/belt_corner"
+		"particle": "arknights_endfield:block/orange"
 	},
 	"elements": [
 		{

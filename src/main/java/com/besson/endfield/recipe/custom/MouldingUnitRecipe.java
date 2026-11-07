@@ -27,7 +27,7 @@ public class MouldingUnitRecipe implements Recipe<Container> {
     public boolean matches(Container inventory, Level world) {
         if (world.isClientSide()) return false;
         ItemStack inputs = inventory.getItem(0);
-        return input.getIngredient().test(inputs);
+        return input.ingredient().test(inputs);
     }
 
     public InputEntry getInput() {
@@ -57,7 +57,7 @@ public class MouldingUnitRecipe implements Recipe<Container> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
-        ingredients.add(input.getIngredient());
+        ingredients.add(input.ingredient());
         return ingredients;
     }
 
@@ -69,6 +69,11 @@ public class MouldingUnitRecipe implements Recipe<Container> {
     @Override
     public RecipeType<?> getType() {
         return Type.INSTANCE;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     public static class Type implements RecipeType<MouldingUnitRecipe> {
@@ -106,8 +111,8 @@ public class MouldingUnitRecipe implements Recipe<Container> {
         @Override
         public void toNetwork(FriendlyByteBuf buf, MouldingUnitRecipe recipe) {
             InputEntry entry = recipe.getInput();
-            entry.getIngredient().toNetwork(buf);
-            buf.writeInt(entry.getCount());
+            entry.ingredient().toNetwork(buf);
+            buf.writeInt(entry.count());
             buf.writeItem(recipe.output);
         }
     }

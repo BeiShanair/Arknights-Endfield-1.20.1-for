@@ -14,7 +14,7 @@ public class ElectricMiningRigScreen extends BaseRigScreen<ElectricMiningRigScre
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/electric_mining_rig.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/021.png");
     }
 
     @Override

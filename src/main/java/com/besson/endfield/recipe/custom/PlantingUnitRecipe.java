@@ -15,11 +15,32 @@ public class PlantingUnitRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final Ingredient input;
     private final ItemStack output;
+    private final ResourceLocation requiredFluid;
+    private final int requiredFluidAmount;
 
     public PlantingUnitRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
+        this(id, input, output, null, 0);
+    }
+
+    public PlantingUnitRecipe(ResourceLocation id, Ingredient input, ItemStack output,
+                              ResourceLocation requiredFluid, int requiredFluidAmount) {
         this.id = id;
         this.input = input;
         this.output = output;
+        this.requiredFluid = requiredFluid;
+        this.requiredFluidAmount = requiredFluidAmount;
+    }
+
+    public ResourceLocation getRequiredFluid() {
+        return requiredFluid;
+    }
+
+    public int getRequiredFluidAmount() {
+        return requiredFluidAmount;
+    }
+    
+    public boolean requiresFluid() {
+        return requiredFluid != null && requiredFluidAmount > 0;
     }
 
     @Override
@@ -65,6 +86,11 @@ public class PlantingUnitRecipe implements Recipe<Container> {
         return Type.INSTANCE;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public Ingredient getInput() {
         return input;
     }
@@ -83,20 +109,45 @@ public class PlantingUnitRecipe implements Recipe<Container> {
         public PlantingUnitRecipe fromJson(ResourceLocation id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            return new PlantingUnitRecipe(id, input, output);
+            
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (json.has("fluid")) {
+                JsonObject fluidObj = GsonHelper.getAsJsonObject(json, "fluid");
+                requiredFluid = new ResourceLocation(GsonHelper.getAsString(fluidObj, "id"));
+                requiredFluidAmount = fluidObj.has("amount") ? GsonHelper.getAsInt(fluidObj, "amount") : 1000;
+            }
+
+            return new PlantingUnitRecipe(id, input, output, requiredFluid, requiredFluidAmount);
         }
 
         @Override
         public PlantingUnitRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             Ingredient input = Ingredient.fromNetwork(buf);
             ItemStack output = buf.readItem();
-            return new PlantingUnitRecipe(id, input, output);
+
+            boolean hasFluid = buf.readBoolean();
+            ResourceLocation requiredFluid = null;
+            int requiredFluidAmount = 0;
+            if (hasFluid) {
+                requiredFluid = buf.readResourceLocation();
+                requiredFluidAmount = buf.readInt();
+            }
+
+            return new PlantingUnitRecipe(id, input, output, requiredFluid, requiredFluidAmount);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, PlantingUnitRecipe recipe) {
             recipe.input.toNetwork(buf);
             buf.writeItem(recipe.output);
+
+            boolean hasFluid = recipe.requiresFluid();
+            buf.writeBoolean(hasFluid);
+            if (hasFluid) {
+                buf.writeResourceLocation(recipe.requiredFluid);
+                buf.writeInt(recipe.requiredFluidAmount);
+            }
         }
     }
 }

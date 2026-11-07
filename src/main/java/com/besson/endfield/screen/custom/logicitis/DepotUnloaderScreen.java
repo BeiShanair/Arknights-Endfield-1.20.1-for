@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class DepotUnloaderScreen extends AbstractContainerScreen<DepotUnloaderScreenHandler> {
     private static final ResourceLocation TEXTURE = 
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/portable_originium_rig.png");
+            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/021_no_power.png");
 
     public DepotUnloaderScreen(DepotUnloaderScreenHandler handler, Inventory inventory, Component title) {
         super(handler, inventory, title);

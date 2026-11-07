@@ -57,6 +57,11 @@ public class SeedPickingUnitRecipe implements Recipe<Container> {
         return Type.INSTANCE;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public Ingredient getInput() {
         return input;
     }

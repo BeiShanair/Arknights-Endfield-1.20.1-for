@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MarshGasMkIBlock extends BaseEntityBlock {
+public class MarshGasMkIBlock extends BaseTowerBlock {
     public MarshGasMkIBlock(Properties settings) {
         super(settings);
     }

@@ -35,6 +35,13 @@ public class FillingUnitSideBlockEntity extends BaseIOSideBlockEntity {
                 return parent.getCapability(cap, side);
             }
         }
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            FillingUnitBlockEntity parent = getParentBlock();
+            if (parent != null && parent.nowFluidMode) {
+                // 流体模式下所有侧方块都是流体端口，管道接到底座任意一面都能注入
+                return parent.getFluidInterface().cast();
+            }
+        }
         return super.getCapability(cap, side);
     }
 }

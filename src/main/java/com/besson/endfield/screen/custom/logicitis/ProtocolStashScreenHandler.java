@@ -1,6 +1,6 @@
 package com.besson.endfield.screen.custom.logicitis;
 
-import com.besson.endfield.blockEntity.custom.logicitis.ProtocolStashBlockEntity;
+import com.besson.endfield.blockEntity.custom.depot.ProtocolStashBlockEntity;
 import com.besson.endfield.screen.ModScreens;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

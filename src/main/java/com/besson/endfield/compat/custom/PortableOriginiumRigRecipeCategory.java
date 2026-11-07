@@ -3,70 +3,33 @@ package com.besson.endfield.compat.custom;
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.recipe.custom.OreRigRecipe;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
-public class PortableOriginiumRigRecipeCategory implements IRecipeCategory<OreRigRecipe> {
+public class PortableOriginiumRigRecipeCategory extends AbstractMachineRecipeCategory<OreRigRecipe> {
     public static final RecipeType<OreRigRecipe> PORTABLE_ORIGINIUM_RIG =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "portable_originium_rig"), OreRigRecipe.class);
-    public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/portable_originium_rig.png");
-
-    private final IDrawable background;
-    private final IDrawable icon;
 
     public PortableOriginiumRigRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 76);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PORTABLE_ORIGINIUM_RIG.get()));
+        super(PORTABLE_ORIGINIUM_RIG, "blockEntity.portable_originium_rig", helper, ModBlocks.PORTABLE_ORIGINIUM_RIG.get());
     }
 
     @Override
-    public RecipeType<OreRigRecipe> getRecipeType() {
-        return PORTABLE_ORIGINIUM_RIG;
-    }
-
-    @Override
-    public int getWidth() {
-        return background.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return background.getHeight();
-    }
-
-    @Override
-    public void draw(OreRigRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        background.draw(guiGraphics);
-    }
-
-    @Override
-    public Component getTitle() {
-        return Component.translatable("blockEntity.portable_originium_rig");
-    }
-
-    @Override
-    public @Nullable IDrawable getIcon() {
-        return this.icon;
+    protected int inputSlotCount(OreRigRecipe recipe) {
+        return 1;
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, OreRigRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 45, 33)
+        builder.addSlot(RecipeIngredientRole.INPUT, inputStartX(1, 1), SLOT_Y)
+                .setStandardSlotBackground()
                 .addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 33)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, outputStartX(1, 1), SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStack(recipe.getResultItem(null));
     }
 }

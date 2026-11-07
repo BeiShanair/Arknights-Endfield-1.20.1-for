@@ -15,7 +15,7 @@ public class FittingUnitScreen extends BaseIOScreen<FittingUnitScreenHandler, Fi
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/fitting_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/121.png");
     }
 
     @Override

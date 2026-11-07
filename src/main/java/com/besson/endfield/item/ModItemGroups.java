@@ -5,6 +5,7 @@ import com.besson.endfield.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,9 +28,9 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.FERRIUM_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.FERRIUM_ORE_BLOCK.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_FERRIUM_ORE.get());
-//                        pOutput.accept(ModBlocks.CUPRIUM_MINERAL_VEIN_BLOCK.get());
-//                        pOutput.accept(ModBlocks.CUPRIUM_ORE_BLOCK.get());
-//                        pOutput.accept(ModBlocks.DEEPSLATE_CUPRIUM_ORE.get());
+                        pOutput.accept(ModBlocks.CUPRIUM_MINERAL_VEIN_BLOCK.get());
+                        pOutput.accept(ModBlocks.CUPRIUM_ORE_BLOCK.get());
+                        pOutput.accept(ModBlocks.DEEPSLATE_CUPRIUM_ORE.get());
 
                         pOutput.accept(ModBlocks.COAL_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.COPPER_MINERAL_VEIN_BLOCK.get());
@@ -39,6 +40,11 @@ public class ModItemGroups {
                         pOutput.accept(ModBlocks.IRON_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.LAPIS_MINERAL_VEIN_BLOCK.get());
                         pOutput.accept(ModBlocks.REDSTONE_MINERAL_VEIN_BLOCK.get());
+
+                        pOutput.accept(ModBlocks.AMETHYST_DRUSE.get());
+                        pOutput.accept(ModBlocks.FERRIUM_DRUSE.get());
+                        pOutput.accept(ModBlocks.ORIGINIUM_DRUSE.get());
+
                         pOutput.accept(ModBlocks.PROTOCOL_ANCHOR_CORE_PORT.get());
                         pOutput.accept(ModBlocks.BELT.get());
                         pOutput.accept(ModBlocks.BELT_BRIDGE.get());
@@ -52,8 +58,12 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.PROTOCOL_ANCHOR_CORE_ITEM.get());
                         pOutput.accept(ModItems.RELAY_TOWER_ITEM.get());
                         pOutput.accept(ModItems.ELECTRIC_PYLON_ITEM.get());
+                        pOutput.accept(ModItems.XIRANITE_PYLON_ITEM.get());
+                        pOutput.accept(ModItems.XIRANITE_RELAY_ITEM.get());
                         pOutput.accept(ModItems.ELECTRIC_MINING_RIG_ITEM.get());
                         pOutput.accept(ModItems.ELECTRIC_MINING_RIG_MK_II_ITEM.get());
+                        pOutput.accept(ModItems.HYDRO_MINING_RIG_ITEM.get());
+                        pOutput.accept(ModItems.WATER_TREATMENT_UNIT_ITEM.get());
                         pOutput.accept(ModItems.PORTABLE_ORIGINIUM_RIG_ITEM.get());
                         pOutput.accept(ModItems.REFINING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.SHREDDING_UNIT_ITEM.get());
@@ -63,6 +73,10 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.GRINDING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.MOULDING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.PACKAGING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.REACTOR_CRUCIBLE_ITEM.get());
+                        pOutput.accept(ModItems.EXPANDED_CRUCIBLE_ITEM.get());
+                        pOutput.accept(ModItems.SEPARATING_UNIT_ITEM.get());
+                        pOutput.accept(ModItems.FORGE_OF_THE_SKY_ITEM.get());
                         pOutput.accept(ModItems.PLANTING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.SEED_PICKING_UNIT_ITEM.get());
                         pOutput.accept(ModItems.THERMAL_BANK_ITEM.get());
@@ -101,11 +115,12 @@ public class ModItemGroups {
                         pOutput.accept(ModItems.FERRIUM_BOTTLE.get());
                         pOutput.accept(ModItems.FERRIUM_PART.get());
                         pOutput.accept(ModItems.FERRIUM_COMPONENT.get());
-//                        pOutput.accept(ModItems.CUPRIUM_ORE.get());
-//                        pOutput.accept(ModItems.CUPRIUM_POWDER.get());
-//                        pOutput.accept(ModItems.CUPRIUM.get());
-//                        pOutput.accept(ModItems.CUPRIUM_PART.get());
-//                        pOutput.accept(ModItems.CUPRIUM_COMPONENT.get());
+                        pOutput.accept(ModItems.CUPRIUM_ORE.get());
+                        pOutput.accept(ModItems.CUPRIUM_POWDER.get());
+                        pOutput.accept(ModItems.CUPRIUM.get());
+                        pOutput.accept(ModItems.CUPRIUM_PART.get());
+                        pOutput.accept(ModItems.CUPRIUM_COMPONENT.get());
+                        pOutput.accept(ModItems.CUPRIUM_BOTTLE.get());
 //                        pOutput.accept(ModItems.CUPRIUM_JAR.get());
                         pOutput.accept(ModItems.CRYSTON_PART.get());
                         pOutput.accept(ModItems.CRYSTON_POWDER.get());
@@ -248,6 +263,41 @@ public class ModItemGroups {
 //                        pOutput.accept(ModItems.SOAKED_WOODCHIP.get());
 //                        pOutput.accept(ModItems.VALLEY_GRAYBREAD.get());
                         pOutput.accept(ModItems.WULING_FRIED_RICE.get());
+
+                        pOutput.accept(ModBlocks.FLUID_PIPE.get());
+                        pOutput.accept(ModBlocks.PIPE_BRIDGE.get());
+                        pOutput.accept(ModBlocks.PIPE_CONVERGER.get());
+                        pOutput.accept(ModBlocks.PIPE_SPLITTER.get());
+                        pOutput.accept(ModItems.CONTROL_ITEM.get());
+
+                        pOutput.accept(ModItems.XIRANITE.get());
+                        pOutput.accept(ModItems.XIRANITE_COMPONENT.get());
+                        pOutput.accept(ModItems.HEAVY_XIRANITE.get());
+                        pOutput.accept(ModItems.XIRCON.get());
+
+                        pOutput.accept(ModItems.HETONITE.get());
+                        pOutput.accept(ModItems.HETONITE_BOTTLE.get());
+                        pOutput.accept(ModItems.HETONITE_PART.get());
+                        pOutput.accept(ModItems.HETONITE_COMPONENT.get());
+
+                        pOutput.accept(ModItems.LC_WULING_BATTERY.get());
+                        pOutput.accept(ModItems.SC_WULING_BATTERY.get());
+
+                        pOutput.accept(ModItems.SEWAGE_BUCKET.get());
+                        pOutput.accept(ModItems.PRECIPITATION_ACID_BUCKET.get());
+                        pOutput.accept(ModItems.XIRCON_EFFLUENT_BUCKET.get());
+                        pOutput.accept(ModItems.INERT_XIRCON_EFFLUENT_BUCKET.get());
+                        pOutput.accept(ModItems.YAZHEN_SOLUTION_BUCKET.get());
+                        pOutput.accept(ModItems.JINCAO_SOLUTION_BUCKET.get());
+                        pOutput.accept(ModItems.LIQUID_XIRANITE_BUCKET.get());
+                        
+                        pOutput.accept(ModItems.FLUID_PUMP_ITEM.get());
+                        pOutput.accept(ModItems.ACID_RESISTANT_PUMP_MK_II_ITEM.get());
+                        pOutput.accept(ModItems.FLUID_TANK_ITEM.get());
+
+                        for (RegistryObject<Item> bottled : ModItems.ALL_BOTTLED_FLUIDS) {
+                            pOutput.accept(bottled.get());
+                        }
                     }).build()
             );
 

@@ -1,61 +1,66 @@
 package com.besson.endfield;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-@Mod.EventBusSubscriber(modid = ArknightsEndfield.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Config
-{
+public final class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    private static final ForgeConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    public static final int DEFAULT_EQUIPMENT_RENDER_DISTANCE = 256;
 
-    private static final ForgeConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+    public static final int MAX_EQUIPMENT_RENDER_DISTANCE = 1024;
 
-    public static final ForgeConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    private static final ForgeConfigSpec.IntValue EQUIPMENT_RENDER_DISTANCE = BUILDER
+            .comment("---- 中文 ----",
+                    "工业设备的渲染距离（单位：方块）。",
+                    "数值越大，离玩家越远的设备模型也会被渲染；调低可减轻大型工厂场景的渲染压力。",
+                    "设为 0 表示只渲染紧邻玩家的设备。默认值：256",
+                    "---- English ----",
+                    "Render distance, in blocks, for industrial equipment.",
+                    "Higher values keep machine models visible from further away; lower values cut down the render cost of large factories.",
+                    "0 renders equipment only when directly adjacent. Default: 256")
+            .defineInRange("equipmentRenderDistance", DEFAULT_EQUIPMENT_RENDER_DISTANCE,
+                    0, MAX_EQUIPMENT_RENDER_DISTANCE);
 
-    // a list of strings that are treated as resource locations for items
-    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), Config::validateItemName);
+    private static final ForgeConfigSpec.EnumValue<BeltRenderLayer> BELT_RENDER_LAYER = BUILDER
+            .comment("---- 中文 ----",
+                    "传送带方块的渲染层级。",
+                    "TRANSLUCENT：半透明渲染（默认，与 Fabric 版本一致），支持半透明贴图。",
+                    "CUTOUT：镂空渲染，不做透明混合，性能略好，可避免传送带密集处的透明排序问题。",
+                    "该选项在客户端启动时读取，修改后需要重启游戏才会生效。",
+                    "---- English ----",
+                    "Render layer used by the belt block.",
+                    "TRANSLUCENT (default, same as the Fabric version) supports translucent textures.",
+                    "CUTOUT skips alpha blending, costs slightly less and avoids transparency sorting issues in dense belt networks.",
+                    "Read once at client startup - a game restart is required after changing it.")
+            .defineEnum("beltRenderLayer", BeltRenderLayer.TRANSLUCENT);
 
-    static final ForgeConfigSpec SPEC = BUILDER.build();
+    public static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean logDirtBlock;
-    public static int magicNumber;
-    public static String magicNumberIntroduction;
-    public static Set<Item> items;
-
-    private static boolean validateItemName(final Object obj)
-    {
-        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(ResourceLocation.tryParse(itemName));
+    private Config() {
+        
     }
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
-        logDirtBlock = LOG_DIRT_BLOCK.get();
-        magicNumber = MAGIC_NUMBER.get();
-        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
+    public static int equipmentRenderDistance() {
+        return Math.max(0, read(EQUIPMENT_RENDER_DISTANCE, DEFAULT_EQUIPMENT_RENDER_DISTANCE));
+    }
 
-        // convert the list of strings into a set of items
-        items = ITEM_STRINGS.get().stream()
-                .map(itemName -> ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(itemName)))
-                .collect(Collectors.toSet());
+    public static BeltRenderLayer beltRenderLayer() {
+        return read(BELT_RENDER_LAYER, BeltRenderLayer.TRANSLUCENT);
+    }
+
+    private static <T> T read(ForgeConfigSpec.ConfigValue<T> value, T fallback) {
+        try
+        {
+            return value.get();
+        }
+        catch (IllegalStateException e)
+        {
+            return fallback;
+        }
+    }
+
+    public enum BeltRenderLayer {
+        TRANSLUCENT,
+        CUTOUT
     }
 }

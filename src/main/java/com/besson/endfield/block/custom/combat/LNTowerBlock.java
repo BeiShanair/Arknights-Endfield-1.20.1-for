@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LNTowerBlock extends BaseEntityBlock {
+public class LNTowerBlock extends BaseTowerBlock {
     public LNTowerBlock(Properties settings) {
         super(settings);
     }

@@ -17,7 +17,7 @@ public class ShreddingUnitScreen extends BaseIOScreen<ShreddingUnitScreenHandler
 
     @Override
     protected ResourceLocation setTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/shredding_unit.png");
+        return ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/121.png");
     }
 
     @Override

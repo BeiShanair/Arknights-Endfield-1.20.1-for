@@ -5,84 +5,52 @@ import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.recipe.custom.CrafterRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class CrafterRecipeCategory implements IRecipeCategory<CrafterRecipe> {
+public class CrafterRecipeCategory extends AbstractMachineRecipeCategory<CrafterRecipe> {
     public static final RecipeType<CrafterRecipe> CRAFTER =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "crafter"), CrafterRecipe.class);
-    public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/crafter.png");
 
-    private final IDrawable background;
-    private final IDrawable icon;
+    private static final int MAX_INPUTS = 5;
 
     public CrafterRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 76);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CRAFTER.get()));
+        super(CRAFTER, "blockEntity.crafter", helper, ModBlocks.CRAFTER.get());
     }
 
     @Override
-    public RecipeType<CrafterRecipe> getRecipeType() {
-        return CRAFTER;
+    protected int maxSlots() {
+        return MAX_INPUTS;
     }
 
     @Override
-    public Component getTitle() {
-        return Component.translatable("blockEntity.crafter");
-    }
-
-    @Override
-    public @Nullable IDrawable getIcon() {
-        return this.icon;
-    }
-
-    @Override
-    public int getWidth() {
-        return background.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return background.getHeight();
-    }
-
-    @Override
-    public void draw(CrafterRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        background.draw(guiGraphics);
+    protected int inputSlotCount(CrafterRecipe recipe) {
+        return recipe.getRequired().size();
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CrafterRecipe recipe, IFocusGroup focuses) {
-        int startX = 26;
-        int startY = 31;
-        int spacing = 18;
+        int inputs = slots(inputSlotCount(recipe));
+        int startX = inputStartX(inputs, 1);
+
         int index = 0;
         for (Map.Entry<ItemLike, Integer> entry : recipe.getRequired().entrySet()) {
-            if (index > 3) break;
-
-            int x = startX + (index * spacing);
-            int y = startY;
-
-            builder.addSlot(RecipeIngredientRole.INPUT, x, y)
+            if (index >= inputs) break;
+            builder.addSlot(RecipeIngredientRole.INPUT, startX + index * PITCH, SLOT_Y)
+                    .setStandardSlotBackground()
                     .addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(entry.getKey().asItem(), entry.getValue()));
             index++;
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 120, 31)
+        builder.addSlot(RecipeIngredientRole.OUTPUT, outputStartX(inputs, 1), SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStack(recipe.getResultItem(null));
     }
 }

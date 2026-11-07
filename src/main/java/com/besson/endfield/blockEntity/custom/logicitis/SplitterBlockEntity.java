@@ -20,8 +20,7 @@ public class SplitterBlockEntity extends BlockEntity {
 
         BlockState state = world.getBlockState(pos);
         Direction inputDir = state.getValue(SplitterBlock.FACING);
-
-        // 只允许从输入方向进入
+        
         if (incomingDir.getOpposite() != inputDir) return false;
 
         Direction[] outputs = getOutputDirections(inputDir);
@@ -35,14 +34,12 @@ public class SplitterBlockEntity extends BlockEntity {
 
             if (!(outBE instanceof BeltBlockEntity targetBelt)) continue;
             if (!targetBelt.storedItem.isEmpty()) continue;
-
-            // 转发
+            
             targetBelt.storedItem = sourceBelt.storedItem;
             targetBelt.travelDirection = dir.getOpposite();
 
             sourceBelt.resetItem();
-
-            // 更新轮询索引
+            
             nextIndex = (nextIndex + 1) % outputs.length;
 
             return true;

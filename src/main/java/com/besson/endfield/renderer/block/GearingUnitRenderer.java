@@ -1,5 +1,6 @@
 package com.besson.endfield.renderer.block;
 
+import com.besson.endfield.Config;
 import com.besson.endfield.blockEntity.custom.production2.GearingUnitBlockEntity;
 import com.besson.endfield.model.block.production2.GearingUnitModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -13,5 +14,10 @@ public class GearingUnitRenderer extends GeoBlockRenderer<GearingUnitBlockEntity
     @Override
     public boolean shouldRenderOffScreen(GearingUnitBlockEntity pBlockEntity) {
         return true;
+    }
+
+    @Override
+    public int getViewDistance() {
+        return Config.equipmentRenderDistance();
     }
 }

@@ -1,8 +1,11 @@
 package com.besson.endfield.item.custom.logicitis;
 
+import com.besson.endfield.item.custom.AbstractMultiBlockItem;
 import com.besson.endfield.renderer.item.logicitis.DepotLoaderItemRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -12,7 +15,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.function.Consumer;
 
-public class DepotLoaderItem extends BlockItem implements GeoItem {
+public class DepotLoaderItem extends AbstractMultiBlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public DepotLoaderItem(Block block, Properties settings) {
         super(block, settings);
@@ -37,5 +40,19 @@ public class DepotLoaderItem extends BlockItem implements GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    @Override
+    protected BlockPos[] getOccupiedPositions(BlockPlaceContext context) {
+        Direction facing = context.getHorizontalDirection().getOpposite();
+        Direction left = facing.getCounterClockWise();
+        Direction right = facing.getClockWise();
+
+        BlockPos pos = context.getClickedPos();
+        return new BlockPos[]{
+                pos.relative(left), pos.relative(left).above(),
+                pos.above(),
+                pos.relative(right), pos.relative(right).above()
+        };
     }
 }

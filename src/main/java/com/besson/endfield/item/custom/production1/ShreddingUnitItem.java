@@ -1,8 +1,11 @@
 package com.besson.endfield.item.custom.production1;
 
+import com.besson.endfield.item.custom.AbstractMultiBlockItem;
 import com.besson.endfield.renderer.item.ShreddingUnitItemRenderer;
+import com.besson.endfield.util.MultiBlockPlacementUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -15,7 +18,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 
 import java.util.function.Consumer;
 
-public class ShreddingUnitItem extends BlockItem implements GeoItem {
+public class ShreddingUnitItem extends AbstractMultiBlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public ShreddingUnitItem(Block block, Properties settings) {
@@ -46,5 +49,11 @@ public class ShreddingUnitItem extends BlockItem implements GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    @Override
+    protected BlockPos[] getOccupiedPositions(BlockPlaceContext context) {
+        BlockPos pos = context.getClickedPos();
+        return MultiBlockPlacementUtil.betweenClosed(pos.offset(1, 0, 1), pos.offset(-1, 0, -1));
     }
 }

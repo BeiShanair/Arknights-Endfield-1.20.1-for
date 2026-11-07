@@ -1,5 +1,6 @@
 package com.besson.endfield.renderer.block.resourcing;
 
+import com.besson.endfield.Config;
 import com.besson.endfield.blockEntity.custom.resourcing.PortableOriginiumRigBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -46,5 +47,10 @@ public class PortableOriginiumRigEntityRenderer implements BlockEntityRenderer<P
 
             matrices.popPose();
         }
+    }
+
+    @Override
+    public int getViewDistance() {
+        return Config.equipmentRenderDistance();
     }
 }

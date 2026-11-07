@@ -2,71 +2,51 @@ package com.besson.endfield.compat.custom;
 
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.ModBlocks;
+import com.besson.endfield.compat.ModFluidHelper;
 import com.besson.endfield.recipe.custom.PlantingUnitRecipe;
-import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.fluids.FluidStack;
 
-public class PlantingRecipeCategory implements IRecipeCategory<PlantingUnitRecipe> {
+public class PlantingRecipeCategory extends AbstractMachineRecipeCategory<PlantingUnitRecipe> {
     public static final RecipeType<PlantingUnitRecipe> PLANTING_UNIT =
             new RecipeType<>(ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "planting_unit"), PlantingUnitRecipe.class);
-    public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(ArknightsEndfield.MOD_ID, "textures/gui/planting_unit.png");
-
-    private final IDrawable background;
-    private final IDrawable icon;
 
     public PlantingRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 76);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PLANTING_UNIT.get()));
+        super(PLANTING_UNIT, "blockEntity.planting_unit", helper, ModBlocks.PLANTING_UNIT.get());
     }
 
     @Override
-    public int getWidth() {
-        return background.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return background.getHeight();
-    }
-
-    @Override
-    public void draw(PlantingUnitRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        background.draw(guiGraphics);
-    }
-
-    @Override
-    public RecipeType<PlantingUnitRecipe> getRecipeType() {
-        return PLANTING_UNIT;
-    }
-
-    @Override
-    public Component getTitle() {
-        return Component.translatable("blockEntity.planting_unit");
-    }
-
-    @Override
-    public @Nullable IDrawable getIcon() {
-        return icon;
+    protected int inputSlotCount(PlantingUnitRecipe recipe) {
+        return 1 + (recipe.requiresFluid() ? 1 : 0);
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, PlantingUnitRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 76, 7)
+        int inputs = slots(inputSlotCount(recipe));
+        int startX = inputStartX(inputs, 1);
+
+        builder.addSlot(RecipeIngredientRole.INPUT, startX, SLOT_Y)
+                .setStandardSlotBackground()
                 .addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 76, 55)
+
+        if (recipe.requiresFluid()) {
+            FluidStack fluid = ModFluidHelper.stack(recipe.getRequiredFluid(), recipe.getRequiredFluidAmount());
+            if (!fluid.isEmpty()) {
+                builder.addSlot(RecipeIngredientRole.INPUT, startX + PITCH, SLOT_Y)
+                        .setStandardSlotBackground()
+                        .setFluidRenderer(fluid.getAmount(), false, SLOT_SIZE - 2, SLOT_SIZE - 2)
+                        .addIngredient(ForgeTypes.FLUID_STACK, fluid);
+            }
+        }
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, outputStartX(inputs, 1), SLOT_Y)
+                .setStandardSlotBackground()
                 .addItemStack(recipe.getResultItem(null));
     }
 }

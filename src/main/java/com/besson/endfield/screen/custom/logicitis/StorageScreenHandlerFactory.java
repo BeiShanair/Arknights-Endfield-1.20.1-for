@@ -12,13 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StorageScreenHandlerFactory implements MenuProvider {
     @Override
     public Component getDisplayName() {
-        return Component.literal("Global Storage");
+        return Component.translatable("screen.global_storage");
     }
 
     @Override
@@ -29,13 +26,11 @@ public class StorageScreenHandlerFactory implements MenuProvider {
             ServerLevel world = serverPlayer.serverLevel();
             StorageState state = GlobalStorageManager.get(world).getState();
 
-            List<StorageEntry> stateEntries = new ArrayList<>(state.getStorage().values());
-
-            for (StorageEntry e : stateEntries) {
-                StorageEntry copy = new StorageEntry(e.getItem(), e.getCapacity());
-                copy.insert(e.getCount());
-                handler.getEntries().add(copy);
+            // 深拷贝一份给界面，避免界面直接持有持久化数据；拷贝会带上各自的 NBT 变体
+            for (StorageEntry entry : state.getEntries()) {
+                handler.getEntries().add(new StorageEntry(entry));
             }
+
             GlobalStorageManager manager = GlobalStorageManager.get(world);
             manager.addListener(serverPlayer);
             handler.refreshSlots();

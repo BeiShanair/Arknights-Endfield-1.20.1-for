@@ -27,6 +27,12 @@ public class ModNetWorking {
         CHANNEL.registerMessage(nextId(), SyncStoragePacket.class, SyncStoragePacket::encode, SyncStoragePacket::decode, SyncStoragePacket::handle);
         CHANNEL.registerMessage(nextId(), OpenStoragePacket.class, OpenStoragePacket::encode, OpenStoragePacket::new, OpenStoragePacket::handle);
         CHANNEL.registerMessage(nextId(), RequestItemPacket.class, RequestItemPacket::encode, RequestItemPacket::decode, RequestItemPacket::handle);
+        CHANNEL.registerMessage(nextId(), DepositItemPacket.class, DepositItemPacket::encode, DepositItemPacket::decode, DepositItemPacket::handle);
+        CHANNEL.registerMessage(nextId(), FillBucketFromPumpPacket.class, FillBucketFromPumpPacket::encode, FillBucketFromPumpPacket::decode, FillBucketFromPumpPacket::handle);
+        CHANNEL.registerMessage(nextId(), TankBottleTransferPacket.class, TankBottleTransferPacket::encode, TankBottleTransferPacket::decode, TankBottleTransferPacket::handle);
+        CHANNEL.registerMessage(nextId(), CrucibleSetOutputPacket.class, CrucibleSetOutputPacket::encode, CrucibleSetOutputPacket::decode, CrucibleSetOutputPacket::handle);
+        CHANNEL.registerMessage(nextId(), CrucibleClearOutputPacket.class, CrucibleClearOutputPacket::encode, CrucibleClearOutputPacket::decode, CrucibleClearOutputPacket::handle);
+        CHANNEL.registerMessage(nextId(), FluidModeChangePacket.class, FluidModeChangePacket::encode, FluidModeChangePacket::decode, FluidModeChangePacket::handle);
     }
 
 }

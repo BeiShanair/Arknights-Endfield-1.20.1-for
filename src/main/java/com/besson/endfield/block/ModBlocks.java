@@ -3,13 +3,26 @@ package com.besson.endfield.block;
 import com.besson.endfield.ArknightsEndfield;
 import com.besson.endfield.block.custom.*;
 import com.besson.endfield.block.custom.combat.*;
+import com.besson.endfield.block.custom.depot.*;
+import com.besson.endfield.block.custom.fluid.DamagingFluidBlock;
+import com.besson.endfield.block.custom.fluid.HealingFluidBlock;
 import com.besson.endfield.block.custom.logicitis.*;
 import com.besson.endfield.block.custom.powering.*;
 import com.besson.endfield.block.custom.production1.*;
 import com.besson.endfield.block.custom.production2.*;
+import com.besson.endfield.block.custom.resourcing.AcidResistantPumpMkIIBlock;
+import com.besson.endfield.block.custom.resourcing.AcidResistantPumpMkIISideBlock;
+import com.besson.endfield.block.custom.resourcing.AmethystDruseBlock;
 import com.besson.endfield.block.custom.resourcing.ElectricMiningRigBlock;
 import com.besson.endfield.block.custom.resourcing.ElectricMiningRigMkIIBlock;
+import com.besson.endfield.block.custom.resourcing.FerriumDruseBlock;
+import com.besson.endfield.block.custom.resourcing.FluidPumpBlock;
+import com.besson.endfield.block.custom.resourcing.FluidPumpSideBlock;
+import com.besson.endfield.block.custom.resourcing.HydroMiningRigBlock;
+import com.besson.endfield.block.custom.resourcing.HydroMiningRigSideBlock;
+import com.besson.endfield.block.custom.resourcing.OriginiumDruseBlock;
 import com.besson.endfield.block.custom.resourcing.PortableOriginiumRigBlock;
+import com.besson.endfield.fluid.ModFluids;
 import com.besson.endfield.item.ModItems;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -17,7 +30,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,8 +56,12 @@ public class ModBlocks {
             () -> new ProtocolAnchorCoreSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> RELAY_TOWER = registerBlocksWithoutItem("relay_tower",
             () -> new RelayTowerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
-    public static final RegistryObject<Block> ELECTRIC_PYLON = registerBlocksWithoutItem("electric_pylon",
-            () -> new ElectricPylonBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> ELECTRIC_PYLON =
+            registerBlocksWithoutItem("electric_pylon", () -> new ElectricPylonBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> XIRANITE_PYLON = registerBlocksWithoutItem("xiranite_pylon",
+            () -> new XiranitePylonBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> XIRANITE_RELAY = registerBlocksWithoutItem("xiranite_relay",
+            () -> new XiraniteRelayBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_MINING_RIG = registerBlocksWithoutItem("electric_mining_rig",
             () -> new ElectricMiningRigBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
     public static final RegistryObject<Block> ELECTRIC_MINING_RIG_MK_II = registerBlocksWithoutItem("electric_mining_rig_mk_ii",
@@ -85,8 +104,26 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> PACKAGING_UNIT = registerBlocksWithoutItem("packaging_unit",
             () -> new PackagingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
-    public static final RegistryObject<Block> PACKAGING_UNIT_SIDE = registerBlocks("packaging_unit_side",
-            () -> new PackagingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> PACKAGING_UNIT_SIDE =
+            registerBlocks("packaging_unit_side", () -> new PackagingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+    public static final RegistryObject<Block> REACTOR_CRUCIBLE = registerBlocksWithoutItem("reactor_crucible",
+            () -> new ReactorCrucibleBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> REACTOR_CRUCIBLE_SIDE = registerBlocks("reactor_crucible_side",
+            () -> new ReactorCrucibleSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> EXPANDED_CRUCIBLE = registerBlocksWithoutItem("expanded_crucible",
+            () -> new ExpandedCrucibleBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> EXPANDED_CRUCIBLE_SIDE = registerBlocks("expanded_crucible_side",
+            () -> new ExpandedCrucibleSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+    public static final RegistryObject<Block> SEPARATING_UNIT = registerBlocksWithoutItem("separating_unit",
+            () -> new SeparatingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> SEPARATING_UNIT_SIDE = registerBlocks("separating_unit_side",
+            () -> new SeparatingUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> FORGE_OF_THE_SKY = registerBlocksWithoutItem("forge_of_the_sky",
+            () -> new ForgeOfTheSkyBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> FORGE_OF_THE_SKY_SIDE = registerBlocks("forge_of_the_sky_side",
+            () -> new ForgeOfTheSkySideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
     public static final RegistryObject<Block> PLANTING_UNIT = registerBlocksWithoutItem("planting_unit",
             () -> new PlantingUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
@@ -155,8 +192,15 @@ public class ModBlocks {
             () -> new DepotUnloaderSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
 
 
+    public static final RegistryObject<Block> AMETHYST_DRUSE = registerBlocks("amethyst_druse",
+            () -> new Block(BlockBehaviour.Properties.of().strength(2f, 2f).noOcclusion()));
+    public static final RegistryObject<Block> FERRIUM_DRUSE = registerBlocks("ferrium_druse",
+            () -> new Block(BlockBehaviour.Properties.of().strength(2f, 2f).noOcclusion()));
+    public static final RegistryObject<Block> ORIGINIUM_DRUSE = registerBlocks("originium_druse",
+            () -> new Block(BlockBehaviour.Properties.of().strength(2f, 2f).noOcclusion()));
+
     public static final RegistryObject<Block> AMETHYST_MINERAL_VEIN_BLOCK = registerBlocks("amethyst_mineral_vein_block",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
+            () -> new AmethystDruseBlock(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> COAL_MINERAL_VEIN_BLOCK = registerBlocks("coal_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> COPPER_MINERAL_VEIN_BLOCK = registerBlocks("copper_mineral_vein_block",
@@ -174,7 +218,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> EMERALD_MINERAL_VEIN_BLOCK = registerBlocks("emerald_mineral_vein_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ORIGINIUM_MINERAL_VEIN_BLOCK = registerBlocks("originium_mineral_vein_block",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
+            () -> new OriginiumDruseBlock(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> AMETHYST_ORE_BLOCK = registerBlocks("amethyst_ore_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> CUPRIUM_MINERAL_VEIN_BLOCK = registerBlocks("cuprium_mineral_vein_block",
@@ -190,7 +234,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> DEEPSLATE_ORIGINIUM_ORE = registerBlocks("deepslate_originium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> FERRIUM_MINERAL_VEIN_BLOCK = registerBlocks("ferrium_mineral_vein_block",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
+            () -> new FerriumDruseBlock(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> FERRIUM_ORE_BLOCK = registerBlocks("ferrium_ore_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f, 5f).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ORIGINIUM_ORE_BLOCK = registerBlocks("originium_ore_block",
@@ -255,7 +299,68 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> FE_CONVERTER_BLOCK = registerBlocks("fe_converter_block",
             () -> new FEConverterBlock(BlockBehaviour.Properties.of().strength(3f).noOcclusion()));
-    
+
+    public static final RegistryObject<Block> FLUID_PIPE = registerBlocks("fluid_pipe",
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.of().strength(0.5f, 5f).noCollission()));
+
+    public static final RegistryObject<Block> PIPE_BRIDGE = registerBlocks("pipe_bridge",
+            () -> new PipeBridgeBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> PIPE_SPLITTER = registerBlocks("pipe_splitter",
+            () -> new PipeSplitterBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> PIPE_CONVERGER = registerBlocks("pipe_converger",
+            () -> new PipeConvergerBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+    public static final RegistryObject<LiquidBlock> SEWAGE_BLOCK = BLOCKS.register("sewage",
+            () -> new DamagingFluidBlock(ModFluids.STILL_SEWAGE, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> PRECIPITATION_ACID_BLOCK = BLOCKS.register("precipitation_acid",
+            () -> new DamagingFluidBlock(ModFluids.STILL_PRECIPITATION_ACID, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> XIRCON_EFFLUENT_BLOCK = BLOCKS.register("xircon_effluent",
+            () -> new DamagingFluidBlock(ModFluids.STILL_XIRCON_EFFLUENT, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> INERT_XIRCON_EFFLUENT_BLOCK = BLOCKS.register("inert_xircon_effluent",
+            () -> new DamagingFluidBlock(ModFluids.STILL_INERT_XIRCON_EFFLUENT, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> YAZHEN_SOLUTION_BLOCK = BLOCKS.register("yazhen_solution",
+            () -> new HealingFluidBlock(ModFluids.STILL_YAZHEN_SOLUTION, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> JINCAO_SOLUTION_BLOCK = BLOCKS.register("jincao_solution",
+            () -> new HealingFluidBlock(ModFluids.STILL_JINCAO_SOLUTION, fluidBlockProperties()));
+
+    public static final RegistryObject<LiquidBlock> LIQUID_XIRANITE_BLOCK = BLOCKS.register("liquid_xiranite",
+            () -> new LiquidBlock(ModFluids.STILL_LIQUID_XIRANITE, fluidBlockProperties()));
+
+    /** 所有流体方块的共同属性：可替换、无碰撞、抗爆 100、无掉落物 */
+    private static BlockBehaviour.Properties fluidBlockProperties() {
+        return BlockBehaviour.Properties.of()
+                .replaceable().noCollission().strength(100f).liquid()
+                .pushReaction(PushReaction.DESTROY).noLootTable();
+    }
+
+    public static final RegistryObject<Block> WATER_TREATMENT_UNIT = registerBlocksWithoutItem("water_treatment_unit",
+            () -> new WaterTreatmentUnitBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> WATER_TREATMENT_UNIT_SIDE = registerBlocks("water_treatment_unit_side",
+            () -> new WaterTreatmentUnitSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+    public static final RegistryObject<Block> HYDRO_MINING_RIG = registerBlocksWithoutItem("hydro_mining_rig",
+            () -> new HydroMiningRigBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> HYDRO_MINING_RIG_SIDE = registerBlocks("hydro_mining_rig_side",
+            () -> new HydroMiningRigSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
+    public static final RegistryObject<Block> FLUID_PUMP = registerBlocksWithoutItem("fluid_pump",
+            () -> new FluidPumpBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> FLUID_PUMP_SIDE = registerBlocks("fluid_pump_side",
+            () -> new FluidPumpSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> ACID_RESISTANT_PUMP_MK_II = registerBlocksWithoutItem("acid_resistant_pump_mk_ii",
+            () -> new AcidResistantPumpMkIIBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> ACID_RESISTANT_PUMP_MK_II_SIDE = registerBlocks("acid_resistant_pump_mk_ii_side",
+            () -> new AcidResistantPumpMkIISideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> FLUID_TANK = registerBlocksWithoutItem("fluid_tank",
+            () -> new FluidTankBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+    public static final RegistryObject<Block> FLUID_TANK_SIDE = registerBlocks("fluid_tank_side",
+            () -> new FluidTankSideBlock(BlockBehaviour.Properties.of().strength(0.5f).noOcclusion()));
+
     private static <T extends Block>RegistryObject<T> registerBlocksWithoutItem(String name, Supplier<T> blocks) {
         return BLOCKS.register(name, blocks);
     }

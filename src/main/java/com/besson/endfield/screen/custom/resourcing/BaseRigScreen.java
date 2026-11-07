@@ -26,7 +26,7 @@ public abstract class BaseRigScreen<T extends BaseRigScreenHandler<B>, B extends
     @Override
     protected void init() {
         super.init();
-        this.addRenderableWidget(new ToggleIconButton(leftPos + 150, topPos + 30, menu::isEnabled,
+        this.addRenderableWidget(new ToggleIconButton(leftPos + 140, topPos + 10, menu::isEnabled,
                 button -> {
                     boolean newEnableState = !menu.isEnabled();
                     menu.setEnabled(newEnableState);

@@ -1,7 +1,7 @@
 package com.besson.endfield.screen.custom.logicitis;
 
 import com.besson.endfield.ArknightsEndfield;
-import com.besson.endfield.blockEntity.custom.logicitis.ProtocolStashBlockEntity;
+import com.besson.endfield.blockEntity.custom.depot.ProtocolStashBlockEntity;
 import com.besson.endfield.network.ModNetWorking;
 import com.besson.endfield.network.SwitchPacket;
 import com.besson.endfield.screen.ToggleIconButton;
@@ -50,6 +50,6 @@ public class ProtocolStashScreen extends AbstractContainerScreen<ProtocolStashSc
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
         context.blit(STORAGE_TEXTURE, i, j, 0, 0, this.imageWidth, 3 * 18 + 17);
-        context.blit(STORAGE_TEXTURE, i, j + 3 * 18 + 17, 0, 126, this.imageWidth, 96);
+        context.blit(STORAGE_TEXTURE, i, j + 3 * 18 + 16, 0, 126, this.imageWidth, 96);
     }
 }

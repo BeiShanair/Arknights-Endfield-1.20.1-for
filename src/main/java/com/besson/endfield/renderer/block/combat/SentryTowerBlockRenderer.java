@@ -1,5 +1,6 @@
 package com.besson.endfield.renderer.block.combat;
 
+import com.besson.endfield.Config;
 import com.besson.endfield.blockEntity.custom.combat.SentryTowerBlockEntity;
 import com.besson.endfield.model.block.combat.SentryTowerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,5 +28,10 @@ public class SentryTowerBlockRenderer extends GeoBlockRenderer<SentryTowerBlockE
             barrelBone.setRotX((float) Math.toRadians(animatable.getTurretPitch()));
         }
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public int getViewDistance() {
+        return Config.equipmentRenderDistance();
     }
 }

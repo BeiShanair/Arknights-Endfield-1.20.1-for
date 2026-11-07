@@ -1,8 +1,11 @@
 package com.besson.endfield.item.custom.powering;
 
+import com.besson.endfield.item.custom.AbstractMultiBlockItem;
 import com.besson.endfield.renderer.item.powering.ProtocolAnchorCoreItemRenderer;
+import com.besson.endfield.util.MultiBlockPlacementUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -15,7 +18,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 
 import java.util.function.Consumer;
 
-public class ProtocolAnchorCoreItem extends BlockItem implements GeoItem {
+public class ProtocolAnchorCoreItem extends AbstractMultiBlockItem implements GeoItem {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -48,5 +51,11 @@ public class ProtocolAnchorCoreItem extends BlockItem implements GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    @Override
+    protected BlockPos[] getOccupiedPositions(BlockPlaceContext context) {
+        BlockPos pos = context.getClickedPos();
+        return MultiBlockPlacementUtil.betweenClosed(pos.offset(4, 0, 4), pos.offset(-4, 0, -4));
     }
 }

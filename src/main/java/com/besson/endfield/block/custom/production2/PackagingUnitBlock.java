@@ -1,5 +1,6 @@
 package com.besson.endfield.block.custom.production2;
 
+import com.besson.endfield.util.MultiBlockPlacementUtil;
 import com.besson.endfield.block.ModBlockEntityWithFacing;
 import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.blockEntity.ModBlockEntities;
@@ -96,17 +97,14 @@ public class PackagingUnitBlock extends ModBlockEntityWithFacing {
 
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        if (!pLevel.isClientSide()) {
-            BlockPos[] sidePositions = getAdjacentPositions(pState, pPos);
+        BlockPos[] sidePositions = getAdjacentPositions(pState, pPos);
 
-            for (BlockPos p : sidePositions) {
-                if (!pLevel.getBlockState(p).getBlock().defaultBlockState().isAir()) {
-                    return false;
-                }
+        for (BlockPos p : sidePositions) {
+            if (!MultiBlockPlacementUtil.isReplaceable(pLevel, p)) {
+                return false;
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     private BlockPos[] getAdjacentPositions(BlockState state, BlockPos pPos) {
@@ -135,5 +133,6 @@ public class PackagingUnitBlock extends ModBlockEntityWithFacing {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         pTooltip.add(Component.translatable("endfield.powerCost", 20).withStyle(ChatFormatting.GRAY));
+        pTooltip.add(Component.translatable("endfield.require_area", "6×4").withStyle(ChatFormatting.GRAY));
     }
 }

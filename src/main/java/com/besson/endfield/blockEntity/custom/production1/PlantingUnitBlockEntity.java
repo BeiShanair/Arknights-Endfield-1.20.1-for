@@ -1,5 +1,7 @@
 package com.besson.endfield.blockEntity.custom.production1;
 
+import com.besson.endfield.util.MultiBlockPlacementUtil;
+import com.besson.endfield.block.ModBlocks;
 import com.besson.endfield.block.custom.production1.PlantingUnitBlock;
 import com.besson.endfield.blockEntity.ModBlockEntities;
 import com.besson.endfield.blockEntity.custom.BaseIOBlockEntity;
@@ -7,21 +9,33 @@ import com.besson.endfield.recipe.custom.PlantingUnitRecipe;
 import com.besson.endfield.screen.custom.production1.PlantingUnitScreenHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
@@ -29,22 +43,148 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static com.besson.endfield.block.ModBlockEntityWithFacing.FACING;
+
 public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecipe> implements GeoBlockEntity {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
-    private static final int POWER_PRE_TICK = 10;
+    private static final int POWER_PRE_TICK = 20;
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    
+    public static final int FLUID_CAPACITY = 50000;
+    
+    public boolean nowFluidMode = false;
+    
+    public final FluidTank fluidTank = new FluidTank(FLUID_CAPACITY) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
+    
+    private final IFluidHandler sidedFluidInterface = new IFluidHandler() {
+        @Override
+        public int getTanks() {
+            return 1;
+        }
+
+        @Override
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            return fluidTank.getFluid();
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return fluidTank.getCapacity();
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            return fluidTank.isFluidValid(stack);
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            if (!nowFluidMode) return 0;
+            return fluidTank.fill(resource, action);
+        }
+
+        @Override
+        public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+    };
+
+    private LazyOptional<IFluidHandler> fluidInterfaceLazy = LazyOptional.empty();
+
     public PlantingUnitBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PLANTING_UNIT.get(), pos, state, 40);
+    }
+    
+    public void changeFluidMode(Level world, Player player) {
+        Direction facing = getBlockState().getValue(PlantingUnitBlock.FACING);
+        BlockPos[] tankPositions = PlantingUnitBlock.getFluidTankPositions(facing, worldPosition);
+        BlockPos left = tankPositions[0];
+        BlockPos right = tankPositions[1];
+
+        if (!nowFluidMode) {
+            if (!MultiBlockPlacementUtil.isReplaceable(world, left) || !MultiBlockPlacementUtil.isReplaceable(world, right)) {
+                player.displayClientMessage(Component.translatable("endfield.fluid_mode.blocked"), true);
+                return;
+            }
+            nowFluidMode = true;
+
+            world.setBlockAndUpdate(left, ModBlocks.PLANTING_UNIT_SIDE.get().defaultBlockState().setValue(FACING, facing));
+            world.setBlockAndUpdate(right, ModBlocks.PLANTING_UNIT_SIDE.get().defaultBlockState().setValue(FACING, facing));
+            if (world.getBlockEntity(left) instanceof PlantingUnitSideBlockEntity adjunct) {
+                adjunct.setParentPos(worldPosition);
+            }
+            if (world.getBlockEntity(right) instanceof PlantingUnitSideBlockEntity adjunct) {
+                adjunct.setParentPos(worldPosition);
+            }
+        } else {
+            clearFluidTank();
+            nowFluidMode = false;
+
+            if (world.getBlockEntity(left) instanceof PlantingUnitSideBlockEntity adjunct) {
+                adjunct.setParentPos(null);
+            }
+            if (world.getBlockEntity(right) instanceof PlantingUnitSideBlockEntity adjunct) {
+                adjunct.setParentPos(null);
+            }
+            world.removeBlock(left, false);
+            world.removeBlock(right, false);
+        }
+        setChanged();
+        world.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+    
+    public void clearFluidTank() {
+        boolean changed = !fluidTank.isEmpty();
+        fluidTank.setFluid(FluidStack.EMPTY);
+        if (changed) {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            }
+        }
+    }
+    
+    /**
+     * 流体模式下，主机任意面都可以作为流体端口。
+     * 注意：主机四周的水平面全部被 PLANTING_UNIT_SIDE 占住，若只放行左右两面，
+     * 外部管道实际上永远碰不到主机的水平面，表现为“接管到底座注不进去”。
+     */
+    @Nullable
+    public IFluidHandler getFluidStorage(Direction side) {
+        if (!nowFluidMode) return null;
+        return sidedFluidInterface;
+    }
+    
+    public LazyOptional<IFluidHandler> getFluidInterface() {
+        if (!fluidInterfaceLazy.isPresent()) {
+            fluidInterfaceLazy = LazyOptional.of(() -> sidedFluidInterface);
+        }
+        return fluidInterfaceLazy.cast();
     }
 
     @Override
     protected int getOutputSlotIndex() {
         return OUTPUT_SLOT;
     }
-    
+
     @Override
     protected int getInvSize() {
         return 2;
@@ -64,6 +204,11 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
                     case 0 -> PlantingUnitBlockEntity.this.progress;
                     case 1 -> PlantingUnitBlockEntity.this.maxProgress;
                     case 2 -> PlantingUnitBlockEntity.this.enable ? 1 : 0;
+                    case 3 -> PlantingUnitBlockEntity.this.storedPower;
+                    case 4 -> fluidTank.getFluidAmount();
+                    case 5 -> fluidTank.getCapacity();
+                    case 6 -> PlantingUnitBlockEntity.this.nowFluidMode ? 1 : 0;
+                    case 7 -> fluidId(fluidTank.getFluid().getFluid());
                     default -> 0;
                 };
             }
@@ -79,9 +224,13 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
 
             @Override
             public int getCount() {
-                return 3;
+                return 8;
             }
         };
+    }
+
+    private static int fluidId(@Nullable Fluid fluid) {
+        return BuiltInRegistries.FLUID.getId(fluid == null ? Fluids.WATER : fluid);
     }
 
     @Override
@@ -108,7 +257,19 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
                 return output.cast();
             }
         }
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            if (getFluidStorage(side) != null) {
+                return getFluidInterface().cast();
+            }
+            return LazyOptional.empty();
+        }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        fluidInterfaceLazy.invalidate();
     }
 
     @Override
@@ -116,6 +277,7 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
         super.onLoad();
         input = LazyOptional.of(() -> new InputItemHandler(itemStackHandler));
         output = LazyOptional.of(() -> new OutputItemHandler(itemStackHandler));
+        fluidInterfaceLazy = LazyOptional.of(() -> sidedFluidInterface);
     }
 
     @Override
@@ -139,23 +301,49 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
     }
 
     @Override
-    protected void craftItem(Level world) {
-        getMatchRecipe(world).ifPresent(r -> {
-            ItemStack result = r.getResultItem(world.registryAccess());
-            this.itemStackHandler.setStackInSlot(OUTPUT_SLOT,
-                    new ItemStack(result.getItem(), itemStackHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
-            this.itemStackHandler.extractItem(INPUT_SLOT, 1, false);
-        }) ;
-    }
-
-    @Override
     protected Optional<PlantingUnitRecipe> getMatchRecipe(Level world) {
         SimpleContainer inv = new SimpleContainer(2);
         for (int i = 0; i < 2; i++) {
             inv.setItem(i, this.itemStackHandler.getStackInSlot(i));
         }
-        return world.getRecipeManager()
-                .getRecipeFor(PlantingUnitRecipe.Type.INSTANCE, inv, world);
+        // 按当前模式过滤：物品模式只匹配纯物品配方，流体模式只匹配"种子+流体"配方
+        List<PlantingUnitRecipe> matches = new ArrayList<>();
+        for (Recipe<Container> candidate : world.getRecipeManager()
+                .getRecipesFor(PlantingUnitRecipe.Type.INSTANCE, inv, world)) {
+            if (candidate instanceof PlantingUnitRecipe recipe) {
+                matches.add(recipe);
+            }
+        }
+        for (PlantingUnitRecipe recipe : matches) {
+            if (nowFluidMode != recipe.requiresFluid()) continue;
+            if (nowFluidMode && !hasEnoughFluid(recipe.getRequiredFluid(), recipe.getRequiredFluidAmount())) {
+                continue;
+            }
+            return Optional.of(recipe);
+        }
+        return Optional.empty();
+    }
+
+    private boolean hasEnoughFluid(@Nullable ResourceLocation required, int amount) {
+        if (required == null || amount <= 0) return false;
+        var fluid = ForgeRegistries.FLUIDS.getValue(required);
+        if (fluid == null) return false;
+        FluidStack current = fluidTank.getFluid();
+        return !current.isEmpty() && current.getFluid().isSame(fluid) && current.getAmount() >= amount;
+    }
+
+    @Override
+    protected void craftItem(Level world) {
+        getMatchRecipe(world).ifPresent(r -> {
+            ItemStack result = r.getResultItem(world.registryAccess());
+            itemStackHandler.setStackInSlot(OUTPUT_SLOT,
+                    new ItemStack(result.getItem(), itemStackHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+            itemStackHandler.extractItem(INPUT_SLOT, 1, false);
+            
+            if (r.requiresFluid()) {
+                fluidTank.drain(r.getRequiredFluidAmount(), IFluidHandler.FluidAction.EXECUTE);
+            }
+        });
     }
 
     @Override
@@ -163,11 +351,42 @@ public class PlantingUnitBlockEntity extends BaseIOBlockEntity<PlantingUnitRecip
         Optional<PlantingUnitRecipe> match = getMatchRecipe(world);
 
         if (match.isPresent()) {
-            ItemStack result = match.get().getResultItem(world.registryAccess());
+            PlantingUnitRecipe recipe = match.get();
+            ItemStack stack = itemStackHandler.getStackInSlot(INPUT_SLOT);
+            if (!recipe.getInput().test(stack)) {
+                return false;
+            }
+            
+            if (recipe.requiresFluid()
+                    && !hasEnoughFluid(recipe.getRequiredFluid(), recipe.getRequiredFluidAmount())) {
+                return false;
+            }
+
+            ItemStack result = recipe.getResultItem(world.registryAccess());
             return canOutputAccept(result);
         }
 
         return false;
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("FluidTank", fluidTank.writeToNBT(new CompoundTag()));
+        tag.putBoolean("fluidMode", nowFluidMode);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("FluidTank")) {
+            fluidTank.readFromNBT(tag.getCompound("FluidTank"));
+        }
+        nowFluidMode = tag.getBoolean("fluidMode");
+    }
+    
+    public Component getFluidMode() {
+        return Component.translatable(nowFluidMode ? "endfield.fluid_mode.open" : "endfield.fluid_mode.close");
     }
 
     private record InputItemHandler(ItemStackHandler parent) implements IItemHandler {

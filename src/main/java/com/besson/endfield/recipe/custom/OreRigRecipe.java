@@ -67,6 +67,11 @@ public class OreRigRecipe implements Recipe<Container> {
         return Type.INSTANCE;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public static class Type implements RecipeType<OreRigRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "ore_rig";

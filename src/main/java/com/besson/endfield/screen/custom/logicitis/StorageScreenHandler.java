@@ -3,9 +3,11 @@ package com.besson.endfield.screen.custom.logicitis;
 import com.besson.endfield.screen.ModScreens;
 import com.besson.endfield.util.storage.GlobalStorageManager;
 import com.besson.endfield.util.storage.StorageEntry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +24,7 @@ public class StorageScreenHandler extends AbstractContainerMenu {
     private static final int STORAGE_ROWS = 6;
     private static final int STORAGE_COLS = 9;
     private static final int STORAGE_SLOT_COUNT = STORAGE_ROWS * STORAGE_COLS;
-    
+
     private List<StorageEntry> entries;
     public int scrollOffset = 0;
     private final SimpleContainer storageInventory = new SimpleContainer(STORAGE_SLOT_COUNT);
@@ -40,17 +42,16 @@ public class StorageScreenHandler extends AbstractContainerMenu {
             for (int i = 0; i < size; i++) {
                 ResourceLocation id = buf.readResourceLocation();
                 Item item = ForgeRegistries.ITEMS.getValue(id);
+                CompoundTag tag = buf.readNbt();
                 long count = buf.readLong();
-                StorageEntry entry = new StorageEntry(item, Math.max(count, 1L));
-                entry.insert(count);
-                entries.add(entry);
+
+                if (item == null) continue;
+
+                entries.add(new StorageEntry(item, tag, count, Math.max(count, 1L)));
             }
-        
+
             for (int i = 0; i < Math.min(entries.size(), STORAGE_SLOT_COUNT); i++) {
-                StorageEntry entry = entries.get(i);
-                ItemStack stack = new ItemStack(entry.getItem());
-                stack.setCount(1);
-                storageInventory.setItem(i, stack);
+                storageInventory.setItem(i, entries.get(i).toStack(1));
             }
         }
 
@@ -82,7 +83,7 @@ public class StorageScreenHandler extends AbstractContainerMenu {
                 ));
             }
         }
-        
+
         for (int col = 0; col < 9; col++) {
             addSlot(new Slot(playerInv, col,
                     8 + col * 18,
@@ -90,10 +91,10 @@ public class StorageScreenHandler extends AbstractContainerMenu {
             ));
         }
     }
-    
+
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -106,8 +107,10 @@ public class StorageScreenHandler extends AbstractContainerMenu {
     }
 
     public List<StorageEntry> getVisibleEntries() {
-        int end = Math.min(scrollOffset + 54, entries.size());
-        return entries.subList(scrollOffset, end);
+        if (entries.isEmpty()) return List.of();
+        int start = Mth.clamp(scrollOffset, 0, entries.size());
+        int end = Math.min(start + STORAGE_SLOT_COUNT, entries.size());
+        return entries.subList(start, end);
     }
 
     public void refreshSlots() {
@@ -118,10 +121,8 @@ public class StorageScreenHandler extends AbstractContainerMenu {
         for (int i = 0; i < storageSlotsToUpdate; i++) {
             Slot slot = slots.get(i);
             if (i < visible.size()) {
-                StorageEntry entry = visible.get(i);
-                ItemStack stack = new ItemStack(entry.getItem());
-                stack.setCount(1);
-                slot.set(stack);
+                // 用带 NBT 的栈刷新，保证图标与提示都能体现变体差异
+                slot.set(visible.get(i).toStack(1));
             } else {
                 slot.set(ItemStack.EMPTY);
             }
@@ -143,6 +144,9 @@ public class StorageScreenHandler extends AbstractContainerMenu {
 
     public void updateEntries(List<StorageEntry> newEntries) {
         this.entries = newEntries;
+        // 条目变少时把滚动位置拉回合法区间，避免 subList 越界
+        int maxOffset = Math.max(0, entries.size() - STORAGE_SLOT_COUNT);
+        this.scrollOffset = Mth.clamp(this.scrollOffset, 0, maxOffset);
         refreshSlots();
     }
 }
